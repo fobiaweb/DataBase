@@ -1,0 +1,68 @@
+<?php
+/**
+ * DbConnectionMssql class  - DbConnectionMssql.php file
+ *
+ * @author     Tyurin D. <fobia3d@gmail.com>
+ * @copyright  Copyright (c) 2013 AC Software
+ */
+
+namespace Fobia\DataBase;
+
+require_once 'DbFactory.php';
+
+use \PDO;
+use \ezcDbHandlerMssql;
+
+/**
+ * DBConnection class
+ *
+ * @package     Fobia.DataBase
+ */
+class DbConnectionMssql extends ezcDbHandlerMssql
+{
+
+    /**
+     * @var LoggerInterface
+     */
+    public $logger;
+    public $logEnabled = true;
+    protected $profiles;
+
+    public function __construct(array $dbParams)
+    {
+        parent::__construct($dbParams);
+
+        $this->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
+        $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Fobia\DataBase\DbStatement', array($this)));
+
+        \Fobia\Log::info('SQL:: Connect database', array($dbParams['dbname']));
+    }
+
+    public function query($statement)
+    {
+        $time  = microtime(true);
+        $query =  parent::query($statement);
+        $this->log($query, $time);
+        return $query;
+    }
+
+    /**
+     * Все выполненные запросы за сессию с временем выполнения.
+     * @return array
+     */
+    public function getProfiles()
+    {
+        // TODO: MSSQL getProfiles 
+    }
+
+    public function log($stmt, $time)
+    {
+        /* @var $stmt DbStatement */
+        \Fobia\Log::info('SQL:: ' . $stmt->queryString, array( round( microtime(true) - $time , 6)) );
+        if (!$stmt) {
+            $error = $this->errorInfo();
+            \Fobia\Log::error('==> SQL:: '. $error[1].': '.$error[2]);
+        }
+    }
+}

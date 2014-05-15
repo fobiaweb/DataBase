@@ -1,0 +1,23 @@
+{
+    "name": "fobiaweb/database",
+    "type": "library",
+    "description": "Fobia DataBase Component",
+    "keywords": [],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "suggest": {
+        "pear-components.ez.no/base": "http://faclib.github.io/packages/p/pear v1.8"
+    },
+    "autoload": {
+        "psr-0": { "Fobia\\DataBase\\": "" }
+    },
+    "target-dir": "Fobia/DataBase",
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.2-dev"
+        }
+    }
+}
