@@ -43,7 +43,7 @@ class DbConnectionMssql extends ezcDbHandlerMssql
     {
         $time  = microtime(true);
         $query =  parent::query($statement);
-        $this->log($query, $time);
+        $this->log($statement, $time);
         return $query;
     }
 
@@ -53,14 +53,23 @@ class DbConnectionMssql extends ezcDbHandlerMssql
      */
     public function getProfiles()
     {
-        // TODO: MSSQL getProfiles 
+        // TODO: MSSQL getProfiles
     }
 
+    /**
+     *
+     * @param \Fobia\DataBase\DbStatement|string $stmt
+     * @param float $time
+     */
     public function log($stmt, $time)
     {
-        /* @var $stmt DbStatement */
-        \Fobia\Log::info('SQL:: ' . $stmt->queryString, array( round( microtime(true) - $time , 6)) );
-        if (!$stmt) {
+        if ( $stmt instanceof \PDOStatement ) {
+            $stmt = $stmt->queryString;
+        }
+
+        \Fobia\Log::info('SQL:: ' . $stmt, array( round( microtime(true) - $time , 6)) );
+
+        if ((int) $app->db->errorCode()) {
             $error = $this->errorInfo();
             \Fobia\Log::error('==> SQL:: '. $error[1].': '.$error[2]);
         }

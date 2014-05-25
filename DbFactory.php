@@ -33,6 +33,10 @@ class DbFactory extends \ezcDbFactory
      */
     public static function create($dbParams)
     {
+        if ( ! is_array( $dbParams )) {
+            $dbParam['dns'] = $dbParam;
+        }
+
         if (isset($dbParams['dbname'])) {
             $dbParams['database'] = $dbParams['dbname'];
             unset($dbParams['dbname']);
@@ -44,12 +48,20 @@ class DbFactory extends \ezcDbFactory
         if (isset($dbParams['pass'])) {
             $dbParams['password'] = $dbParams['pass'];
             unset($dbParams['pass']);
+        }        
+        if (isset($dbParams['user'])) {
+            $dbParams['username'] = $dbParams['user'];
+            unset($dbParams['user']);
         }
-        
-        if ( is_array( $dbParams ) && array_key_exists('dns', $dbParams)) {
+
+        if ( array_key_exists('dns', $dbParams)) {
             $params = \Fobia\DataBase\DbFactory::parseDSN($dbParams['dns']);
             $dbParams = array_merge($params, $dbParams);
             unset($dbParams['dns']);
+        }
+        
+        if (!isset($dbParams['phptype'])) {
+            $dbParams['phptype'] = 'mysql';
         }
 
         return parent::create($dbParams);

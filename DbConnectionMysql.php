@@ -43,7 +43,7 @@ class DbConnectionMysql extends ezcDbHandlerMysql
     {
         $time  = microtime(true);
         $query =  parent::query($statement);
-        $this->log($query, $time);
+        $this->log($statement, $time);
         return $query;
     }
 
@@ -62,14 +62,18 @@ class DbConnectionMysql extends ezcDbHandlerMysql
 
     /**
      *
-     * @param \Fobia\DataBase\DbStatement $stmt
-     * @param type $time
+     * @param \Fobia\DataBase\DbStatement|string $stmt
+     * @param float $time
      */
     public function log($stmt, $time)
     {
-        /* @var $stmt DbStatement */
-        \Fobia\Log::info('SQL:: ' . $stmt->queryString, array( round( microtime(true) - $time , 6)) );
-        if (!$stmt) {
+        if ( $stmt instanceof \PDOStatement ) {
+            $stmt = $stmt->queryString;
+        }
+
+        \Fobia\Log::info('SQL:: ' . $stmt, array( round( microtime(true) - $time , 6)) );
+
+        if ((int) $app->db->errorCode()) {
             $error = $this->errorInfo();
             \Fobia\Log::error('==> SQL:: '. $error[1].': '.$error[2]);
         }
