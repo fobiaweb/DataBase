@@ -69,7 +69,7 @@ class DbConnectionMssql extends ezcDbHandlerMssql
 
         \Fobia\Log::info('SQL:: ' . $stmt, array( round( microtime(true) - $time , 6)) );
 
-        if ((int) $app->db->errorCode()) {
+        if ((int) $this->errorCode()) {
             $error = $this->errorInfo();
             \Fobia\Log::error('==> SQL:: '. $error[1].': '.$error[2]);
         }
