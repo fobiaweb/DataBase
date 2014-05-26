@@ -64,13 +64,16 @@ class DbConnectionMssql extends ezcDbHandlerMssql
     public function log($stmt, $time)
     {
         if ( $stmt instanceof \PDOStatement ) {
-            $stmt = $stmt->queryString;
+            $query = $stmt->queryString;
+        } else {
+            $query = $stmt;
+            $stmt = $this;
         }
 
-        \Fobia\Log::info('SQL:: ' . $stmt, array( round( microtime(true) - $time , 6)) );
+        \Fobia\Log::info('SQL:: ' . $query, array( round( microtime(true) - $time , 6)) );
 
-        if ((int) $this->errorCode()) {
-            $error = $this->errorInfo();
+        if ((int) $stmt->errorCode()) {
+            $error = $stmt->errorInfo();
             \Fobia\Log::error('==> SQL:: '. $error[1].': '.$error[2]);
         }
     }
