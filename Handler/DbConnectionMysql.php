@@ -6,17 +6,17 @@
  * @copyright  Copyright (c) 2013 AC Software
  */
 
-namespace Fobia\DataBase;
-
-require_once 'DbFactory.php';
+namespace Fobia\DataBase\Handler;
 
 use \PDO;
 use \ezcDbHandlerMysql;
+use \Fobia\DataBase\Query\QueryInsert;
+use \Fobia\DataBase\Query\ReplaceInsert;
 
 /**
  * DBConnection class
  *
- * @package     Fobia.DataBase
+ * @package     Fobia.DataBase.Handler
  */
 class DbConnectionMysql extends ezcDbHandlerMysql
 {
@@ -80,5 +80,25 @@ class DbConnectionMysql extends ezcDbHandlerMysql
             $error = $stmt->errorInfo();
             \Fobia\Log::error('==> SQL:: '. $error[1].': '.$error[2]);
         }
+    }
+
+    /**
+     * Returns a new ezcQueryInsert derived object for the correct database type.
+     *
+     * @return \Fobia\DataBase\Query\QueryInsert
+     */
+    public function createInsertQuery()
+    {
+        return new QueryInsert( $this );
+    }
+
+    /**
+     * Returns a new ezcQueryInsert derived object for the correct database type.
+     *
+     * @return \Fobia\DataBase\Query\QueryInsert
+     */
+    public function createReplaceQuery()
+    {
+        return new QueryReplace( $this );
     }
 }
