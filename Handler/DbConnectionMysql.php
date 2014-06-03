@@ -11,7 +11,7 @@ namespace Fobia\DataBase\Handler;
 use \PDO;
 use \ezcDbHandlerMysql;
 use \Fobia\DataBase\Query\QueryInsert;
-use \Fobia\DataBase\Query\ReplaceInsert;
+use \Fobia\DataBase\Query\QueryReplace;
 
 /**
  * DBConnection class
