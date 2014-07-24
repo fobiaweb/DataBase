@@ -23,7 +23,9 @@ use Fobia\DataBase\Query\QuerySelect;
 class MySQL extends ezcDbHandlerMysql
 {
     protected $profiles = false;
-
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
     protected $logger = null;
 
     /**
