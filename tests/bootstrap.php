@@ -10,6 +10,6 @@
 $logger = require_once __DIR__ . '/vendor/autoload.php';
 
 /* @var $logger \Composer\Autoload\ClassLoader */
-$logger->addPsr4("Fobia\\DataBase\\", __DIR__ . "/../");
+$logger->addPsr4("Fobia\\DataBase\\", dirname(__DIR__));
 
-echo "ok";
+//echo "ok";

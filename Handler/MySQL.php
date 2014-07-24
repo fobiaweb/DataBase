@@ -10,6 +10,7 @@ namespace Fobia\DataBase\Handler;
 
 use PDO;
 use ezcDbHandlerMysql;
+use PDOStatement;
 use Fobia\DataBase\Query\QueryInsert;
 use Fobia\DataBase\Query\QueryReplace;
 use Fobia\DataBase\Query\QuerySelect;
@@ -47,7 +48,12 @@ class MySQL extends ezcDbHandlerMysql
         $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
         $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Fobia\DataBase\DbStatement', array($this)));
 
-        $this->logger = \Fobia\Debug\Log::getLogger();
+
+        if (class_exists('\Fobia\Debug\Log')) {
+            $this->logger = \Fobia\Debug\Log::getLogger();
+        } else {
+            $this->logger = new \Psr\Log\NullLogger();
+        }
 
         // if (@$dbParams['charset']) {
         //     parent::query("SET NAMES '{$dbParams['charset']}'");
@@ -90,7 +96,7 @@ class MySQL extends ezcDbHandlerMysql
      */
     public function log($stmt, $time)
     {
-        if ( $stmt instanceof \PDOStatement ) {
+        if ( $stmt instanceof PDOStatement ) {
             $query = $stmt->queryString;
         } else {
             $query = $stmt;

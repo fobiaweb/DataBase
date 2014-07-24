@@ -8,8 +8,9 @@
 
 namespace Fobia\DataBase;
 
-use \PDOStatement;
-use \Log;
+use PDOStatement;
+use Log;
+use ezcDbHandler;
 
 /**
  * DBStatement class
@@ -27,7 +28,7 @@ class DbStatement extends PDOStatement
     /**
      * @internal
      */
-    protected function __construct(\ezcDbHandler $connection)
+    protected function __construct(ezcDbHandler $connection)
     {
         $this->connection = $connection;
     }

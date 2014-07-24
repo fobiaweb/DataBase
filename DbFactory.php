@@ -8,14 +8,17 @@
 
 namespace Fobia\DataBase;
 
+use ezcBase;
+use ezcDbFactory;
+
 if ( ! class_exists("\\ezcBase")) {
     @require_once 'ezc/Base/base.php';
     spl_autoload_register(function($className) {
-        \ezcBase::autoload($className);
+        ezcBase::autoload($className);
     });
 }
-\ezcDbFactory::addImplementation('mysql', '\\Fobia\\DataBase\\Handler\\MySQL');
-\ezcDbFactory::addImplementation('mssql', '\\Fobia\\DataBase\\Handler\\MSSQL');
+ezcDbFactory::addImplementation('mysql', '\\Fobia\\DataBase\\Handler\\MySQL');
+ezcDbFactory::addImplementation('mssql', '\\Fobia\\DataBase\\Handler\\MSSQL');
 
 
 require_once __DIR__ . '/DbStatement.php';
@@ -25,7 +28,7 @@ require_once __DIR__ . '/DbStatement.php';
  *
  * @package   Fobia.DataBase
  */
-class DbFactory extends \ezcDbFactory
+class DbFactory extends ezcDbFactory
 {
     /**
      * @param array|string $dbParams
@@ -34,7 +37,10 @@ class DbFactory extends \ezcDbFactory
     public static function create($dbParams)
     {
         if ( ! is_array( $dbParams )) {
-            $dbParams['dns'] = $dbParams;
+            $dns = $dbParams;
+            $dbParams = array();
+            $dbParams['dns'] = $dns;
+            unset($dns);
         }
 
         if (isset($dbParams['dbname'])) {
