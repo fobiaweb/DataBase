@@ -42,8 +42,11 @@ class QueryInsert extends ezcQueryInsert
      */
     public function getQuery()
     {
-        $query = parent::getQuery();
-        $query = "INSERT {$this->ignore} " . substr($query, 6);
+        $query = "INSERT";
+        if ($this->ignore) {
+            $query .= " " . $this->ignore;
+        }
+        $query .= substr(parent::getQuery(), 6);
         return $query;
     }
 }

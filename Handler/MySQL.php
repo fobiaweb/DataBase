@@ -92,7 +92,7 @@ class MySQL extends ezcDbHandlerMysql
     /**
      *
      * @param \Fobia\DataBase\DbStatement|string $stmt
-     * @param float $time
+     * @param mixed $time
      */
     public function log($stmt, $time)
     {

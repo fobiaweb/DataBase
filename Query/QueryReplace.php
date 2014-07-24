@@ -26,7 +26,7 @@ class QueryReplace extends ezcQueryInsert
     public function getQuery()
     {
         $query = parent::getQuery();
-        $query = "REPLACE " . substr($query, 6);
+        $query = "REPLACE" . substr($query, 6);
         return $query;
     }
 }
