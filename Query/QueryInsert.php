@@ -8,7 +8,7 @@
 
 namespace Fobia\DataBase\Query;
 
-use \ezcQueryInsert;
+use ezcQueryInsert;
 
 /**
  * QueryInsert class

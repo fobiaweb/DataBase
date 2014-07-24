@@ -9,6 +9,7 @@
 namespace Fobia\DataBase;
 
 use \PDOStatement;
+use \Log;
 
 /**
  * DBStatement class
@@ -39,7 +40,7 @@ class DbStatement extends PDOStatement
         if (method_exists($this->connection, 'log')) {
             $this->connection->log($this, $time);
             if ($input_parameters) {
-                \Fobia\Log::debug('SQL:: ==> input_parameters: ', array_values($input_parameters));
+                Log::debug('SQL:: ==> input_parameters: ', array_values($input_parameters));
             }
         }
         return $query;

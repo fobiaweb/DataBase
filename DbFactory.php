@@ -14,8 +14,8 @@ if ( ! class_exists("\\ezcBase")) {
         \ezcBase::autoload($className);
     });
 }
-\ezcDbFactory::addImplementation('mysql', '\\Fobia\\DataBase\\Handler\\DbConnectionMysql');
-\ezcDbFactory::addImplementation('mssql', '\\Fobia\\DataBase\\Handler\\DbConnectionMssql');
+\ezcDbFactory::addImplementation('mysql', '\\Fobia\\DataBase\\Handler\\MySQL');
+\ezcDbFactory::addImplementation('mssql', '\\Fobia\\DataBase\\Handler\\MSSQL');
 
 
 require_once __DIR__ . '/DbStatement.php';
@@ -34,7 +34,7 @@ class DbFactory extends \ezcDbFactory
     public static function create($dbParams)
     {
         if ( ! is_array( $dbParams )) {
-            $dbParam['dns'] = $dbParam;
+            $dbParams['dns'] = $dbParams;
         }
 
         if (isset($dbParams['dbname'])) {
@@ -52,6 +52,10 @@ class DbFactory extends \ezcDbFactory
         if (isset($dbParams['user'])) {
             $dbParams['username'] = $dbParams['user'];
             unset($dbParams['user']);
+        }
+
+        if (empty($dbParams['charset'])) {
+            $dbParams['charset'] = 'utf8';
         }
 
         if ( @array_key_exists('dns', $dbParams)) {
