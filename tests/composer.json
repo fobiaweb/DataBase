@@ -1,0 +1,9 @@
+{
+    "name": "fobiaweb/database",
+    "require": {
+        "php": ">=5.3.3",
+        "fobiaweb/ezc-base": "1.*",
+        "fobiaweb/ezc-database": "1.*",
+        "psr/log": "1.*"
+    }
+}
