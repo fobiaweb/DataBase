@@ -9,7 +9,7 @@
 namespace Fobia\DataBase;
 
 use PDOStatement;
-use Log;
+use Fobia\Debug\Log;
 use ezcDbHandler;
 
 /**
