@@ -71,9 +71,9 @@ class DbFactory extends ezcDbFactory
         }
 
         if (!isset($dbParams['phptype'])) {
-            @$dbParams['phptype'] = 'mysql';
+            $dbParams['phptype'] = 'mysql';
         }
 
-        return parent::create($dbParams);
+        return \ezcDbFactory::create($dbParams);// parent::create($dbParams);
     }
 }

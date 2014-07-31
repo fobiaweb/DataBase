@@ -50,18 +50,21 @@ class MySQL extends ezcDbHandlerMysql
         $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
         $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Fobia\DataBase\DbStatement', array($this)));
 
-
-        if (class_exists('\Fobia\Debug\Log')) {
-            $this->logger = \Fobia\Debug\Log::getLogger();
+        if (@$dbParams['params']['logger'] instanceof \Psr\Log\LoggerInterface) {
+            $this->logger = $dbParams['params']['logger'];
         } else {
-            $this->logger = new \Psr\Log\NullLogger();
+            if (class_exists('\Fobia\Debug\Log')) {
+                $this->logger = \Fobia\Debug\Log::getLogger();
+            } else {
+                $this->logger = new \Psr\Log\NullLogger();
+            }
         }
 
         // if (@$dbParams['charset']) {
         //     parent::query("SET NAMES '{$dbParams['charset']}'");
         // }
 
-        $this->logger->info('[SQL]:: Connect database', array($dbParams['database']));
+        $this->getLogger()->info('[SQL]:: Connect database', array($dbParams['database']));
 
         if (@$dbParams['params']['debug']) {
             parent::query('SET profiling = 1');
@@ -95,6 +98,7 @@ class MySQL extends ezcDbHandlerMysql
      *
      * @param \Fobia\DataBase\DbStatement|string $stmt
      * @param mixed $time
+     * @return \Psr\Log\LoggerInterface 
      */
     public function log($stmt, $time)
     {
@@ -107,10 +111,19 @@ class MySQL extends ezcDbHandlerMysql
 
         $this->logger->info('[SQL]:: ' . $query, array( round( microtime(true) - $time , 6)) );
 
-        if ((int) $stmt->errorCode()) {
+        if ( (int) $stmt->errorCode() ) {
             $error = $stmt->errorInfo();
             $this->logger->error('==> [SQL]:: '. $error[1].': '.$error[2]);
         }
+        return $this->logger;
+    }
+
+    /**
+     * @return \Psr\Log\LoggerInterface
+     */
+    public function getLogger()
+    {
+        return $this->logger;
     }
 
     /**

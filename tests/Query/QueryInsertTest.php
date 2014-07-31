@@ -23,16 +23,20 @@ class QueryInsertTest extends \PHPUnit_Framework_TestCase
     public function testInsertIntoIgnore()
     {
         $q = $this->db->createInsertQuery();
-        $q->insertIntoIgnore('user');
         $this->assertInstanceOf('\Fobia\DataBase\Query\QueryInsert', $q);
+        $q->insertIntoIgnore('user');
+        $q->set("Host", "'localhost'");
+
+        $stmt = $q->prepare();
+        $this->assertStringStartsWith("INSERT IGNORE INTO user", $stmt->queryString);
     }
 
     public function testGetQuery()
     {
         $q = $this->db->createInsertQuery();
 
-        $str = "INSERT IGNORE INTO user ( Host, User, Password ) VALUES ( 'localhost', 'test', '' )";
-        $q->insertIntoIgnore('user')
+        $str = "INSERT INTO user ( Host, User, Password ) VALUES ( 'localhost', 'test', '' )";
+        $q->insertInto('user')
                 ->set('Host', $this->db->quote('localhost'))
                 ->set('User', $this->db->quote('test'))
                 ->set('Password', $this->db->quote(''));

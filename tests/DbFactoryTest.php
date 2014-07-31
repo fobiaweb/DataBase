@@ -26,16 +26,16 @@ class DbFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('PDO', $db);
     }
 
-    public function functionName()
-    {
-        $db = \Fobia\DataBase\DbFactory::create('mysql://root@localhost/mysql');
-
-        /* @var $db \Fobia\DataBase\Handler\DbConnectionMysql */
-
-        $q    = $db->createSelectQuery();
-        $q->select('*')->from('user')->limit(10);
-        $stmt = $q->prepare();
-        $stmt->execute();
-        var_dump($stmt->fetchAll());
-    }
+//    public function functionName()
+//    {
+//        $db = \Fobia\DataBase\DbFactory::create('mysql://root@localhost/mysql');
+//
+//        /* @var $db \Fobia\DataBase\Handler\DbConnectionMysql */
+//
+//        $q    = $db->createSelectQuery();
+//        $q->select('*')->from('user')->limit(10);
+//        $stmt = $q->prepare();
+//        $stmt->execute();
+//        var_dump($stmt->fetchAll());
+//    }
 }
