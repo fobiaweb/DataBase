@@ -24,15 +24,17 @@ class MySQLTest extends \PHPUnit_Framework_TestCase
      * @covers Fobia\DataBase\Handler\MySQL::query
      * @todo   Implement testQuery().
      */
-    /*
     public function testQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $db = $this->db;
+        $stmt = $db->query("SELECT VERSION()");
+        $this->assertInstanceOf('\Fobia\DataBase\DbStatement', $stmt);
+
+        $row = $stmt->fetch();
+        $v = array_shift($row);
+        $this->assertRegExp("/^5\..+/", $v);
     }
-/* */
+
     /**
      * @covers Fobia\DataBase\Handler\MySQL::getProfiles
      * @todo   Implement testGetProfiles().
@@ -46,19 +48,22 @@ class MySQLTest extends \PHPUnit_Framework_TestCase
         );
     }
 /* */
+
     /**
      * @covers Fobia\DataBase\Handler\MySQL::log
      * @todo   Implement testLog().
      */
-    /*
     public function testLog()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
+        $logger = $this->db->log("SELECT VERSION()", microtime(true));
+        $this->assertInstanceOf('\Psr\Log\LoggerInterface', $logger);
     }
-/* */
+
+    public function testGetLogger()
+    {
+        $this->assertInstanceOf('\Psr\Log\LoggerInterface', $this->db->getLogger());
+    }
+
     /**
      * @covers Fobia\DataBase\Handler\MySQL::createInsertQuery
      * @todo   Implement testCreateInsertQuery().
@@ -67,13 +72,6 @@ class MySQLTest extends \PHPUnit_Framework_TestCase
     {
         $q = $this->db->createInsertQuery();
         $this->assertInstanceOf('\Fobia\DataBase\Query\QueryInsert', $q);
-
-        $str = "INSERT INTO user ( Host, User, Password ) VALUES ( 'localhost', 'test', '' )";
-        $q->insertInto('user')
-                ->set('Host', $this->db->quote('localhost'))
-                ->set('User', $this->db->quote('test'))
-                ->set('Password', $this->db->quote(''));
-        $this->assertEquals($str, $q->getQuery());
     }
 
     /**

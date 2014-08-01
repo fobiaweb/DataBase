@@ -6,6 +6,12 @@
     "require": {
         "php": ">=5.3.3"
     },
+    "require-dev": {
+        "psr/log": "~1",
+        "fobiaweb/ezc-base": "1.*",
+        "fobiaweb/ezc-database": "1.*",
+        "phpunit/phpunit": "*"
+    },
     "suggest": {
         "pear-components.ez.no/database": "1.4.7",
         "psr/log": "-"

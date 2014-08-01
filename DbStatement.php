@@ -9,7 +9,6 @@
 namespace Fobia\DataBase;
 
 use PDOStatement;
-use Fobia\Debug\Log;
 use ezcDbHandler;
 
 /**
@@ -36,12 +35,16 @@ class DbStatement extends PDOStatement
     public function execute(array $input_parameters = null)
     {
         $time  = microtime(true);
-        $query = parent::execute($input_parameters);
+        if ($input_parameters === null) {
+            $query = parent::execute();
+        } else {
+            $query = parent::execute($input_parameters);
+        }
 
         if (method_exists($this->connection, 'log')) {
-            $this->connection->log($this, $time);
+            $logger = $this->connection->log($this, $time);
             if ($input_parameters) {
-                Log::debug('SQL:: ==> input_parameters: ', array_values($input_parameters));
+               $logger->gebug('SQL:: ==> input_parameters: ', array_values($input_parameters));
             }
         }
         return $query;

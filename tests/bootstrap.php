@@ -6,10 +6,11 @@
  * @copyright  Copyright (c) 2014 Dmitriy Tyurin
  */
 
-
-$logger = require_once __DIR__ . '/vendor/autoload.php';
+$logger = require  dirname(__DIR__) . '/vendor/autoload.php';
 
 /* @var $logger \Composer\Autoload\ClassLoader */
-$logger->addPsr4("Fobia\\DataBase\\", dirname(__DIR__));
+// $logger->add("Fobia\\DataBase\\", __DIR__);
+//$logger->setPsr4("Fobia\\DataBase\\", __DIR__);
 
-//echo "ok";
+
+// var_dump($logger);

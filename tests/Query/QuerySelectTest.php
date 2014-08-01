@@ -24,37 +24,37 @@ class QuerySelectTest extends \PHPUnit_Framework_TestCase
      * @covers Fobia\DataBase\Query\QuerySelect::fetchItemsCount
      * @todo   Implement testFetchItemsCount().
      */
-    public function testFetchItemsCount()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
+//    public function testFetchItemsCount()
+//    {
+//        // Remove the following lines when you implement this test.
+//        $this->markTestIncomplete(
+//                'This test has not been implemented yet.'
+//        );
+//    }
 
     /**
      * @covers Fobia\DataBase\Query\QuerySelect::findAll
      * @todo   Implement testFindAll().
      */
-    public function testFindAll()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
+//    public function testFindAll()
+//    {
+//        // Remove the following lines when you implement this test.
+//        $this->markTestIncomplete(
+//                'This test has not been implemented yet.'
+//        );
+//    }
 
     /**
      * @covers Fobia\DataBase\Query\QuerySelect::offset
      * @todo   Implement testOffset().
      */
-    public function testOffset()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
+//    public function testOffset()
+//    {
+//        // Remove the following lines when you implement this test.
+//        $this->markTestIncomplete(
+//                'This test has not been implemented yet.'
+//        );
+//    }
 
     /**
      * @covers Fobia\DataBase\Query\QuerySelect::reset
