@@ -11,6 +11,7 @@ namespace Fobia\DataBase\Handler;
 use PDO;
 use ezcDbHandlerMssql;
 use Fobia\DataBase\Query\QueryInsert;
+use Fobia\Debug\Log;
 
 /**
  * DBConnection class
@@ -35,7 +36,7 @@ class MSSQL extends ezcDbHandlerMssql
         $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
         $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Fobia\DataBase\DbStatement', array($this)));
 
-        \Fobia\Log::info('SQL:: Connect database', array($dbParams['dbname']));
+        Log::info('SQL:: Connect database', array($dbParams['dbname']));
     }
 
     public function query($statement)
@@ -69,11 +70,11 @@ class MSSQL extends ezcDbHandlerMssql
             $stmt = $this;
         }
 
-        \Fobia\Log::info('SQL:: ' . $query, array( round( microtime(true) - $time , 6)) );
+        Log::info('SQL:: ' . $query, array( round( microtime(true) - $time , 6)) );
 
         if ((int) $stmt->errorCode()) {
             $error = $stmt->errorInfo();
-            \Fobia\Log::error('==> SQL:: '. $error[1].': '.$error[2]);
+            Log::error('==> SQL:: '. $error[1].': '.$error[2]);
         }
     }
 

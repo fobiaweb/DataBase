@@ -26,7 +26,8 @@ class QuerySelect extends ezcQuerySelect
         $s->execute();
         return array(
             'count' => $this->findAll(),
-            'items' => $s->fetchAll(),
+            // 'items' => $s->fetchAll()
+            'items' => call_user_func_array(array($s, 'fetchAll'), func_get_args())
         );
     }
 
