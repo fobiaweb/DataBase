@@ -148,4 +148,26 @@ class MySQLTest extends \PHPUnit_Framework_TestCase
         $q = $this->db->createSelectQuery();
         $this->assertInstanceOf('\Fobia\DataBase\Query\QuerySelect', $q);
     }
+
+
+    public function testBeginTransaction()
+    {
+        $this->assertTrue($this->db->beginTransaction());
+        return $this->db;
+    }
+
+    /**
+     * @depends testBeginTransaction
+     */
+    public function testCommit($db)
+    {
+        $this->assertTrue($db->commit());
+    }
+
+    public function testRollback()
+    {
+        $this->db->beginTransaction();
+        $this->assertTrue($this->db->rollback());
+
+    }
 }
