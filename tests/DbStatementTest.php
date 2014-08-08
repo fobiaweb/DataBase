@@ -28,7 +28,25 @@ class DbStatementTest extends \PHPUnit_Framework_TestCase
     {
         $stmt = $this->db->query("SELECT VERSION()");
         $stmt->execute();
+        $row = $stmt->fetch(\PDO::FETCH_NUM);
+        $this->assertRegExp("/.*5\..*/", $row[0]);
     }
+
+
+    /**
+     * @covers Fobia\DataBase\DbStatement::execute
+     * @todo   Implement testExecute().
+     */
+    public function testExecute2()
+    {
+        $stmt = $this->db->prepare("SELECT user FROM user WHERE user = :user");
+        $stmt->execute(array(
+            'user' => 'root'
+        ));
+        $row = $stmt->fetch();
+        $this->assertEquals("root", $row["user"]);
+    }
+
 
     /**
      * @covers Fobia\DataBase\DbStatement::__destruct

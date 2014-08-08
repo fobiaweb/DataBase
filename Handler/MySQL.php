@@ -14,6 +14,7 @@ use PDOStatement;
 use Fobia\DataBase\Query\QueryInsert;
 use Fobia\DataBase\Query\QueryReplace;
 use Fobia\DataBase\Query\QuerySelect;
+use Fobia\DataBase\Query\QueryUpdate;
 
 /**
  * MySQL class, extends PDO
@@ -27,6 +28,8 @@ class MySQL extends ezcDbHandlerMysql
      * @var \Psr\Log\LoggerInterface
      */
     protected $logger = null;
+
+    protected $log_error = null;
 
     /**
      * Создает объект из параметров $dbParams.
@@ -53,11 +56,16 @@ class MySQL extends ezcDbHandlerMysql
         if (@$dbParams['params']['logger'] instanceof \Psr\Log\LoggerInterface) {
             $this->logger = $dbParams['params']['logger'];
         } else {
-            if (class_exists('\Fobia\Debug\Log')) {
-                $this->logger = \Fobia\Debug\Log::getLogger();
-            } else {
-                $this->logger = new \Psr\Log\NullLogger();
-            }
+            //if (class_exists('\Fobia\Debug\Log')) {
+            //    $this->logger = (class_exists('\Fobia\Debug\Log'));
+            //} else {
+            //    $this->logger = new \Psr\Log\NullLogger();
+            //}
+            $this->logger = (class_exists('\Fobia\Debug\Log')) ? \Fobia\Debug\Log::getLogger() :  new \Psr\Log\NullLogger();
+        }
+
+        if (isset($dbParams['params']['log_error'])) {
+            $this->log_error = $dbParams['params']['log_error'];
         }
 
         // if (@$dbParams['charset']) {
@@ -116,10 +124,11 @@ class MySQL extends ezcDbHandlerMysql
             $error = $stmt->errorInfo();
             $this->logger->error('==> [SQL]:: '. $error[1].': '.$error[2]);
 
-            if (defined('LOGS_DIR')) {
+            if ($this->log_error) {
+                // LOGS_DIR . "/sql.log"
                 $str = date("[Y-m-d H:i:s]") . " [SQL]:: Error " . $error[1] . ': ' . $error[2] . "\n"
-                        . "  # $query\n";
-                file_put_contents(LOGS_DIR . "/sql.log", $str, FILE_APPEND);
+                        . preg_replace(array("/\n/", "/\s*\n/"), array("\n    # ", "\n"), "    # $query\n");
+                file_put_contents($this->log_error, $str, FILE_APPEND);
             }
         }
         return $this->logger;
@@ -162,4 +171,15 @@ class MySQL extends ezcDbHandlerMysql
     {
         return new QuerySelect( $this );
     }
+
+    /**
+     * Returns a new QuerySelect derived object for the correct database type.
+     *
+     * @return \Fobia\DataBase\Query\QueryUpdate
+     */
+    public function createUpdateQuery()
+    {
+        return new QueryUpdate( $this );
+    }
+
 }

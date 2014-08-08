@@ -11,12 +11,12 @@ namespace Fobia\DataBase;
 use ezcBase;
 use ezcDbFactory;
 
-if ( ! class_exists("\\ezcBase")) {
-    @require_once 'ezc/Base/base.php';
-    spl_autoload_register(function($className) {
-        ezcBase::autoload($className);
-    });
-}
+//if ( ! class_exists("\\ezcBase")) {
+//    @require_once 'ezc/Base/base.php';
+//    spl_autoload_register(function($className) {
+//        ezcBase::autoload($className);
+//    });
+//}
 ezcDbFactory::addImplementation('mysql', '\\Fobia\\DataBase\\Handler\\MySQL');
 ezcDbFactory::addImplementation('mssql', '\\Fobia\\DataBase\\Handler\\MSSQL');
 

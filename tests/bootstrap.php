@@ -9,8 +9,10 @@
 $logger = require  dirname(__DIR__) . '/vendor/autoload.php';
 
 /* @var $logger \Composer\Autoload\ClassLoader */
+$loader->add('', __DIR__ . '/tests');
 // $logger->add("Fobia\\DataBase\\", __DIR__);
 //$logger->setPsr4("Fobia\\DataBase\\", __DIR__);
 
 
 // var_dump($logger);
+\Fobia\Debug\Log::setLogger(new \Psr\Log\NullLogger());

@@ -7,7 +7,9 @@ namespace Fobia\DataBase;
  */
 class DbFactoryTest extends \PHPUnit_Framework_TestCase
 {
-
+    /**
+     * @covers Fobia\DataBase\DbFactory::create
+     */
     public function testCreate()
     {
         $db = \Fobia\DataBase\DbFactory::create('mysql://root@localhost/mysql');
@@ -24,18 +26,19 @@ class DbFactoryTest extends \PHPUnit_Framework_TestCase
         );
         $db     = \Fobia\DataBase\DbFactory::create($params);
         $this->assertInstanceOf('PDO', $db);
+        $this->assertInstanceOf('\\Fobia\\DataBase\\Handler\\MySQL', $db);
     }
 
-//    public function functionName()
-//    {
-//        $db = \Fobia\DataBase\DbFactory::create('mysql://root@localhost/mysql');
-//
-//        /* @var $db \Fobia\DataBase\Handler\DbConnectionMysql */
-//
-//        $q    = $db->createSelectQuery();
-//        $q->select('*')->from('user')->limit(10);
-//        $stmt = $q->prepare();
-//        $stmt->execute();
-//        var_dump($stmt->fetchAll());
-//    }
+    public function testCreate2()
+    {
+        $params = array(
+            'host'   => 'localhost',
+            'dbname' => 'mysql',
+            'driver' => 'mysql',
+            'user'   => 'root',
+            'pass'   => ''
+        );
+        $db     = \Fobia\DataBase\DbFactory::create($params);
+        $this->assertInstanceOf('\\Fobia\\DataBase\\Handler\\MySQL', $db);
+    }
 }

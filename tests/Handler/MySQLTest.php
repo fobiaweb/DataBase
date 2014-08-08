@@ -12,12 +12,76 @@ class MySQLTest extends \PHPUnit_Framework_TestCase
      * @var \Fobia\DataBase\Handler\MySQL
      */
     protected $db;
-    
+
     protected function setUp()
     {
         if (!$this->db) {
             $this->db = \Fobia\DataBase\DbFactory::create('mysql://root@localhost/mysql');
         }
+    }
+
+
+        public function testNewDatabase()
+        {
+            $this->assertInstanceOf("\Fobia\DataBase\Handler\MySQL", $this->db);
+        }
+        public function testNewDatabaseDebug()
+        {
+            $dbParams = array(
+                'dns' => 'mysql://root@localhost/mysql',
+                'params' => array( 'debug' => true )
+            );
+            $db = \Fobia\DataBase\DbFactory::create($dbParams);
+            $this->assertInstanceOf("\Fobia\DataBase\Handler\MySQL", $db);
+        }
+
+        public function testNewDatabaseLogger()
+        {
+            $dbParams = array(
+                'dns' => 'mysql://root@localhost/mysql',
+                'params' => array(
+                    'debug' => true ,
+                    'logger' => new \Psr\Log\NullLogger()
+                )
+            );
+            $db = \Fobia\DataBase\DbFactory::create($dbParams);
+            $this->assertInstanceOf("\Fobia\DataBase\Handler\MySQL", $db);
+        }
+
+
+    /**
+     * @covers Fobia\DataBase\Handler\MySQL::getProfiles
+     * @todo   Implement testGetProfiles().
+     */
+    public function testGetProfilesCreate()
+    {
+        $dbParams = array(
+            'dns' => 'mysql://root@localhost/mysql',
+            'params' => array( )
+        );
+        $dbParams['params']['debug'] = true;
+        $dbParams['params']['log_error'] = false;
+        $dbParams['params']['logger'] = new \Psr\Log\NullLogger();
+        $db = \Fobia\DataBase\DbFactory::create($dbParams);
+        $this->assertInstanceOf("\Fobia\DataBase\Handler\MySQL", $db);
+        return $db;
+    }
+
+    /**
+     * @covers Fobia\DataBase\Handler\MySQL::getProfiles
+     * @todo   Implement testGetProfiles().
+     * @depends testGetProfilesCreate
+     */
+    public function testGetProfiles($db)
+    {
+        $db->query("SELECT VERSION()");
+        $db->query("SELECT VERSION()");
+
+        $arr = $db->getProfiles();
+        $this->assertCount(2, $arr);
+        $this->assertEquals('SELECT VERSION()', $arr[0]['query']);
+
+        $this->assertCount(0, $this->db->getProfiles());
     }
 
     /**
@@ -35,19 +99,6 @@ class MySQLTest extends \PHPUnit_Framework_TestCase
         $this->assertRegExp("/^5\..+/", $v);
     }
 
-    /**
-     * @covers Fobia\DataBase\Handler\MySQL::getProfiles
-     * @todo   Implement testGetProfiles().
-     */
-    /*
-    public function testGetProfiles()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-                'This test has not been implemented yet.'
-        );
-    }
-/* */
 
     /**
      * @covers Fobia\DataBase\Handler\MySQL::log
@@ -59,6 +110,10 @@ class MySQLTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Psr\Log\LoggerInterface', $logger);
     }
 
+    /**
+     * @covers Fobia\DataBase\Handler\MySQL::getLogger
+     * @todo   Implement testGetLogger().
+     */
     public function testGetLogger()
     {
         $this->assertInstanceOf('\Psr\Log\LoggerInterface', $this->db->getLogger());

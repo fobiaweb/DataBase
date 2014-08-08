@@ -20,6 +20,10 @@ class QueryReplaceTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @covers Fobia\DataBase\Query\QueryReplace::getQuery
+     * @todo   Implement testGetQuery().
+     */
     public function testGetQuery()
     {
         $q = $this->db->createReplaceQuery();
