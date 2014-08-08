@@ -45,7 +45,7 @@ class DbStatement extends PDOStatement
             $logger = $this->connection->log($this, $time);
             if ($input_parameters) {
                // $logger = $this->connection->getLogger();
-               $logger->debug('SQL:: ==> input_parameters: ', array_values($input_parameters));
+               $logger->debug('[SQL]:: ==> input_parameters: ', array_values($input_parameters));
             }
         }
         return $query;

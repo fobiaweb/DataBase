@@ -89,7 +89,24 @@ class MySQL extends ezcDbHandlerMysql
         return $query;
     }
 
-    /**
+    public function beginTransaction()
+    {
+        $this->logger->info("[SQL]:: ==> Begin transaction");
+        return parent::beginTransaction();
+    }
+
+    public function commit()
+    {
+        $r = parent::commit();
+        if (!$r) {
+            $this->logger->error("[SQL]:: ==> Error commit transaction");
+        } else {
+            $this->logger->info("[SQL]:: ==> Commit transaction");
+        }
+        return $r;
+    }
+
+        /**
      * Все выполненные запросы за сессию с временем выполнения.
      * @return array
      */
