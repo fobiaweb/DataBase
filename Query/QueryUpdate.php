@@ -42,7 +42,7 @@ class QueryUpdate extends ezcQueryUpdate
      * @param string $column a column name in the result set
      * @param string $type if the column should be sorted ascending or descending.
      *        you can specify this using ezcQuerySelect::ASC or ezcQuerySelect::DESC
-     * @return ezcQuery a pointer to $this
+     * @return \Fobia\DataBase\Query\QueryUpdate a pointer to $this
      */
     public function orderBy($column, $type = 'ASC')
     {
@@ -74,15 +74,11 @@ class QueryUpdate extends ezcQueryUpdate
      *
      * @param string $limit integer expression
      * @param string $offset integer expression
-     * @return QuerySelect
+     * @return \Fobia\DataBase\Query\QueryUpdate
      */
-    public function limit($limit, $offset = '')
+    public function limit($limit)
     {
-        if ($offset === '') {
-            $this->limitString = "LIMIT {$limit}";
-        } else {
-            $this->limitString = "LIMIT {$limit} OFFSET {$offset}";
-        }
+        $this->limitString = "LIMIT {$limit}";
         $this->lastInvokedMethod = 'limit';
 
         return $this;

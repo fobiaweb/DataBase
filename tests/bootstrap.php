@@ -15,4 +15,6 @@ $loader->add('', __DIR__ . '/tests');
 
 
 // var_dump($logger);
-\Fobia\Debug\Log::setLogger(new \Psr\Log\NullLogger());
+if (class_exists('\Fobia\Debug\Log')) {
+    \Fobia\Debug\Log::setLogger(new \Psr\Log\NullLogger());
+}

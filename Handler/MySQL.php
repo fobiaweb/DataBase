@@ -24,6 +24,7 @@ use Fobia\DataBase\Query\QueryUpdate;
 class MySQL extends ezcDbHandlerMysql
 {
     protected $profiles = false;
+
     /**
      * @var \Psr\Log\LoggerInterface
      */
@@ -56,12 +57,9 @@ class MySQL extends ezcDbHandlerMysql
         if (@$dbParams['params']['logger'] instanceof \Psr\Log\LoggerInterface) {
             $this->logger = $dbParams['params']['logger'];
         } else {
-            //if (class_exists('\Fobia\Debug\Log')) {
-            //    $this->logger = (class_exists('\Fobia\Debug\Log'));
-            //} else {
-            //    $this->logger = new \Psr\Log\NullLogger();
-            //}
-            $this->logger = (class_exists('\Fobia\Debug\Log')) ? \Fobia\Debug\Log::getLogger() :  new \Psr\Log\NullLogger();
+            $this->logger = (class_exists('\Fobia\Debug\Log')) 
+                    ? \Fobia\Debug\Log::getLogger()
+                    :  new \Psr\Log\NullLogger();
         }
 
         if (isset($dbParams['params']['log_error'])) {
@@ -89,8 +87,33 @@ class MySQL extends ezcDbHandlerMysql
         return $query;
     }
 
+    public function beginTransaction()
+    {
+        $this->logger->info("[SQL]:: ==> Begin transaction");
+        return parent::beginTransaction();
+    }
+
+    public function commit()
+    {
+        $r = parent::commit();
+
+        $log = ($r)
+                ? "Commit transaction"
+                : "Error commit transaction";
+        $this->logger->error("[SQL]:: ==> $log");
+
+        return $r;
+    }
+
+    public function rollback()
+    {
+        $this->logger->info("[SQL]:: ==> Rollback transaction");
+        return parent::rollback();
+    }
+
     /**
      * Все выполненные запросы за сессию с временем выполнения.
+     *
      * @return array
      */
     public function getProfiles()
@@ -126,7 +149,8 @@ class MySQL extends ezcDbHandlerMysql
 
             if ($this->log_error) {
                 // LOGS_DIR . "/sql.log"
-                $str = date("[Y-m-d H:i:s]") . " [SQL]:: Error " . $error[1] . ': ' . $error[2] . "\n"
+                $str = date("[Y-m-d H:i:s]") . " [SQL]:: Error " . $error[1] . ': '
+                        . $error[2] . "\n"
                         . preg_replace(array("/\n/", "/\s*\n/"), array("\n    # ", "\n"), "    # $query\n");
                 file_put_contents($this->log_error, $str, FILE_APPEND);
             }
@@ -173,7 +197,7 @@ class MySQL extends ezcDbHandlerMysql
     }
 
     /**
-     * Returns a new QuerySelect derived object for the correct database type.
+     * Returns a new QueryUpdate derived object for the correct database type.
      *
      * @return \Fobia\DataBase\Query\QueryUpdate
      */

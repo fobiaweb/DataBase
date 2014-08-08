@@ -12,7 +12,7 @@ class QueryUpdateTest extends \PHPUnit_Framework_TestCase
     protected $db;
 
     /**
-     * @var \Fobia\DataBase\Query\QuerySelect
+     * @var \Fobia\DataBase\Query\QueryUpdate
      */
     protected $q;
 
@@ -41,6 +41,9 @@ class QueryUpdateTest extends \PHPUnit_Framework_TestCase
                 ->orderBy("timestamp", 'DESC')
                 ;
         $this->assertRegExp("/ORDER BY timestamp DESC$/", $q->getQuery());
+
+        $q->orderBy('column', 'DESC');
+        $this->assertRegExp("/ORDER BY timestamp DESC, column DESC$/", $q->getQuery());
     }
 
     /**
@@ -67,9 +70,11 @@ class QueryUpdateTest extends \PHPUnit_Framework_TestCase
     {
         $q     = $this->q;
         $q->update('test')
+                ->orderBy('test')
+                ->limit(1)
                 ->set('id', $this->db->quote(2) )
                 ->where($q->expr->eq('id', $this->db->quote(1)))
                 ;
-        $this->assertEquals("UPDATE test SET id = '2' WHERE id = '1'", $q->getQuery());
+        $this->assertEquals("UPDATE test SET id = '2' WHERE id = '1' ORDER BY test LIMIT 1", $q->getQuery());
     }
 }
