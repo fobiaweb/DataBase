@@ -10,6 +10,7 @@ namespace Fobia\DataBase;
 
 use PDOStatement;
 use ezcDbHandler;
+use ezcDbInterface;
 use PDO;
 
 /**
@@ -29,7 +30,7 @@ class DbStatement extends PDOStatement
     /**
      * @internal
      */
-    protected function __construct(PDO $connection)
+    protected function __construct(ezcDbInterface $connection)
     {
         $this->connection = $connection;
     }
@@ -37,6 +38,7 @@ class DbStatement extends PDOStatement
     public function execute(array $input_parameters = null)
     {
         $time  = microtime(true);
+
         if ($input_parameters === null) {
             $query = parent::execute();
         } else {
@@ -50,6 +52,7 @@ class DbStatement extends PDOStatement
                $logger->debug('[SQL]:: ==> execute parameters: ', array_values($input_parameters));
             }
         }
+
         return $query;
     }
 
