@@ -21,32 +21,32 @@ class MySQLTest extends \PHPUnit_Framework_TestCase
     }
 
 
-        public function testNewDatabase()
-        {
-            $this->assertInstanceOf("\Fobia\DataBase\Handler\MySQL", $this->db);
-        }
-        public function testNewDatabaseDebug()
-        {
-            $dbParams = array(
-                'dns' => 'mysql://root@localhost/mysql',
-                'params' => array( 'debug' => true )
-            );
-            $db = \Fobia\DataBase\DbFactory::create($dbParams);
-            $this->assertInstanceOf("\Fobia\DataBase\Handler\MySQL", $db);
-        }
+    public function testNewDatabase()
+    {
+        $this->assertInstanceOf("\Fobia\DataBase\Handler\MySQL", $this->db);
+    }
+    public function testNewDatabaseDebug()
+    {
+        $dbParams = array(
+            'dns' => 'mysql://root@localhost/mysql',
+            'params' => array( 'debug' => true )
+        );
+        $db = \Fobia\DataBase\DbFactory::create($dbParams);
+        $this->assertInstanceOf("\Fobia\DataBase\Handler\MySQL", $db);
+    }
 
-        public function testNewDatabaseLogger()
-        {
-            $dbParams = array(
-                'dns' => 'mysql://root@localhost/mysql',
-                'params' => array(
-                    'debug' => true ,
-                    'logger' => new \Psr\Log\NullLogger()
-                )
-            );
-            $db = \Fobia\DataBase\DbFactory::create($dbParams);
-            $this->assertInstanceOf("\Fobia\DataBase\Handler\MySQL", $db);
-        }
+    public function testNewDatabaseLogger()
+    {
+        $dbParams = array(
+            'dns' => 'mysql://root@localhost/mysql',
+            'params' => array(
+                'debug' => true ,
+                'logger' => new \Psr\Log\NullLogger()
+            )
+        );
+        $db = \Fobia\DataBase\DbFactory::create($dbParams);
+        $this->assertInstanceOf("\Fobia\DataBase\Handler\MySQL", $db);
+    }
 
 
     /**
