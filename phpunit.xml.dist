@@ -9,12 +9,11 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
-         >
-
+>
     <testsuites>
-       <testsuite name="Fobia Test Suite">
-         <directory suffix="Test.php">./tests/</directory>
-       </testsuite>
+        <testsuite name="Fobia Test Suite">
+            <directory suffix="Test.php">./tests/</directory>
+        </testsuite>
     </testsuites>
 
     <filter>
@@ -25,26 +24,19 @@
             <directory suffix=".php">./Query/</directory>
         </whitelist>
     </filter>
-
+<!--
     <logging>
-
-      <log type="coverage-html"  charset="UTF-8" highlight="true"
-        lowUpperBound="35" highLowerBound="70"
-                                    target="tmp/report"/>
-
-      <!--
-      <log type="testdox-html"      target="app/tmp/testdox.html"/>
-      <log type="coverage-clover"   target="app/tmp/coverage.xml"/>
-      <log type="coverage-php"      target="app/tmp/coverage.serialized"/>
-      <log type="junit"             target="app/tmp/logfile.xml" logIncompleteSkipped="false"/>
-      -->
-    <!--
-      <log type="coverage-text"     target="php://stdout" showUncoveredFiles="false"/>
-      <log type="json"              target="app/tmp/logfile.json"/>
-      <log type="tap"               target="app/tmp/logfile.tap"/>
-      <log type="testdox-text"      target="app/tmp/testdox.txt"/>
-  -->
+        <log type="coverage-html"
+             charset="UTF-8"
+             highlight="true"
+             lowUpperBound="35"
+             highLowerBound="70"
+             target="tmp/report"
+        />
+        <log type="coverage-text"
+             target="php://stdout"
+             showUncoveredFiles="false"
+        />
     </logging>
-
-
+-->
 </phpunit>
