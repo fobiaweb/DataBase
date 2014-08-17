@@ -2,7 +2,7 @@
 /**
  * DBStatement class  - DBStatement.php file
  *
- * @author     Tyurin D. <fobia3d@gmail.com>
+ * @author   Dmitriy Tyurin <fobia3d@gmail.com>
  * @copyright  Copyright (c) 2013 AC Software
  */
 
@@ -10,11 +10,13 @@ namespace Fobia\DataBase;
 
 use PDOStatement;
 use ezcDbHandler;
+use PDO;
 
 /**
  * DBStatement class
  *
- * @package     Fobia.DataBase
+ * @author   Dmitriy Tyurin <fobia3d@gmail.com>
+ * @package  Fobia.DataBase
  */
 class DbStatement extends PDOStatement
 {
@@ -27,7 +29,7 @@ class DbStatement extends PDOStatement
     /**
      * @internal
      */
-    protected function __construct(ezcDbHandler $connection)
+    protected function __construct(PDO $connection)
     {
         $this->connection = $connection;
     }

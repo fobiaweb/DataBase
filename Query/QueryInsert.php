@@ -2,7 +2,7 @@
 /**
  * QueryInsert class  - QueryInsert.php file
  *
- * @author     Tyurin D. <fobia3d@gmail.com>
+ * @author   Dmitriy Tyurin <fobia3d@gmail.com>
  * @copyright  Copyright (c) 2013 AC Software
  */
 
@@ -13,7 +13,8 @@ use ezcQueryInsert;
 /**
  * QueryInsert class
  *
- * @package Fobia.DataBase.Query
+ * @author   Dmitriy Tyurin <fobia3d@gmail.com>
+ * @package  Fobia.DataBase.Query
  */
 class QueryInsert extends ezcQueryInsert
 {

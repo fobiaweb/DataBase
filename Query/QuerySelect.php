@@ -13,7 +13,8 @@ use ezcQuerySelect;
 /**
  * QuerySelect class
  *
- * @package
+ * @author   Dmitriy Tyurin <fobia3d@gmail.com>
+ * @package  Fobia.DataBase.Query
  */
 class QuerySelect extends ezcQuerySelect
 {

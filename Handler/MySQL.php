@@ -2,7 +2,7 @@
 /**
  * DbConnectionMysql class  - DbConnectionMysql.php file
  *
- * @author     Tyurin D. <fobia3d@gmail.com>
+ * @author   Dmitriy Tyurin <fobia3d@gmail.com>
  * @copyright  Copyright (c) 2013 AC Software
  */
 
@@ -19,7 +19,8 @@ use Fobia\DataBase\Query\QueryUpdate;
 /**
  * MySQL class, extends PDO
  *
- * @package     Fobia.DataBase.Handler
+ * @author   Dmitriy Tyurin <fobia3d@gmail.com>
+ * @package  Fobia.DataBase.Handler
  */
 class MySQL extends ezcDbHandlerMysql
 {
@@ -51,13 +52,13 @@ class MySQL extends ezcDbHandlerMysql
         parent::__construct($dbParams);
 
         $this->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
+        $this->setAttribute(PDO::ATTR_ERRMODE,            PDO::ERRMODE_SILENT);
         $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Fobia\DataBase\DbStatement', array($this)));
 
         if (@$dbParams['params']['logger'] instanceof \Psr\Log\LoggerInterface) {
             $this->logger = $dbParams['params']['logger'];
         } else {
-            $this->logger = (class_exists('\Fobia\Debug\Log')) 
+            $this->logger = (class_exists('\Fobia\Debug\Log'))
                     ? \Fobia\Debug\Log::getLogger()
                     :  new \Psr\Log\NullLogger();
         }
@@ -77,38 +78,6 @@ class MySQL extends ezcDbHandlerMysql
             $this->profiles = true;
             $this->logger->debug('==> Set profiling');
         }
-    }
-
-    public function query($statement)
-    {
-        $time  = microtime(true);
-        $query =  parent::query($statement);
-        $this->log($statement, $time);
-        return $query;
-    }
-
-    public function beginTransaction()
-    {
-        $this->logger->info("[SQL]:: ==> Begin transaction");
-        return parent::beginTransaction();
-    }
-
-    public function commit()
-    {
-        $r = parent::commit();
-
-        $log = ($r)
-                ? "Commit transaction"
-                : "Error commit transaction";
-        $this->logger->error("[SQL]:: ==> $log");
-
-        return $r;
-    }
-
-    public function rollback()
-    {
-        $this->logger->info("[SQL]:: ==> Rollback transaction");
-        return parent::rollback();
     }
 
     /**
@@ -166,8 +135,67 @@ class MySQL extends ezcDbHandlerMysql
         return $this->logger;
     }
 
+
+    /*********************************************************
+     * OVERRIDE
+     *********************************************************/
+
     /**
-     * Returns a new QueryInsert derived object for the correct database type.
+     * Выполняет SQL запрос, возвращая результат запроса в виде объекта PDOStatement
+     *
+     * @param string $statement  Запросе SQL для подготовки и выполнения.
+     *                           Данные внутри запроса должны быть надлежащим образом экранированы.
+     * @return PDOStatement Возвращает объект PDOStatement или false в случае возникновения ошибки.
+     */
+    public function query($statement)
+    {
+        $time  = microtime(true);
+        $query = parent::query($statement);
+        $this->log($statement, $time);
+        return $query;
+    }
+
+    /**
+     * Начинает транзакцию.
+     *
+     * @return bool
+     */
+    public function beginTransaction()
+    {
+        $this->logger->info("[SQL]:: ==> Begin transaction");
+        return parent::beginTransaction();
+    }
+
+    /**
+     * Выполняет транзакцию.
+     *
+     * @return bool
+     */
+    public function commit()
+    {
+        $r = parent::commit();
+
+        $log = ($r)
+                ? "Commit transaction"
+                : "Error commit transaction";
+        $this->logger->error("[SQL]:: ==> $log");
+
+        return $r;
+    }
+
+    /**
+     * Откат транзакции.
+     *
+     * @return bool
+     */
+    public function rollback()
+    {
+        $this->logger->info("[SQL]:: ==> Rollback transaction");
+        return parent::rollback();
+    }
+
+    /**
+     * Возвращает новый QueryInsert производный объект для правильного типа базы данных.
      *
      * @return \Fobia\DataBase\Query\QueryInsert
      */
@@ -177,7 +205,7 @@ class MySQL extends ezcDbHandlerMysql
     }
 
     /**
-     * Returns a new QueryInsert derived object for the correct database type.
+     * Возвращает новый QueryInsert производный объект для правильного типа базы данных.
      *
      * @return \Fobia\DataBase\Query\QueryReplace
      */
@@ -187,7 +215,7 @@ class MySQL extends ezcDbHandlerMysql
     }
 
     /**
-     * Returns a new QuerySelect derived object for the correct database type.
+     * Возвращает новый QuerySelect производный объект для правильного типа базы данных.
      *
      * @return \Fobia\DataBase\Query\QuerySelect
      */
@@ -197,7 +225,7 @@ class MySQL extends ezcDbHandlerMysql
     }
 
     /**
-     * Returns a new QueryUpdate derived object for the correct database type.
+     * Возвращает новый QueryUpdate производный объект для правильного типа базы данных.
      *
      * @return \Fobia\DataBase\Query\QueryUpdate
      */

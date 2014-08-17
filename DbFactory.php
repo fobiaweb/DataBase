@@ -8,7 +8,6 @@
 
 namespace Fobia\DataBase;
 
-use ezcBase;
 use ezcDbFactory;
 
 //if ( ! class_exists("\\ezcBase")) {
@@ -26,7 +25,8 @@ require_once __DIR__ . '/DbStatement.php';
 /**
  * DbFactory class
  *
- * @package   Fobia.DataBase
+ * @author   Dmitriy Tyurin <fobia3d@gmail.com>
+ * @package  Fobia.DataBase
  */
 class DbFactory extends ezcDbFactory
 {
