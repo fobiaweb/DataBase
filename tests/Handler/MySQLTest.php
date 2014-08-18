@@ -72,6 +72,7 @@ class MySQLTest extends \PHPUnit_Framework_TestCase
      * @todo   Implement testGetProfiles().
      * @depends testGetProfilesCreate
      */
+    /*
     public function testGetProfiles($db)
     {
         $db->query("SELECT VERSION()");
@@ -83,7 +84,7 @@ class MySQLTest extends \PHPUnit_Framework_TestCase
 
         $this->assertCount(0, $this->db->getProfiles());
     }
-
+    */
     /**
      * @covers Fobia\DataBase\Handler\MySQL::query
      * @todo   Implement testQuery().

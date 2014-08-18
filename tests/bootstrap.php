@@ -6,7 +6,7 @@
  * @copyright  Copyright (c) 2014 Dmitriy Tyurin
  */
 
-$logger = require  dirname(__DIR__) . '/vendor/autoload.php';
+$loader = require  dirname(__DIR__) . '/vendor/autoload.php';
 
 /* @var $logger \Composer\Autoload\ClassLoader */
 $loader->add('', __DIR__ . '/tests');

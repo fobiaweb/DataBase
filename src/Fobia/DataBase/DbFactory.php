@@ -36,6 +36,10 @@ class DbFactory extends ezcDbFactory
      */
     public static function create($dbParams)
     {
+        if ($dbParams instanceof \PDO) {
+            return parent::wrapper($dbParams);
+        }
+        
         if ( ! is_array( $dbParams )) {
             $dns = $dbParams;
             $dbParams = array();

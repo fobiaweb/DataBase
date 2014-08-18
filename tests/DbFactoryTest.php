@@ -13,7 +13,7 @@ class DbFactoryTest extends \PHPUnit_Framework_TestCase
     public function testCreate()
     {
         $db = \Fobia\DataBase\DbFactory::create('mysql://root@localhost/mysql');
-        $this->assertInstanceOf('PDO', $db);
+        $this->assertInstanceOf('PDO', $db->getDb());
     }
 
     public function testCreate1()
@@ -25,7 +25,7 @@ class DbFactoryTest extends \PHPUnit_Framework_TestCase
             'pass'   => ''
         );
         $db     = \Fobia\DataBase\DbFactory::create($params);
-        $this->assertInstanceOf('PDO', $db);
+        $this->assertInstanceOf('PDO', $db->getDb());
         $this->assertInstanceOf('\\Fobia\\DataBase\\Handler\\MySQL', $db);
     }
 
