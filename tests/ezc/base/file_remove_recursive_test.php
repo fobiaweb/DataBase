@@ -14,10 +14,12 @@
  */
 class ezcBaseFileRemoveRecursiveTest extends ezcTestCase
 {
+    protected $tempDir;
+
     protected function setUp()
     {
         $this->tempDir = $this->createTempDir( 'ezcBaseFileRemoveFileRecursiveTest' );
-        mkdir( $this->tempDir . '/dir1' );
+        mkdir( $this->tempDir . '/dir1', 0777, true);
         mkdir( $this->tempDir . '/dir2' );
         mkdir( $this->tempDir . '/dir2/dir1' );
         mkdir( $this->tempDir . '/dir2/dir1/dir1' );

@@ -28,4 +28,10 @@ class ezcTestCase extends PHPUnit_Framework_TestCase
     {
         return "/tmp/ezcTest/$dir";
     }
+
+
+    protected function removeTempDir()
+    {
+        shell_exec("rm -rf /tmp/ezcTest");
+    }
 }
