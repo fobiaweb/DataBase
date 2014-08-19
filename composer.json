@@ -21,7 +21,7 @@
     },
     "autoload": {
         "psr-0": { "Fobia\\DataBase\\": "src/" },
-        "classmap": [ "lib/ezc/" ]
+        "classmap": [ "src/ezc/" ]
     },
     "minimum-stability": "dev",
     "extra": {
