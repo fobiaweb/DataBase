@@ -57,12 +57,12 @@ class ezcQueryDelete extends ezcQuery
      * Constructs a new ezcQueryDelete that works on the database $db and with the aliases $aliases.
      *
      * The paramters are passed directly to ezcQuery.
-     * @param PDO $db
+     * @param PDO $pdo
      * @param array(string=>string) $aliases
      */
-    public function __construct( $db, array $aliases = array() )
+    public function __construct( $pdo, array $aliases = array() )
     {
-        parent::__construct( $db, $aliases );
+        parent::__construct( $pdo, $aliases );
     }
 
     /**

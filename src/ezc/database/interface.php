@@ -24,7 +24,7 @@ interface ezcDbInterface
      *
      * @return PDO
      */
-    public function getDb();
+    public function getPdo();
 
     /**
      * Начинает транзакцию.

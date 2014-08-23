@@ -24,16 +24,16 @@ class ezcDbUtilities
      *
      * @var ezcDbHandler
      */
-    protected $db;
+    protected $dbHandler;
 
     /**
      * Constructs a new db util using the db handler $db.
      *
-     * @param ezcDbHandler $db
+     * @param ezcDbHandler $handler
      */
-    public function __construct(ezcDbInterface $db )
+    public function __construct(ezcDbInterface $handler )
     {
-        $this->db = $db;
+        $this->dbHandler = $handler;
     }
 
     /**
@@ -69,7 +69,7 @@ class ezcDbUtilities
     public function createTemporaryTable( $tableName, $tableDefinition )
     {
         $tableName = str_replace( '%', '', $tableName );
-        $this->db->exec( "CREATE TEMPORARY TABLE $tableName ($tableDefinition)" );
+        $this->dbHandler->exec( "CREATE TEMPORARY TABLE $tableName ($tableDefinition)" );
         return $tableName;
     }
 
@@ -88,7 +88,7 @@ class ezcDbUtilities
      */
     public function dropTemporaryTable( $tableName )
     {
-        $this->db->exec( "DROP TABLE $tableName" );
+        $this->dbHandler->exec( "DROP TABLE $tableName" );
     }
 
     /**

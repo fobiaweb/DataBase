@@ -118,7 +118,7 @@ class ezcDbHandlerMssql extends ezcDbHandler
         $requiredMode = $this->options->quoteIdentifier;
         if ( $requiredMode == ezcDbMssqlOptions::QUOTES_GUESS )
         {
-            $result = $this->db->query( "SELECT sessionproperty('QUOTED_IDENTIFIER')" );
+            $result = $this->pdo->query( "SELECT sessionproperty('QUOTED_IDENTIFIER')" );
             $rows = $result->fetchAll();
             $mode = (int)$rows[0][0];
             if ( $mode == 0 )
@@ -132,12 +132,12 @@ class ezcDbHandlerMssql extends ezcDbHandler
         }
         else if ( $requiredMode == ezcDbMssqlOptions::QUOTES_COMPLIANT )
         {
-            $this->db->exec( 'SET QUOTED_IDENTIFIER ON' );
+            $this->pdo->exec( 'SET QUOTED_IDENTIFIER ON' );
             $this->identifierQuoteChars = array( 'start' => '"', 'end' => '"' );
         }
         else if ( $requiredMode == ezcDbMssqlOptions::QUOTES_LEGACY )
         {
-            $this->db->exec( 'SET QUOTED_IDENTIFIER OFF' );
+            $this->pdo->exec( 'SET QUOTED_IDENTIFIER OFF' );
             $this->identifierQuoteChars = array( 'start' => '[', 'end' => ']' );
         }
     }
@@ -191,7 +191,7 @@ class ezcDbHandlerMssql extends ezcDbHandler
         $retval = true;
         if ( $this->transactionNestingLevel == 0 )
         {
-            $retval = $this->db->exec( "BEGIN TRANSACTION" );
+            $retval = $this->pdo->exec( "BEGIN TRANSACTION" );
         }
         // else NOP
 
@@ -228,13 +228,13 @@ class ezcDbHandlerMssql extends ezcDbHandler
         {
             if ( $this->transactionErrorFlag )
             {
-                $this->db->exec( "ROLLBACK TRANSACTION" );
+                $this->pdo->exec( "ROLLBACK TRANSACTION" );
                 $this->transactionErrorFlag = false; // reset error flag
                 $retval = false;
             }
             else
             {
-                $this->db->exec( "COMMIT TRANSACTION" );
+                $this->pdo->exec( "COMMIT TRANSACTION" );
             }
         }
         // else NOP
@@ -267,7 +267,7 @@ class ezcDbHandlerMssql extends ezcDbHandler
 
         if ( $this->transactionNestingLevel == 1 )
         {
-            $this->db->exec( "ROLLBACK TRANSACTION" );
+            $this->pdo->exec( "ROLLBACK TRANSACTION" );
             $this->transactionErrorFlag = false; // reset error flag
         }
         else

@@ -40,15 +40,15 @@ class ezcDbUtilitiesSqlite extends ezcDbUtilities
      */
     public function cleanup()
     {
-        $this->db->begin();
-        $rslt = $this->db->query( 'SELECT * FROM SQLITE_MASTER' );
+        $this->dbHandler->begin();
+        $rslt = $this->dbHandler->query( 'SELECT * FROM SQLITE_MASTER' );
         $rslt->setFetchMode( PDO::FETCH_NUM );
         $rows = $rslt->fetchAll();
         foreach ( $rows as $row )
         {
             $table = $row[0];
-            $this->db->exec( "DROP TABLE `$table`" );
+            $this->dbHandler->exec( "DROP TABLE `$table`" );
         }
-        $this->db->commit();
+        $this->dbHandler->commit();
     }
 }

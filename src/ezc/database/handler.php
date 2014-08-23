@@ -60,18 +60,18 @@ abstract class ezcDbHandler implements ezcDbInterface
      *
      * @var PDO
      */
-    protected $db;
+    protected $pdo;
 
     /**
      * Constructs a handler object.
      *
      * note: Remember to always call this constructor from constructor of a derived class!
      *
-     * @param PDO   $db       Misc database connection parameters.
+     * @param PDO   $pdo       Misc database connection parameters.
      */
-    public function __construct( PDO $db )
+    public function __construct( PDO $pdo )
     {
-        $this->db = $db;
+        $this->pdo = $pdo;
     }
 
 
@@ -122,22 +122,21 @@ abstract class ezcDbHandler implements ezcDbInterface
     /**
      * Возвращает указатель на обработчик базы данных.
      *
-     * @return PDO
+     * @return PDO the PDO instance, null if the connection is not established yet
      */
-    public function getDb()
+    public function getPdo()
     {
-        return $this->db;
+        return $this->pdo;
     }
-
 
     public function __call($name, $args)
     {
         switch (@count($args)) {
-            case 0: return $this->db->{$name}();
-            case 1: return $this->db->{$name}($args[0]);
-            case 2: return $this->db->{$name}($args[0], $args[1]);
-            case 3: return $this->db->{$name}($args[0], $args[1], $args[2]);
-            default: return call_user_func_array(array($this->db, $name), $args);
+            case 0: return $this->pdo->{$name}();
+            case 1: return $this->pdo->{$name}($args[0]);
+            case 2: return $this->pdo->{$name}($args[0], $args[1]);
+            case 3: return $this->pdo->{$name}($args[0], $args[1], $args[2]);
+            default: return call_user_func_array(array($this->pdo, $name), $args);
         }
         // switch ($name) {
         //     case 'exec':
@@ -191,7 +190,7 @@ abstract class ezcDbHandler implements ezcDbInterface
         $retval = true;
         if ( $this->transactionNestingLevel == 0 )
         {
-            $retval = $this->db->beginTransaction();
+            $retval = $this->pdo->beginTransaction();
         }
         // else NOP
 
@@ -228,13 +227,13 @@ abstract class ezcDbHandler implements ezcDbInterface
         {
             if ( $this->transactionErrorFlag )
             {
-                $this->db->rollback();
+                $this->pdo->rollback();
                 $this->transactionErrorFlag = false; // reset error flag
                 $retval = false;
             }
             else
             {
-                $this->db->commit();
+                $this->pdo->commit();
             }
         }
         // else NOP
@@ -267,7 +266,7 @@ abstract class ezcDbHandler implements ezcDbInterface
 
         if ( $this->transactionNestingLevel == 1 )
         {
-            $this->db->rollback();
+            $this->pdo->rollback();
             $this->transactionErrorFlag = false; // reset error flag
         }
         else

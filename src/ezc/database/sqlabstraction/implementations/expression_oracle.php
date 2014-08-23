@@ -299,7 +299,7 @@ class ezcQueryExpressionOracle extends ezcQueryExpression
                         $values[$key] = (string) $value;
                         break;
                     default:
-                        $values[$key] = $this->db->quote( $value );
+                        $values[$key] = $this->pdo->quote( $value );
                 }
             }
         }

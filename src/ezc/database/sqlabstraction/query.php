@@ -35,7 +35,7 @@ abstract class ezcQuery
      *
      * @var PDO
      */
-    protected $db;
+    protected $pdo;
 
     /**
      * The column and table name aliases.
@@ -96,15 +96,15 @@ abstract class ezcQuery
      * friendly names. E.g PersistentObject uses it to allow using property and class
      * names instead of column and table names.
      *
-     * @param mixed $ezcDb
+     * @param mixed $pdo
      * @param array(string=>string) $aliases
      */
-    public function __construct( $ezcDb, array $aliases = array() )
+    public function __construct( $pdo, array $aliases = array() )
     {
-        if ( ( $ezcDb instanceof ezcDbInterface ) || ($ezcDb instanceof PDO) ){
-            $this->db = $ezcDb;
+        if ( ( $pdo instanceof ezcDbInterface ) || ($pdo instanceof PDO) ){
+            $this->pdo = $pdo;
         } else {
-            throw new ezcDbException(sprintf("Объект '%s' не реализовывает 'PDO'", get_class($ezcDb)));
+            throw new ezcDbException(sprintf("Объект '%s' не реализовывает 'PDO'", get_class($pdo)));
         }
 
         if ( $this->expr == null )
@@ -124,15 +124,15 @@ abstract class ezcQuery
      */
     protected function createExpression()
     {
-        if ( $this->db instanceof ezcDbInterface ) {
-            $expr = $this->db->createExpression( $this->db );
+        if ( $this->pdo instanceof ezcDbInterface ) {
+            $expr = $this->pdo->createExpression( $this->pdo );
         } else {
-            $driver = $this->db->getAttribute(PDO::ATTR_DRIVER_NAME);
+            $driver = $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
             $className = 'ezcQueryExpression';
             if ( $driver !== 'mysql' ) {
                 $className .=  strtoupper(substr($impName, 0, 1)) . substr($impName, 1);
             }
-            $expr = new $className($this->db);
+            $expr = new $className($this->pdo);
         }
         return $expr ;
     }
@@ -454,7 +454,7 @@ abstract class ezcQuery
      */
     public function prepare()
     {
-        $stmt = $this->db->prepare( $this->getQuery() );
+        $stmt = $this->pdo->prepare( $this->getQuery() );
         $this->doBind( $stmt );
         return $stmt;
     }

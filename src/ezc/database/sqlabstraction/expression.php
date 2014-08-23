@@ -29,7 +29,7 @@ class ezcQueryExpression
      *
      * @var PDO
      */
-    protected $db;
+    protected $pdo;
 
     /**
      * The column and table name aliases.
@@ -64,15 +64,15 @@ class ezcQueryExpression
     /**
      * Constructs an empty ezcQueryExpression
      *
-     * @param PDO|ezcDbInterface $db
+     * @param PDO|ezcDbInterface $pdo
      * @param array(string=>string) $aliases
      */
-    public function __construct( $db, array $aliases = array() )
+    public function __construct( $pdo, array $aliases = array() )
     {
-        if ($db instanceof ezcDbInterface) {
-            $db = $db->getDb();
+        if ($pdo instanceof ezcDbInterface) {
+            $pdo = $pdo->getPdo();
         }
-        $this->_setDb($db);
+        $this->_setDb($pdo);
 
         if ( !empty( $aliases ) )
         {
@@ -80,9 +80,9 @@ class ezcQueryExpression
         }
     }
 
-    private function _setDb(PDO $db)
+    private function _setDb(PDO $pdo)
     {
-        $this->db = $db;
+        $this->pdo = $pdo;
     }
 
     /**
@@ -635,7 +635,7 @@ class ezcQueryExpression
                         $values[$key] = (string) $value;
                         break;
                     default:
-                        $values[$key] = $this->db->quote( $value );
+                        $values[$key] = $this->pdo->quote( $value );
                 }
             }
         }

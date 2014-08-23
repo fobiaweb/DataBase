@@ -40,15 +40,15 @@ class ezcDbUtilitiesMysql extends ezcDbUtilities
      */
     public function cleanup()
     {
-        $this->db->beginTransaction();
-        $rslt = $this->db->query( 'SHOW TABLES' );
+        $this->dbHandler->beginTransaction();
+        $rslt = $this->dbHandler->query( 'SHOW TABLES' );
         $rslt->setFetchMode( PDO::FETCH_NUM );
         $rows = $rslt->fetchAll();
         foreach ( $rows as $row )
         {
             $table = $row[0];
-            $this->db->exec( "DROP TABLE `$table`" );
+            $this->dbHandler->exec( "DROP TABLE `$table`" );
         }
-        $this->db->commit();
+        $this->dbHandler->commit();
     }
 }

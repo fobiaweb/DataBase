@@ -40,31 +40,31 @@ class ezcDbUtilitiesPgsql extends ezcDbUtilities
      */
     public function cleanup()
     {
-        $this->db->beginTransaction();
+        $this->dbHandler->beginTransaction();
 
         // drop tables
-        $rslt = $this->db->query( "SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND tablename NOT LIKE 'pg_%'" );
+        $rslt = $this->dbHandler->query( "SELECT tablename FROM pg_tables WHERE schemaname = 'public' AND tablename NOT LIKE 'pg_%'" );
         $rslt->setFetchMode( PDO::FETCH_NUM );
         $rows = $rslt->fetchAll();
         unset( $rslt );
         foreach ( $rows as $row )
         {
             $table = $row[0];
-            $this->db->exec( "DROP TABLE $table" );
+            $this->dbHandler->exec( "DROP TABLE $table" );
         }
 
         // drop sequences
-        $rslt = $this->db->query( "SELECT relname FROM pg_catalog.pg_class WHERE relkind='S'" );
+        $rslt = $this->dbHandler->query( "SELECT relname FROM pg_catalog.pg_class WHERE relkind='S'" );
         $rslt->setFetchMode( PDO::FETCH_NUM );
         $rows = $rslt->fetchAll();
         foreach ( $rows as $row )
         {
             $seq = $row[0];
-            $this->db->exec( "DROP SEQUENCE $seq" );
+            $this->dbHandler->exec( "DROP SEQUENCE $seq" );
         }
 
         // FIXME: drop triggers?
 
-        $this->db->commit();
+        $this->dbHandler->commit();
     }
 }

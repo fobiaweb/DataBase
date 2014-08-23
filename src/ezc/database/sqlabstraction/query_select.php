@@ -120,12 +120,12 @@ class ezcQuerySelect extends ezcQuery
      *
      * For an introduction to aliases see {@link ezcQuery::__construct()}.
      *
-     * @param PDO $db a pointer to the database object.
+     * @param PDO $pdo a pointer to the database object.
      * @param array(string=>string) $aliases
      */
-    public function __construct( $db, array $aliases = array() )
+    public function __construct( $pdo, array $aliases = array() )
     {
-        parent::__construct( $db, $aliases );
+        parent::__construct( $pdo, $aliases );
     }
 
     /**

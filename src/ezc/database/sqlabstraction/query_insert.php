@@ -59,12 +59,12 @@ class ezcQueryInsert extends ezcQuery
      * Constructs a new ezcQueryInsert that works on the database $db and with the aliases $aliases.
      *
      * The parameters are passed directly to ezcQuery.
-     * @param PDO $db
+     * @param PDO $pdo
      * @param array(string=>string) $aliases
      */
-    public function __construct( $db, array $aliases = array() )
+    public function __construct( $pdo, array $aliases = array() )
     {
-        parent::__construct( $db, $aliases );
+        parent::__construct( $pdo, $aliases );
     }
 
     /**
@@ -96,7 +96,7 @@ class ezcQueryInsert extends ezcQuery
         $column = $this->getIdentifier( $column );
         $expression = $this->getIdentifier( $expression );
 
-        if ( $this->db->getName() == 'oracle' )
+        if ( $this->pdo->getName() == 'oracle' )
         {
             // This is "quick fix" for the case of setting sequence value in Oracle.
             // Assume that set( 'columnName', "nextval('sequenceName')") was called.

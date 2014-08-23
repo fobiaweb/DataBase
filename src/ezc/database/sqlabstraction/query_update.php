@@ -69,12 +69,12 @@ class ezcQueryUpdate extends ezcQuery
      * Constructs a new ezcQueryUpdate that works on the database $db and with the aliases $aliases.
      *
      * The parameters are passed directly to ezcQuery.
-     * @param PDO $db
+     * @param PDO $pod
      * @param array(string=>string) $aliases
      */
-    public function __construct( $db, array $aliases = array() )
+    public function __construct( $pod, array $aliases = array() )
     {
-        parent::__construct( $db, $aliases );
+        parent::__construct( $pod, $aliases );
     }
 
     /**

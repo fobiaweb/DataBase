@@ -40,32 +40,32 @@ class ezcDbUtilitiesOracle extends ezcDbUtilities
      */
     public function cleanup()
     {
-        $this->db->beginTransaction();
+        $this->dbHandler->beginTransaction();
 
         // drop tables
-        $rslt = $this->db->query( "SELECT lower(table_name) FROM user_tables" );
+        $rslt = $this->dbHandler->query( "SELECT lower(table_name) FROM user_tables" );
         $rslt->setFetchMode( PDO::FETCH_NUM );
         $rows = $rslt->fetchAll();
         unset( $rslt );
         foreach ( $rows as $row )
         {
             $table = $row[0];
-            $this->db->exec( "DROP TABLE $table" );
+            $this->dbHandler->exec( "DROP TABLE $table" );
         }
 
         // drop sequences
-        $rslt = $this->db->query( "SELECT LOWER(sequence_name) FROM user_sequences" );
+        $rslt = $this->dbHandler->query( "SELECT LOWER(sequence_name) FROM user_sequences" );
         $rslt->setFetchMode( PDO::FETCH_NUM );
         $rows = $rslt->fetchAll();
         foreach ( $rows as $row )
         {
             $seq = $row[0];
-            $this->db->exec( "DROP SEQUENCE $seq" );
+            $this->dbHandler->exec( "DROP SEQUENCE $seq" );
         }
 
         // FIXME: drop triggers?
 
-        $this->db->commit();
+        $this->dbHandler->commit();
     }
 
 
@@ -100,7 +100,7 @@ class ezcDbUtilitiesOracle extends ezcDbUtilities
                 $num = rand( 10000000, 99999999 );
                 $tableName = strtoupper( str_replace( '%', $num, $tableNamePattern ) );
                 $query = "SELECT count(*) AS cnt FROM user_tables WHERE table_name='$tableName'";
-                $cnt = (int) $this->db->query( $query )->fetchColumn( 0 );
+                $cnt = (int) $this->dbHandler->query( $query )->fetchColumn( 0 );
                 $maxTries--;
             } while ( $cnt > 0 && $maxTries > 0 );
 
@@ -113,7 +113,7 @@ class ezcDbUtilitiesOracle extends ezcDbUtilities
             }
         }
 
-        $this->db->exec( "CREATE GLOBAL TEMPORARY TABLE $tableName ($tableDefinition)" );
+        $this->dbHandler->exec( "CREATE GLOBAL TEMPORARY TABLE $tableName ($tableDefinition)" );
         return $tableName;
     }
 
@@ -132,7 +132,7 @@ class ezcDbUtilitiesOracle extends ezcDbUtilities
      */
     public function dropTemporaryTable( $tableName )
     {
-        $this->db->exec( "TRUNCATE TABLE $tableName" );
-        $this->db->exec( "DROP TABLE $tableName" );
+        $this->dbHandler->exec( "TRUNCATE TABLE $tableName" );
+        $this->dbHandler->exec( "DROP TABLE $tableName" );
     }
 }
