@@ -15,23 +15,3 @@ $loader->add("Fobia\\DataBase\\", __DIR__ );
 if (class_exists('\Fobia\Debug\Log')) {
     \Fobia\Debug\Log::setLogger(new \Psr\Log\NullLogger());
 }
-
-
-class ezcTestCase extends PHPUnit_Framework_TestCase
-{
-    protected function assertType($expected, $actual)
-    {
-       self::assertInternalType($expected, $actual);
-    }
-
-    protected function createTempDir($dir)
-    {
-        return "/tmp/ezcTest/$dir";
-    }
-
-
-    protected function removeTempDir()
-    {
-        shell_exec("rm -rf /tmp/ezcTest");
-    }
-}
