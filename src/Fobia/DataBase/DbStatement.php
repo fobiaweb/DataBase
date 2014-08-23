@@ -52,6 +52,45 @@ class DbStatement extends PDOStatement
     }
 
     /**
+     * Выводит асс. масив, где ключи это $key, а значение в зависимости от $columns
+     * - [null] первое поле строки, исключая при этом поле $key
+     * - [string] поле $columns
+     * - [array] масив содержащий поля $columns
+     *
+     * @param string $key
+     * @param string|array $columns
+     * @return array
+     */
+    public function selectCol($key, $columns = null)
+    {
+        $result = array();
+        $rows = $this->fetchAll();
+
+        
+        if ( ! $columns ) {
+            foreach ( $rows as $row ) {
+                $kv = $row[$key];
+                unset($row[$key]);
+                $result[$kv] = array_shift($row);
+            }
+            return $result;
+        }
+
+        if ( is_string( $columns ) ) {
+            foreach ($rows as $row ) {
+                $result[$row[$key]] = $row[$columns];
+            }
+            return $result;
+        }
+
+        $columns = array_flip((array) $columns);
+        foreach ($rows as $row ) {
+            $result[$row[$key]] = array_intersect_key($row, $columns);
+        }
+        return $result;
+    }
+
+    /**
      * @internal
      */
     public function __destruct()

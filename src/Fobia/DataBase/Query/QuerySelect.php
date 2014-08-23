@@ -17,9 +17,15 @@ use ezcQuerySelect;
  */
 class QuerySelect extends ezcQuerySelect
 {
+    /**
+     * Количество всех найденых строк и список строк по limit
+     * 
+     * @return array [count, items]
+     */
     public function fetchItemsCount()
     {
         if (!$this->limitString) {
+            trigger_error("В запросе 'SELECT'  не установлен 'limit'", E_USER_WARNING);
             $this->limit(1000, 0);
         }
         $s = $this->prepare();
@@ -31,6 +37,11 @@ class QuerySelect extends ezcQuerySelect
         );
     }
 
+    /**
+     * Количество всех найденых строк
+     *
+     * @return int
+     */
     public function findAll()
     {
         $q = clone $this;
