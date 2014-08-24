@@ -1,39 +1,15 @@
 <?php
-/**
- * @copyright Copyright (C) 2005-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/new_bsd New BSD License
- * @version 1.4.9
- * @filesource
- * @package Database
- * @subpackage Tests
- */
 
-/**
- * Testing the SQL expression abstraction layer.
- * This file tests that the methods actually produce correct output for the base
- * implementation regardless of how they methods are called. The _impl file tests
- * the same again, but with full SQL calls, only using one call type and on the database.
- *
- * @package Database
- * @subpackage Tests
- * @todo, test with null input values
- */
-class ezcQueryExpressionTest extends ezcTestCaseDatabase
+class ezcQueryExpressionTest extends PHPUnit_Framework_TestCase
 {
     private $q;
     private $e;
-//    private $db;
+    private $db;
 
     protected function setUp()
     {
-        try {
-            $this->db = ezcDbInstance::get();
-        }
-        catch ( Exception $e )
-        {
-//            throw $e;
-            $this->markTestSkipped();
-        }
+        $this->db = ezcTestUtils::instanceDb();
+        // $this->db->setAttribute(PDO::ATTR_CASE,    PDO::CASE_LOWER);
 
         $this->q = $this->db->createSelectQuery();
         $this->e = $this->db->createExpression();
@@ -71,11 +47,6 @@ class ezcQueryExpressionTest extends ezcTestCaseDatabase
         if ( $this->db === null ) return;
 
         $this->db->exec( 'DROP TABLE query_test' );
-    }
-
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite( 'ezcQueryExpressionTest' );
     }
 
     public function testLorNone()
@@ -346,6 +317,7 @@ class ezcQueryExpressionTest extends ezcTestCaseDatabase
     {
         if ( $this->db->getName() === 'mysql' )
         {
+            return;
             self::markTestSkipped( 'Not for MySQL' );
         }
         $reference = "id IN ( '''Hello''', '''world''' )";
@@ -1022,15 +994,23 @@ class ezcQueryExpressionTest extends ezcTestCaseDatabase
         $stmt->execute();
         $this->assertSame( strtotime( '2007-05-03 11:54:17' ), (int)$stmt->fetchColumn( 0 ) );
     }
-
+/*
     public function testUnixTimestampImpl2()
+    {
+        $this->q->select( $this->e->unixTimestamp( "'2007-03-03 01:54:17'" ) );
+        $stmt = $this->q->prepare();
+        $stmt->execute();
+        $this->assertSame( strtotime( '2007-03-03 01:54:17' ), (int)$stmt->fetchColumn( 0 ) );
+    }
+
+    public function testUnixTimestampImpl3()
     {
         $this->q->select( $this->e->unixTimestamp( "'2007-12-03 11:54:17'" ) );
         $stmt = $this->q->prepare();
         $stmt->execute();
         $this->assertSame( strtotime( '2007-12-03 11:54:17' ), (int)$stmt->fetchColumn( 0 ) );
     }
-
+*/
     public function testDateSubSecondImpl()
     {
         $this->q->select( $this->e->dateSub( "'2007-05-03 11:54:17'", 1, 'SECOND' ) );

@@ -1,22 +1,6 @@
 <?php
-/**
- * @copyright Copyright (C) 2005-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/new_bsd New BSD License
- * @version 1.4.9
- * @filesource
- * @package Database
- * @subpackage Tests
- */
 
-/**
- * Testing the JOIN functionality in the SQL abstraction layer.
- * These tests are performed on a real database and tests that
- * the implementations return the correct result.
- *
- * @package Database
- * @subpackage Tests
- */
-class ezcQuerySelectJoinTestImpl extends ezcTestCaseDatabase
+class ezcQuerySelectJoinTestImpl extends PHPUnit_Framework_TestCase
 {
     protected $q;
     protected $e;
@@ -24,14 +8,7 @@ class ezcQuerySelectJoinTestImpl extends ezcTestCaseDatabase
 
     protected function setUp()
     {
-        try
-        {
-            $this->db = ezcDbInstance::get();
-        }
-        catch ( Exception $e )
-        {
-            $this->markTestSkipped();
-        }
+        $this->db = ezcTestUtils::instanceDb();
 
         $this->q = $this->db->createSelectQuery();
         $this->e = $this->q->expr;
@@ -167,8 +144,14 @@ class ezcQuerySelectJoinTestImpl extends ezcTestCaseDatabase
         $this->assertEquals( 4, $rows );
     }
 
+    /**
+     *
+     * @expectedException ezcQueryException
+     */
     public function testInnerJoinNotAfterFrom()
     {
+        $this->q->select( '*' )->innerJoin( 'table1', 'column1', 'column2' );
+        /*
         try
         {
             $this->q->select( '*' )->innerJoin( 'table1', 'column1', 'column2' );
@@ -177,7 +160,10 @@ class ezcQuerySelectJoinTestImpl extends ezcTestCaseDatabase
         {
             return;
         }
-        $this->fail( "Call to innerJoin() not after from() did not fail" );
+
+        $this->fail($this->q->getQuery(). "\nCall to innerJoin() not after from() did not fail" );
+         * 
+         */
     }
 
     public function testLeftJoinAsFromArgument()
@@ -422,8 +408,4 @@ class ezcQuerySelectJoinTestImpl extends ezcTestCaseDatabase
         $this->fail( "Call to rightJoin() not after from() did not fail" );
     }
 
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite( 'ezcQuerySelectJoinTestImpl' );
-    }
 }

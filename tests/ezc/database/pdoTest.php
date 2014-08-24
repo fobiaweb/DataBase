@@ -14,18 +14,11 @@
  * @package Database
  * @subpackage Tests
  */
-class ezcPdoTest extends ezcTestCaseDatabase
+class ezcPdoTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        try
-        {
-            $db = ezcDbInstance::get();
-        }
-        catch ( Exception $e )
-        {
-            $this->markTestSkipped();
-        }
+        $db = ezcTestUtils::instanceDb();
 
         $this->q = new ezcQueryInsert( $db );
         try
@@ -36,7 +29,6 @@ class ezcPdoTest extends ezcTestCaseDatabase
 
         // insert some data
         $db->exec( 'CREATE TABLE query_test ( id int, company VARCHAR(255), section VARCHAR(255), employees int )' );
-
     }
 
     protected function tearDown()
@@ -95,10 +87,5 @@ class ezcPdoTest extends ezcTestCaseDatabase
 
         $q = $db->prepare("INSERT INTO query_test VALUES( ':id', 'name', 'section', 22)" ); // <-- ':id' should be :id (or a string without ":")
         $q->execute();
-    }
-
-    public static function suite()
-    {
-         return new PHPUnit_Framework_TestSuite( "ezcPdoTest" );
     }
 }

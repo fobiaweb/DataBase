@@ -13,19 +13,7 @@ class ezcDbFactoryTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        try
-        {
-            $this->default = ezcDbInstance::get();
-        }
-        catch ( Exception $e )
-        {
-            // $this->markTestSkipped();
-        }
-
-        if ( ! $this->default ) {
-            $this->default = ezcDbFactory::create('mysql://root@localhost/test');
-            ezcDbInstance::set( $this->default );
-        }
+        $this->default =  ezcTestUtils::instanceDb();
     }
 
     protected function tearDown()
@@ -84,7 +72,7 @@ class ezcDbFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testCreate()
     {
-        $db = ezcDbFactory::create('mysql://root@localhost/test');
+        $db = ezcDbFactory::create('mysql://root@localhost/ezc-test');
         $this->assertTrue( $db instanceof ezcDbInterface );
     }
 
@@ -94,8 +82,101 @@ class ezcDbFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testWrapper()
     {
-        $pdo = new PDO('mysql://localhost/test', 'root', '');
+        $pdo = new PDO('mysql://localhost/ezc-test', 'root', '');
         $db = ezcDbFactory::wrapper($pdo);
         $this->assertTrue( $db instanceof ezcDbInterface );
     }
+    
+    public function testSqliteDSN1()
+    {
+        if ( !ezcBaseFeatures::hasExtensionSupport( 'pdo_sqlite') )
+        {
+            $this->markTestSkipped();
+            return;
+        }
+        $db = ezcDbFactory::create( 'sqlite://:memory:' );
+        $db = ezcDbFactory::create( 'sqlite:///tmp/testSqliteDSN1.sqlite' );
+        $this->assertEquals( true, file_exists( '/tmp/testSqliteDSN1.sqlite' ) );
+        unlink( '/tmp/testSqliteDSN1.sqlite' );
+        $this->assertEquals( false, file_exists( ':memory:' ) );
+    }
+
+    public function testSqliteDSN2()
+    {
+        if ( !ezcBaseFeatures::hasExtensionSupport( 'pdo_sqlite') )
+        {
+            $this->markTestSkipped();
+            return;
+        }
+        try
+        {
+            $db = ezcDbFactory::create( 'sqlite:///:memory:' );
+            $this->fail( "Expected exception not thrown." );
+        }
+        catch ( PDOException $e )
+        {
+            $this->assertEquals( "SQLSTATE[HY000] [14] unable to open database file", $e->getMessage() );
+        }
+    }
+
+    public function testSqliteDSN3()
+    {
+        if ( !ezcBaseFeatures::hasExtensionSupport( 'pdo_sqlite') )
+        {
+            $this->markTestSkipped();
+            return;
+        }
+        try
+        {
+            $db = ezcDbFactory::create( 'sqlite://' );
+            $this->fail( "Expected exception not thrown." );
+        }
+        catch ( ezcDbMissingParameterException $e )
+        {
+            $this->assertEquals( "The option 'database' is required in the parameter 'dbParams'.", $e->getMessage() );
+        }
+    }
+
+    /*
+    public function testSqliteDSN4()
+    {
+        if ( !ezcBaseFeatures::hasExtensionSupport( 'pdo_sqlite') || ezcBaseFeatures::os() !== 'Windows' )
+        {
+            $this->markTestSkipped( 'Windows only test' );
+            return;
+        }
+        $db = ezcDbFactory::create( 'sqlite:///c:\tmp\foo.sqlite' );
+        $this->assertEquals( true, file_exists( 'c:\tmp\foo.sqlite' ) );
+        unlink( 'c:\tmp\foo.sqlite' );
+    }
+    */
+    public function testParamsSqliteDatabase1()
+    {
+        if ( !ezcBaseFeatures::hasExtensionSupport( 'pdo_sqlite') )
+        {
+            $this->markTestSkipped();
+            return;
+        }
+        try
+        {
+            $db = ezcDbFactory::create( array( 'handler' => 'sqlite' ) );
+            $this->fail( "Expected exception not thrown." );
+        }
+        catch ( ezcDbMissingParameterException $e )
+        {
+            $this->assertEquals( "The option 'database' is required in the parameter 'dbParams'.", $e->getMessage() );
+        }
+    }
+
+    public function testParamsSqliteDatabase2()
+    {
+        if ( !ezcBaseFeatures::hasExtensionSupport( 'pdo_sqlite') )
+        {
+            $this->markTestSkipped();
+            return;
+        }
+        $db = ezcDbFactory::create( array( 'handler' => 'sqlite', 'port' => 'memory' ) );
+        $this->assertEquals( false, file_exists( 'memory' ) );
+    }
+
 }

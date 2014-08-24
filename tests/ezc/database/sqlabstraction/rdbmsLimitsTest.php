@@ -1,39 +1,17 @@
 <?php
-/**
- * @copyright Copyright (C) 2005-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/new_bsd New BSD License
- * @version 1.4.9
- * @filesource
- * @package Database
- * @subpackage Tests
- */
 
-/**
- * testing sql abstraction for common rdbms limits
- *
- * @package Database
- * @subpackage Tests
- */
-class ezcRdbmsLimitTest extends ezcTestCaseDatabase
+class ezcRdbmsLimitTest extends PHPUnit_Framework_TestCase
 {
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite( 'ezcRdbmsLimitTest' );
-    }
+
+    private $db;
 
     protected function setUp()
     {
-        try
-        {
-            $db = ezcDbInstance::get();
-        }
-        catch ( Exception $e )
-        {
-            $this->markTestSkipped();
-        }
-
+        $db = ezcTestUtils::instanceDb();
         $this->assertNotNull( $db, 'Database instance is not initialized.' );
 
+        $this->db = ezcDbFactory::create( 'sqlite:///tmp/testSqlite.sqlite' );
+        $this->assertNotNull( $db, 'Database instance is not initialized.' );
     }
 
     protected function tearDown()
@@ -42,7 +20,7 @@ class ezcRdbmsLimitTest extends ezcTestCaseDatabase
 
     public function testLongTableNames()
     {
-        $db = ezcDbInstance::get();
+        $db = $this->db;//ezcDbInstance::get();
         if ( $db->getName() === 'mysql' )
         {
             self::markTestSkipped( 'Not for MySQL' );
@@ -77,7 +55,7 @@ class ezcRdbmsLimitTest extends ezcTestCaseDatabase
 
     public function testLongColumnNames()
     {
-        $db = ezcDbInstance::get();
+        $db = $this->db;//ezcDbInstance::get();
         if ( $db->getName() === 'mysql' )
         {
             self::markTestSkipped( 'Not for MySQL' );

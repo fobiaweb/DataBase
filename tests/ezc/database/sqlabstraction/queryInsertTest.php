@@ -1,33 +1,11 @@
 <?php
-/**
- * @copyright Copyright (C) 2005-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/new_bsd New BSD License
- * @version 1.4.9
- * @filesource
- * @package Database
- * @subpackage Tests
- */
-
-/**
- * Testing the SQL expression abstraction layer for INSERT queries.
- *
- * @package Database
- * @subpackage Tests
- */
-class ezcQueryInsertTest extends ezcTestCaseDatabase
+class ezcQueryInsertTest extends PHPUnit_Framework_TestCase
 {
     private $q;
 
     protected function setUp()
     {
-        try
-        {
-            $db = ezcDbInstance::get();
-        }
-        catch ( Exception $e )
-        {
-            $this->markTestSkipped();
-        }
+        $db = ezcTestUtils::instanceDb();
 
         $this->q = new ezcQueryInsert( $db );
         try
@@ -111,7 +89,8 @@ class ezcQueryInsertTest extends ezcTestCaseDatabase
             ->where( $q->expr->eq( 'id', 1 ) );
         $stmt = $q->prepare();
         $stmt->execute();
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetchAll(\PDO::FETCH_NUM);
+
         $this->assertEquals( 1, (int)$result[0][0] );
         $this->assertEquals( 'eZ systems', $result[0][1] );
     }
@@ -145,7 +124,7 @@ class ezcQueryInsertTest extends ezcTestCaseDatabase
             ->where( $q->expr->eq( 'id', 1 ) );
         $stmt = $q->prepare();
         $stmt->execute();
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetchAll(\PDO::FETCH_NUM);
         $this->assertEquals( 1, (int)$result[0][0] );
         $this->assertEquals( 'eZ systems', $result[0][1] );
 
@@ -156,7 +135,7 @@ class ezcQueryInsertTest extends ezcTestCaseDatabase
             ->where( $q->expr->eq( 'id', 2 ) );
         $stmt = $q->prepare();
         $stmt->execute();
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetchAll(\PDO::FETCH_NUM);
         $this->assertEquals( 2, (int)$result[0][0] );
         $this->assertEquals( 'trolltech', $result[0][1] );
 
@@ -190,7 +169,7 @@ class ezcQueryInsertTest extends ezcTestCaseDatabase
             ->where( $q->expr->eq( 'id', 1 ) );
         $stmt = $q->prepare();
         $stmt->execute();
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetchAll(\PDO::FETCH_NUM);
         $this->assertEquals( 1, (int)$result[0][0] );
         $this->assertEquals( 'eZ systems', $result[0][1] );
 
@@ -201,7 +180,7 @@ class ezcQueryInsertTest extends ezcTestCaseDatabase
             ->where( $q->expr->eq( 'id', 2 ) );
         $stmt = $q->prepare();
         $stmt->execute();
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetchAll(\PDO::FETCH_NUM);
         $this->assertEquals( 2, (int)$result[0][0] );
         $this->assertEquals( 'eZ systems', $result[0][1] );
     }
@@ -252,7 +231,7 @@ class ezcQueryInsertTest extends ezcTestCaseDatabase
         $q->select( '*' )->from( 'query_test' )->where( $q->expr->eq( 'id', 2 ) );
         $stmt = $q->prepare();
         $stmt->execute();
-        $result = $stmt->fetchAll();
+        $result = $stmt->fetchAll(\PDO::FETCH_NUM);
         $this->assertEquals( 2, (int)$result[0][0] );
         $this->assertEquals( 'eZ systems', $result[0][1] );
         $this->assertEquals( 'Ukraine', $result[0][2] );
@@ -262,10 +241,5 @@ class ezcQueryInsertTest extends ezcTestCaseDatabase
         {
             $db->exec( "DROP SEQUENCE query_test_id_seq" );
         }
-    }
-
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite( 'ezcQueryInsertTest' );
     }
 }

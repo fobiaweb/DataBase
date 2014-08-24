@@ -1,32 +1,12 @@
 <?php
-/**
- * @copyright Copyright (C) 2005-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/new_bsd New BSD License
- * @version 1.4.9
- * @filesource
- * @package Database
- * @subpackage Tests
- */
 
-/**
- * Testing the SQL expression abstraction layer for INSERT queries.
- *
- * @package Database
- * @subpackage Tests
- */
-class ezcQueryUpdateTest extends ezcTestCaseDatabase
+class ezcQueryUpdateTest extends PHPUnit_Framework_TestCase
 {
     private $q;
 
     protected function setUp()
     {
-        try {
-            $db = ezcDbInstance::get();
-        }
-        catch ( Exception $e )
-        {
-            $this->markTestSkipped();
-        }
+        $db = ezcTestUtils::instanceDb();
 
         $this->assertNotNull( $db, 'Database instance is not initialized.' );
 
@@ -200,6 +180,7 @@ class ezcQueryUpdateTest extends ezcTestCaseDatabase
     }
 
     // test for bug 10777
+    /*
     function testUpdateWithFalseTest()
     {
         // create the database
@@ -269,9 +250,5 @@ class ezcQueryUpdateTest extends ezcTestCaseDatabase
         $s->fetch( PDO::FETCH_BOUND );
         self::assertEquals( false, $returnValue );
     }
-
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite( 'ezcQueryUpdateTest' );
-    }
+    */
 }

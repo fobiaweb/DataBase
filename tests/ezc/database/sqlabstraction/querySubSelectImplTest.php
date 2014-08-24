@@ -1,23 +1,6 @@
 <?php
-/**
- * @copyright Copyright (C) 2005-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/new_bsd New BSD License
- * @version 1.4.9
- * @filesource
- * @package Database
- * @subpackage Tests
- */
 
-/**
- * Testing the SQL abstraction layer.
- * These tests are performed on a real database and tests that
- * the implementations return the correct result.
- *
- * @package Database
- * @subpackage Tests
- * @todo, test with null input values
- */
-class ezcQuerySubSelectTestImpl extends ezcTestCaseDatabase
+class ezcQuerySubSelectTestImpl extends PHPUnit_Framework_TestCase
 {
     protected $q;
     protected $e;
@@ -25,14 +8,7 @@ class ezcQuerySubSelectTestImpl extends ezcTestCaseDatabase
 
     protected function setUp()
     {
-        try
-        {
-            $this->db = ezcDbInstance::get();
-        }
-        catch ( Exception $e )
-        {
-            $this->markTestSkipped();
-        }
+        $this->db = ezcTestUtils::instanceDb();
 
         $this->q = $this->db->createSelectQuery();
         $this->e = $this->q->expr;
@@ -234,8 +210,4 @@ class ezcQuerySubSelectTestImpl extends ezcTestCaseDatabase
         $this->assertEquals( 'Germany', $result[1]['section'] );
     }
 
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite( 'ezcQuerySubSelectTestImpl' );
-    }
 }

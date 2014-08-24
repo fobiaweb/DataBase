@@ -1,33 +1,12 @@
 <?php
-/**
- * @copyright Copyright (C) 2005-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/new_bsd New BSD License
- * @version 1.4.9
- * @filesource
- * @package Database
- * @subpackage Tests
- */
 
-/**
- * Testing the SQL expression abstraction layer for INSERT queries.
- *
- * @package Database
- * @subpackage Tests
- */
-class ezcQueryDeleteTest extends ezcTestCaseDatabase
+class ezcQueryDeleteTest extends PHPUnit_Framework_TestCase
 {
     private $q;
 
     protected function setUp()
     {
-        try
-        {
-            $db = ezcDbInstance::get();
-        }
-        catch ( Exception $e )
-        {
-            $this->markTestSkipped();
-        }
+        $db = ezcTestUtils::instanceDb();
 
         $this->q = new ezcQueryDelete( $db );
         try
@@ -178,10 +157,5 @@ class ezcQueryDeleteTest extends ezcTestCaseDatabase
         $stmt->execute();
         $result = $stmt->fetchAll();
         $this->assertEquals( 1, count( $result ) );
-    }
-
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite( 'ezcQueryDeleteTest' );
     }
 }

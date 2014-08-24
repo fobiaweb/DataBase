@@ -1,12 +1,4 @@
 <?php
-/**
- * @copyright Copyright (C) 2005-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/new_bsd New BSD License
- * @version 1.4.9
- * @filesource
- * @package Database
- * @subpackage Tests
- */
 
 class TestSubSelect extends ezcQuerySelect
 {
@@ -46,30 +38,15 @@ class TestSubSelect extends ezcQuerySelect
     }
 }
 
-/**
- * Testing the SQL abstraction layer.
- * This file tests that the methods actually produce correct output for the base
- * implementation regardless of how they methods are called. The _impl file tests
- * the same again, but with full SQL calls, only using one call type and on the database.
- *
- * @package Database
- * @subpackage Tests
- * @todo, test with null input values
- */
-class ezcQuerySubSelectTest extends ezcTestCaseDatabase
+
+class ezcQuerySubSelectTest extends PHPUnit_Framework_TestCase
 {
     protected $q; // query
     protected $e; // queryExpression
+
     protected function setUp()
     {
-        try
-        {
-            $db = ezcDbInstance::get();
-        }
-        catch ( Exception $e )
-        {
-            $this->markTestSkipped();
-        }
+        $db = ezcTestUtils::instanceDb();
 
         $this->q = new TestSubSelect( $db );
         $this->e = $this->q->expr;
@@ -268,8 +245,4 @@ class ezcQuerySubSelectTest extends ezcTestCaseDatabase
         $this->assertEquals( "SELECT id, name FROM main INNER JOIN ( SELECT main_id FROM sub LIMIT 20 OFFSET 0 ) AS sub_items ON sub_items.main_id = main.id", $q->getQuery() );
     }
 
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite( 'ezcQuerySubSelectTest' );
-    }
 }

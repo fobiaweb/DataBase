@@ -1,12 +1,4 @@
 <?php
-/**
- * @copyright Copyright (C) 2005-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/new_bsd New BSD License
- * @version 1.4.9
- * @filesource
- * @package Database
- * @subpackage Tests
- */
 
 class TestSelect extends ezcQuerySelect
 {
@@ -49,31 +41,15 @@ class TestSelect extends ezcQuerySelect
     }
 }
 
-/**
- * Testing the SQL abstraction layer.
- * This file tests that the methods actually produce correct output for the base
- * implementation regardless of how they methods are called. The _impl file tests
- * the same again, but with full SQL calls, only using one call type and on the database.
- *
- * @package Database
- * @subpackage Tests
- * @todo, test with null input values
- */
-class ezcQuerySelectTest extends ezcTestCaseDatabase
+
+class ezcQuerySelectTest extends PHPUnit_Framework_TestCase
 {
     private $q; // query
     private $e; // queryExpression
 
     protected function setUp()
     {
-        try
-        {
-            $db = ezcDbInstance::get();
-        }
-        catch ( Exception $e )
-        {
-            $this->markTestSkipped();
-        }
+        $db = ezcTestUtils::instanceDb();
 
         $this->q = new TestSelect( $db );
         $this->e = $this->q->expr;
@@ -626,8 +602,4 @@ class ezcQuerySelectTest extends ezcTestCaseDatabase
         }
     }
 
-    public static function suite()
-    {
-        return new PHPUnit_Framework_TestSuite( 'ezcQuerySelectTest' );
-    }
 }

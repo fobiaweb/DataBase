@@ -1,25 +1,5 @@
 <?php
-/**
- * @copyright Copyright (C) 2005-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/new_bsd New BSD License
- * @version 1.4.9
- * @filesource
- * @package Database
- * @subpackage Tests
- */
 
-/**
- * A factory to create a database connections
- * using previously set parameters.
- *
- * We use MyDB::create() to create a database connection from any place
- * without passing connection parameters every time.
- * (this is not the same as singleton since the connection is not stored in
- * a static member)
- *
- * @package Database
- * @subpackage Tests
- */
 class MyDB
 {
     static private $instance = null;
@@ -33,33 +13,30 @@ class MyDB
     static public function create()
     {
         // create instance
-        if ( self::$dbParams === null )
+        if ( self::$dbParams === null ) {
             throw new Exception( "Missing database " .
                                  "connection parameteters." );
+        }
 
         return ezcDbFactory::create( self::$dbParams );
     }
 }
 
-/**
- * Testing how nested transactions work.
- *
- * @package Database
- * @subpackage Tests
- */
-class ezcDatabaseTransactionsTest extends ezcTestCaseDatabase
+class ezcDatabaseTransactionsTest extends PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
         try
         {
             //$dbparams = ezcTestSettings::getInstance()->db->dsn;
-            $dbparams = 'sqlite:///:memory:';// ezcTestSettings::getInstance()->db->dsn;
+            $dbparams = 'sqlite://:memory:';// ezcTestSettings::getInstance()->db->dsn;
             MyDB::setParams( $dbparams );
             $this->db = MyDB::create();
         }
         catch ( Exception $e )
         {
+            // print_r($e);
+            echo $e->getMessage() . PHP_EOL;
             $this->markTestSkipped();
         }
     }
@@ -186,8 +163,4 @@ class ezcDatabaseTransactionsTest extends ezcTestCaseDatabase
         $this->fail( "The case with consequent BEGIN, COMMIT, ROLLBACK did not fail.\n" );
     }
 
-    public static function suite()
-    {
-         return new PHPUnit_Framework_TestSuite( "ezcDatabaseTransactionsTest" );
-    }
 }

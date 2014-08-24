@@ -33,7 +33,7 @@ class QuerySelectTest extends \PHPUnit_Framework_TestCase
     public function testFetchItemsCount()
     {
         $q      = $this->q;
-        $q->select('*')->from('user');
+        $q->select('*')->from('user')->limit(100);
         $result = $q->fetchItemsCount();
 
         $this->assertArrayHasKey('count', $result);

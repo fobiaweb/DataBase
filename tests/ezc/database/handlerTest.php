@@ -13,16 +13,7 @@ class ezcDbHandlerTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        try
-        {
-            $this->default = ezcDbInstance::get();
-        }
-        catch ( Exception $e ) {}
-
-        if ( ! $this->default ) {
-            $this->default = ezcDbFactory::create('mysql://root@localhost/test');
-            ezcDbInstance::set( $this->default );
-        }
+        $this->default = ezcTestUtils::instanceDb();
     }
 
     protected function tearDown()
