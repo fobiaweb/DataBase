@@ -639,12 +639,45 @@ class ezcQuerySelect extends ezcQuery
      */
     public function where()
     {
+        $args = func_get_args();
+        $this->doWhere($args, 'AND');
+        return $this;
+    }
+
+    /**
+     * Adds a where clause with logical expressions to the query.
+     *
+     * where() accepts an arbitrary number of parameters. Each parameter
+     * must contain a logical expression or an array with logical expressions.
+     * If you specify multiple logical expression they are connected using
+     * a logical and.
+     *
+     * Multiple calls to where() will join the expressions using a logical and.
+     *
+     * Example:
+     * <code>
+     * $q->select( '*' )->from( 'table' )->where( $q->expr->eq( 'id', 1 ) );
+     * </code>
+     *
+     * @throws ezcQueryVariableParameterException if called with no parameters.
+     * @param string|array(string) $... Either a string with a logical expression name
+     * or an array with logical expressions.
+     * @return ezcQuerySelect
+     */
+    public function orWhere()
+    {
+        $args = func_get_args();
+        $this->doWhere($args, 'OR');
+        return $this;
+    }
+    
+    protected function doWhere(array $args, $join = 'AND')
+    {
         if ( $this->whereString == null )
         {
             $this->whereString = 'WHERE ';
         }
 
-        $args = func_get_args();
         $expressions = self::arrayFlatten( $args );
         if ( count( $expressions ) < 1 )
         {
@@ -656,13 +689,12 @@ class ezcQuerySelect extends ezcQuery
         // glue string should be inserted each time but not before first entry
         if ( $this->whereString != 'WHERE ' )
         {
-            $this->whereString .= ' AND ';
+            $this->whereString .= " $join ";
         }
 
-        $this->whereString .= join( ' AND ', $expressions );
+        $this->whereString .= join( " $join ", $expressions );
         return $this;
     }
-
 
     // limit, order and group
 

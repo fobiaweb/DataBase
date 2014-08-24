@@ -35,6 +35,17 @@ require_once 'sqlabstraction/query_subselect_test_impl.php';
 require_once 'sqlabstraction/rdbms_limits.php';
 require_once 'sqlabstraction/param_values.php';
 
+try {
+if (!ezcDbInstance::get()) {
+        $db = ezcDbFactory::create('mysql://root@localhost/test');
+        ezcDbInstance::set($db);
+}
+} catch (Exception $exc) {
+    // echo $exc->getTraceAsString();
+}
+
+
+        
 /**
  * @package Database
  * @subpackage Tests
@@ -44,6 +55,7 @@ class ezcDatabaseSuite extends PHPUnit_Framework_TestSuite
 	public function __construct()
 	{
         parent::__construct();
+
         $this->setName( 'Database' );
         $this->addTest( ezcDatabaseFactoryTest::suite() );
         $this->addTest( ezcDatabaseTransactionsTest::suite() );

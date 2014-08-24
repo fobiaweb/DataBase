@@ -39,6 +39,7 @@ class DbStatement extends PDOStatement
             $query = parent::execute();
         } else {
             $query = parent::execute($input_parameters);
+            // $this->parsePlaceholder($query, $input_parameters);
         }
 
         if (method_exists($this->connection, 'log')) {
@@ -60,7 +61,7 @@ class DbStatement extends PDOStatement
      *
      * @param type $query
      */
-    public function parsePlaceholder($query, array $params = array() )
+    protected function parsePlaceholder($query, array $params = array() )
     {
         if ( substr_count ($query, '?') != count($params) ) {
             trigger_error("Не верное количество параметров", E_USER_ERROR);
@@ -105,6 +106,11 @@ class DbStatement extends PDOStatement
                 return (int) $val;
             }
         }, $query);
+    }
+
+    public function setQuery($query)
+    {
+        $this->queryString = $query;
     }
 
     /**
