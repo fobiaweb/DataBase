@@ -103,4 +103,24 @@ class QuerySelect extends ezcQuerySelect
                 break;
         }
     }
+
+
+     /**
+     * Returns the complete select query string.
+     * Возвращает полный 'select' строку запроса.
+     *
+     * Этот метод использует методы сборки построения
+     * Различных частей запроса на выборку
+     *
+     * @throws ezcQueryInvalidException если не удалось построить правильный запрос.
+     * @return string
+     */
+    public function getQuery()
+    {
+        if (!$this->selectString) {
+            $this->select('*');
+        }
+        
+        return parent::getQuery();
+    }
 }
