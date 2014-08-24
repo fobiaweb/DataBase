@@ -26,7 +26,7 @@ class ezcDbHandlerSqlite extends ezcDbHandler
      * @throws ezcDbMissingParameterException if the database name was not specified.
      * @param array $dbParams Database connection parameters (key=>value pairs).
      */
-    public function __construct( $dbParams, array $options = array() )
+    public function __construct( $dbParams )
     {
         if ($dbParams instanceof PDO) {
              parent::__construct($dbParams);

@@ -45,7 +45,7 @@ class ezcQuerySelectOracle extends ezcQuerySelect
      *
      * @param PDO $db
      */
-    public function __construct( PDO $db )
+    public function __construct( $db )
     {
         parent::__construct( $db );
     }
