@@ -6,14 +6,14 @@
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
  */
+
 /**
  * @package Base
  * @subpackage Tests
- *
- * @
  */
 class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
 {
+
     protected function setUp()
     {
         $uname = php_uname( 's' );
@@ -22,6 +22,7 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
             $this->markTestSkipped( 'Unix tests' );
         }
     }
+
     /**
      * @requires OS Linux
      */

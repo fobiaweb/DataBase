@@ -7,18 +7,17 @@
  * @license http://ez.no/licenses/new_bsd New BSD License
  */
 
-require_once( "ezcTestCaseBase.php");
-require_once( "base_test.php");
-require_once( "base_init_test.php");
-require_once( "features_unix_test.php");
-require_once( "features_windows_test.php");
-require_once( "base_options_test.php");
-require_once( "struct_test.php");
-require_once 'file_find_recursive_test.php';
-require_once 'file_is_absolute_path.php';
-require_once 'file_copy_recursive_test.php';
-require_once 'file_remove_recursive_test.php';
-require_once 'file_calculate_relative_path_test.php';
+require_once( "baseTest.php");
+require_once( "baseInitTest.php");
+require_once( "featuresUnixTest.php");
+require_once( "featuresWindowsTest.php");
+require_once( "baseOptionsTest.php");
+require_once( "structTest.php");
+require_once 'fileFindRecursiveTest.php';
+require_once 'fileIsAbsolutePathTest.php';
+require_once 'fileCopyRecursiveTest.php';
+require_once 'fileRemoveRecursiveTest.php';
+require_once 'fileCalculateRelativePathTest.php';
 
 /**
  * @package Base

@@ -11,6 +11,7 @@ $loader = require  dirname(__DIR__) . '/vendor/autoload.php';
 $loader->add("Fobia\\DataBase\\", __DIR__ );
 
 require_once __DIR__ . '/ezc/ezcTestUtils.php';
+require_once __DIR__ . '/ezc/ezcTestCaseBase.php';
 
 
 // var_dump($logger);

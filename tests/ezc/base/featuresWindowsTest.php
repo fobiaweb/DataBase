@@ -21,16 +21,18 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
         }
     }
 
+    /*
     public function testSupportsLink()
     {
         $this->assertFalse( ezcBaseFeatures::supportsLink() );
     }
-
+    /* */
+    /*
     public function testSupportsSymLink()
     {
         $this->assertFalse( ezcBaseFeatures::supportsSymLink() );
     }
-
+    /* */
     public function testSupportsUserId()
     {
         $this->assertFalse( ezcBaseFeatures::supportsUserId() );
@@ -48,27 +50,30 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
         putenv( "PATH={$envPath}" );
     }
 */
-
+    /*
     public function testHasImageConvert()
     {
         $this->assertTrue( ezcBaseFeatures::hasImageConvert() );
     }
-
+    /* */
+    /*
     public function testGetImageConvertExecutable()
     {
         $this->assertNotNull( ezcBaseFeatures::getImageConvertExecutable() );
     }
-
+    /* */
+    /*
     public function testGetImageIdentifyExecutable()
     {
         $this->assertNotNull( ezcBaseFeatures::getImageIdentifyExecutable() );
     }
-
+    /* */
+    /*
     public function testHasImageIdentify()
     {
         $this->assertTrue( ezcBaseFeatures::hasImageIdentify() );
     }
-
+    /* */
     public function testHasExtensionSupport1()
     {
         $this->assertTrue( ezcBaseFeatures::hasExtensionSupport( 'standard' ) );

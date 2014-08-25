@@ -18,7 +18,15 @@ class ezcBaseFileCopyRecursiveTest extends ezcTestCaseBase
 
     protected function setUp()
     {
+        $uname = php_uname( 's' );
+        if ( substr( $uname, 0, 7 ) == 'Windows' )
+        {
+            $this->markTestSkipped( 'Unix tests' );
+        }
+
         $this->tempDir = $this->createTempDir( __CLASS__ );
+        $this->removeTempDir($this->tempDir);
+
         mkdir( $this->tempDir . '/dir1' , 0777, true);
         mkdir( $this->tempDir . '/dir2' );
         mkdir( $this->tempDir . '/dir2/dir1' );

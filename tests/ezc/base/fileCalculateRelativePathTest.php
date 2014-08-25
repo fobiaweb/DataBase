@@ -49,7 +49,10 @@ class ezcBaseFileCalculateRelativePathTest extends ezcTestCaseBase
         $result = ezcBaseFile::calculateRelativePath( 'C:\\bar\\php.php', 'D:\\foo\\bar\\1\\2');
         self::assertEquals('..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'C:' . DIRECTORY_SEPARATOR . 'bar' . DIRECTORY_SEPARATOR . 'php.php', $result);
     }
-
+    
+    /**
+     * @requires OS Linux
+     */
     public function testRelative3()
     {
         $result = ezcBaseFile::calculateRelativePath( '/foo/1/2/php.php', '/foo/bar' );
