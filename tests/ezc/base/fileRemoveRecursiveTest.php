@@ -16,6 +16,9 @@ class ezcBaseFileRemoveRecursiveTest extends ezcTestCaseBase
 {
     protected $tempDir;
 
+    /**
+     * @group linux
+     */
     protected function setUp()
     {
         $uname = php_uname( 's' );
@@ -71,6 +74,9 @@ class ezcBaseFileRemoveRecursiveTest extends ezcTestCaseBase
         $this->removeTempDir();
     }
 
+    /**
+     * @group linux
+     */
     public function testRecursive1()
     {
         self::assertEquals( 15, count( ezcBaseFile::findRecursive( $this->tempDir ) ) );
@@ -80,6 +86,9 @@ class ezcBaseFileRemoveRecursiveTest extends ezcTestCaseBase
         self::assertEquals( 7, count( ezcBaseFile::findRecursive( $this->tempDir ) ) );
     }
 
+    /**
+     * @group linux
+     */
     public function testRecursive2()
     {
         self::assertEquals( 15, count( ezcBaseFile::findRecursive( $this->tempDir ) ) );
@@ -94,6 +103,9 @@ class ezcBaseFileRemoveRecursiveTest extends ezcTestCaseBase
         self::assertEquals( 15, count( ezcBaseFile::findRecursive( $this->tempDir ) ) );
     }
 
+    /**
+     * @group linux
+     */
     public function testRecursive3()
     {
         self::assertEquals( 15, count( ezcBaseFile::findRecursive( $this->tempDir ) ) );
@@ -108,6 +120,9 @@ class ezcBaseFileRemoveRecursiveTest extends ezcTestCaseBase
         self::assertEquals( 13, count( ezcBaseFile::findRecursive( $this->tempDir ) ) );
     }
 
+    /**
+     * @group linux
+     */
     public function testRecursive4()
     {
         self::assertEquals( 15, count( ezcBaseFile::findRecursive( $this->tempDir ) ) );
@@ -122,6 +137,9 @@ class ezcBaseFileRemoveRecursiveTest extends ezcTestCaseBase
         self::assertEquals( 15, count( ezcBaseFile::findRecursive( $this->tempDir ) ) );
     }
 
+    /**
+     * @group linux
+     */
     public function testRecursive5()
     {
         self::assertEquals( 15, count( ezcBaseFile::findRecursive( $this->tempDir ) ) );
@@ -143,6 +161,9 @@ class ezcBaseFileRemoveRecursiveTest extends ezcTestCaseBase
         self::assertEquals( 15, count( ezcBaseFile::findRecursive( $this->tempDir ) ) );
     }
 
+    /**
+     * @group linux
+     */
     public function testRecursiveNotWritableParent()
     {
         self::assertEquals( 15, count( ezcBaseFile::findRecursive( $this->tempDir ) ) );

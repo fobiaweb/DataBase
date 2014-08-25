@@ -12,6 +12,7 @@
  */
 class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
 {
+
     protected function setUp()
     {
         $uname = php_uname( 's' );
@@ -33,6 +34,10 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
         $this->assertFalse( ezcBaseFeatures::supportsSymLink() );
     }
     /* */
+
+    /**
+     * @group windows
+     */
     public function testSupportsUserId()
     {
         $this->assertFalse( ezcBaseFeatures::supportsUserId() );
@@ -74,11 +79,19 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
         $this->assertTrue( ezcBaseFeatures::hasImageIdentify() );
     }
     /* */
+
+
+    /**
+     * @group windows
+     */
     public function testHasExtensionSupport1()
     {
         $this->assertTrue( ezcBaseFeatures::hasExtensionSupport( 'standard' ) );
     }
 
+    /**
+     * @group windows
+     */
     public function testHasExtensionSupportNotFound1()
     {
         $this->assertEquals( false, ezcBaseFeatures::hasExtensionSupport( 'non_existent_extension' ) );
@@ -93,6 +106,9 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
         }
     }
 
+    /**
+     * @group windows
+     */
     public function testHasExtensionSupportNotFound2()
     {
         $this->assertEquals( false, ezcBaseFeatures::hasExtensionSupport( 'non_existent_extension' ) );
@@ -107,36 +123,59 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
         }
     }
 
+    /**
+     * @group windows
+     */
     public function testHasFunction1()
     {
         $this->assertEquals( true, ezcBaseFeatures::hasFunction( 'function_exists' ) );
     }
 
+    /**
+     * @group windows
+     */
     public function testHasFunction2()
     {
         $this->assertEquals( false, ezcBaseFeatures::hasFunction( 'non_existent_function_in_php' ) );
     }
 
+    /**
+     * @group windows
+     */
     public function testHasExtensionSupport2()
     {
         $this->assertEquals( true, ezcBaseFeatures::hasExtensionSupport( 'date', '5.1.0' ) );
     }
 
+
+    /**
+     * @group windows
+     */
     public function testClassExists()
     {
         $this->assertEquals( true, ezcBaseFeatures::classExists( 'Exception', false ) );
     }
 
+
+    /**
+     * @group windows
+     */
     public function testClassExistsAutoload()
     {
         $this->assertEquals( true, ezcBaseFeatures::classExists( 'ezcBaseFeatures' ) );
     }
 
+    /**
+     * @group windows
+     */
     public function testClassExistsNotFound()
     {
         $this->assertEquals( false, ezcBaseFeatures::classExists( 'ezcBaseNonExistingClass', false ) );
     }
 
+    /**
+     * @group windows
+     */
     public function testClassExistsNotFoundAutoload()
     {
         $this->assertEquals( false, ezcBaseFeatures::classExists( 'ezcBaseNonExistingClass' ) );
