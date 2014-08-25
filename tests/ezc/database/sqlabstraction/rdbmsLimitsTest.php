@@ -10,7 +10,7 @@ class ezcRdbmsLimitTest extends PHPUnit_Framework_TestCase
         $db = ezcTestUtils::instanceDb();
         $this->assertNotNull( $db, 'Database instance is not initialized.' );
 
-        $this->db = ezcDbFactory::create( 'sqlite:///tmp/testSqlite.sqlite' );
+        $this->db = ezcDbFactory::create( 'sqlite://:memory:' );
         $this->assertNotNull( $db, 'Database instance is not initialized.' );
     }
 
@@ -29,7 +29,6 @@ class ezcRdbmsLimitTest extends PHPUnit_Framework_TestCase
         for ( $i = 8; $i <= 256; $i *= 2 )
         {
             $table = str_pad( 'table', $i, 'very_' );
-
             try
             {
                 $db->exec( 'CREATE TABLE ' .
