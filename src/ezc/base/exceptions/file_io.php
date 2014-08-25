@@ -2,7 +2,7 @@
 /**
  * File containing the ezcBaseFileIoException class
  *
- * @package Base
+ * @package ezc.Base.Exception
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -11,7 +11,7 @@
  * ezcBaseFileIoException is thrown when a problem occurs while writing
  * and reading to/from an open file.
  *
- * @package Base
+ * @package ezc.Base.Exception
  * @version 1.8
  */
 class ezcBaseFileIoException extends ezcBaseFileException

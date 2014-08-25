@@ -14,7 +14,7 @@
  * - Правильная рекурсивная обработка транзакций
  *
  * @author  Dmitriy Tyurin <fobia3d@gmail.com>
- * @package Database
+ * @package ezc.Database
  * @version 1.4.9
  */
 interface ezcDbInterface

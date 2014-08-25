@@ -2,7 +2,7 @@
 /**
  * File containing the ezcBaseOptions class.
  *
- * @package Base
+ * @package ezc.Base
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -11,7 +11,7 @@
 /**
  * Base options class for all eZ components.
  *
- * @package Base
+ * @package ezc.Base
  * @version 1.8
  */
 abstract class ezcBaseOptions implements ArrayAccess

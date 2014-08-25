@@ -2,7 +2,7 @@
 /**
  * File containing the ezcBaseFileNotFoundException class
  *
- * @package Base
+ * @package ezc.Base.Exception
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -11,7 +11,7 @@
  * ezcBaseFileNotFoundException is thrown when a file or directory was tried to
  * be opened, but did not exist.
  *
- * @package Base
+ * @package ezc.Base.Exception
  * @version 1.8
  */
 class ezcBaseFileNotFoundException extends ezcBaseFileException

@@ -10,7 +10,7 @@
  * MySQL driver implementation
  *
  * @see ezcDbHandler
- * @package Database
+ * @package ezc.Database.Handler
  * @version 1.4.9
  */
 class ezcDbHandlerMysql extends ezcDbHandler

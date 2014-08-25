@@ -2,7 +2,7 @@
 /**
  * File containing the ezcBasePersistable interface
  *
- * @package Base
+ * @package ezc.Base.Interface
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -11,7 +11,7 @@
  * This class provides the interface that classes need to implement to be able
  * to be used by the PersistentObject and Search components.
  *
- * @package Base
+ * @package ezc.Base
  * @version 1.8
  */
 interface ezcBasePersistable

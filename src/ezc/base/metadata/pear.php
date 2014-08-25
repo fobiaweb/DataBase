@@ -2,7 +2,7 @@
 /**
  * File containing the ezcBaseMetaDataPearReader class.
  *
- * @package Base
+ * @package ezc.Base
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -18,7 +18,7 @@
  * age with their PHP 3 code and general liberal use of throwing warnings and
  * notices.
  *
- * @package Base
+ * @package ezc.Base
  * @version 1.8
  * @mainclass
  */

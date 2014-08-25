@@ -2,7 +2,7 @@
 /**
  * File containing the ezcBase class.
  *
- * @package Base
+ * @package ezc.Base
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -10,7 +10,7 @@
 /**
  * Base class implements the methods needed to use the eZ components.
  *
- * @package Base
+ * @package ezc.Base
  * @version 1.8
  * @mainclass
  */

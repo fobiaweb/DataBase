@@ -2,7 +2,7 @@
 /**
  * File containing the ezcQueryUpdate class.
  *
- * @package Database
+ * @package ezc.Database.Query
  * @version 1.4.9
  * @copyright Copyright (C) 2005-2010 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -36,7 +36,7 @@
  * $stmt->execute();
  * </code>
  *
- * @package Database
+ * @package ezc.Database.Query
  * @mainclass
  * @version 1.4.9
  */

@@ -4,7 +4,7 @@
  * @license http://ez.no/licenses/new_bsd New BSD License
  * @version 1.8
  * @filesource
- * @package Base
+ * @package ezc.Base
  */
 
 /**
@@ -33,7 +33,7 @@
  * ?>
  * </code>
  *
- * @package Base
+ * @package ezc.Base
  * @version 1.8
  * @mainclass
  */

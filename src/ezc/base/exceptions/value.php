@@ -2,7 +2,7 @@
 /**
  * File containing the ezcBaseValueException class.
  *
- * @package Base
+ * @package ezc.Base.Exception
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -11,7 +11,7 @@
  * ezcBaseValueException is thrown whenever the type or value of the given
  * variable is not as expected.
  *
- * @package Base
+ * @package ezc.Base.Exception
  * @version 1.8
  */
 class ezcBaseValueException extends ezcBaseException

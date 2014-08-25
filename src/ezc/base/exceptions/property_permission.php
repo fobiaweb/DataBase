@@ -2,7 +2,7 @@
 /**
  * File containing the ezcPropertyReadOnlyException class
  *
- * @package Base
+ * @package ezc.Base.Exception
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -11,7 +11,7 @@
  * ezcBasePropertyPermissionException is thrown whenever a read-only property
  * is tried to be changed, or when a write-only property was accessed for reading.
  *
- * @package Base
+ * @package ezc.Base.Exception
  * @version 1.8
  */
 class ezcBasePropertyPermissionException extends ezcBaseException

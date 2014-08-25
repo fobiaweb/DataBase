@@ -22,7 +22,7 @@
  * @method bool   setAttribute( int $attribute, mixed $value )
  *
  * @author  Dmitriy Tyurin <fobia3d@gmail.com>
- * @package Database
+ * @package ezc.Database
  * @version 1.4.9
  */
 abstract class ezcDbHandler implements ezcDbInterface

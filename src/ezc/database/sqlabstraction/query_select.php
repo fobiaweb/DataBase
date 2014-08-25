@@ -2,7 +2,7 @@
 /**
  * File containing the ezcQuerySelect class.
  *
- * @package Database
+ * @package ezc.Database.Query
  * @version 1.4.9
  * @copyright Copyright (C) 2005-2010 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -39,7 +39,7 @@
  * Database independence:
  * TRUE/FALSE, MySQL accepts 0 and 1 as boolean values. PostgreSQL does not, but accepts TRUE/FALSE.
  * @todo introduction needs examples with clone(), reusing a query and advanced binding.
- * @package Database
+ * @package ezc.Database.Query
  * @version 1.4.9
  * @mainclass
  */
@@ -670,7 +670,7 @@ class ezcQuerySelect extends ezcQuery
         $this->doWhere($args, 'OR');
         return $this;
     }
-    
+
     protected function doWhere(array $args, $join = 'AND')
     {
         if ( $this->whereString == null )

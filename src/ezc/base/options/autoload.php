@@ -2,7 +2,7 @@
 /**
  * File containing the ezcBaseAutoloadOptions class
  *
- * @package Base
+ * @package ezc.Base
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -21,7 +21,7 @@
  *           PHP in the autoload handler, you have to catch them in autoload()
  *           yourself and do something with the exception message.
  *
- * @package Base
+ * @package ezc.Base
  * @version 1.8
  */
 class ezcBaseAutoloadOptions extends ezcBaseOptions

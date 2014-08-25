@@ -13,13 +13,13 @@ use ezcQuerySelect;
 /**
  * QuerySelect class
  *
- * @package
+ * @package Fobia.DataBase.Query
  */
 class QuerySelect extends ezcQuerySelect
 {
     /**
      * Количество всех найденых строк и список строк по limit
-     * 
+     *
      * @return array [count, items]
      */
     public function fetchItemsCount()
@@ -120,7 +120,7 @@ class QuerySelect extends ezcQuerySelect
         if (!$this->selectString) {
             $this->select('*');
         }
-        
+
         return parent::getQuery();
     }
 }

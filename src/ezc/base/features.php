@@ -2,7 +2,7 @@
 /**
  * File containing the ezcBaseFeatures class.
  *
- * @package Base
+ * @package ezc.Base
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -26,7 +26,7 @@
  * ?>
  * </code>
  *
- * @package Base
+ * @package ezc.Base
  * @version 1.8
  */
 class ezcBaseFeatures
@@ -349,8 +349,8 @@ class ezcBaseFeatures
     }
 
     /**
-     * Reset the cached information. 
-     * 
+     * Reset the cached information.
+     *
      * @return void
      * @access private
      * @ignore

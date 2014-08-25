@@ -2,7 +2,7 @@
 /**
  * File containing the ezcBaseInvalidParentClassException class
  *
- * @package Base
+ * @package ezc.Base.Exception
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -10,7 +10,7 @@
 /**
  * Exception that is thrown if an invalid class is passed as custom class.
  *
- * @package Base
+ * @package ezc.Base.Exception
  * @version 1.8
  */
 class ezcBaseInvalidParentClassException extends ezcBaseException

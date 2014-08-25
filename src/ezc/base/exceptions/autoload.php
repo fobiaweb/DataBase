@@ -2,7 +2,7 @@
 /**
  * File containing the ezcBaseAutoloadException class
  *
- * @package Base
+ * @package ezc.Base.Exception
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -11,7 +11,7 @@
  * ezcBaseAutoloadException is thrown whenever a class can not be found with
  * the autoload mechanism.
  *
- * @package Base
+ * @package ezc.Base.Exception
  * @version 1.8
  */
 class ezcBaseAutoloadException extends ezcBaseException

@@ -2,7 +2,7 @@
 /**
  * File containing the ezcQueryException class.
  *
- * @package Database
+ * @package ezc.Database.Exception
  * @version 1.4.9
  * @copyright Copyright (C) 2005-2010 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
@@ -11,7 +11,7 @@
 /**
  * Base class for exceptions related to the SQL abstraction.
  *
- * @package Database
+ * @package ezc.Database.Exception
  * @version 1.4.9
  */
 class ezcQueryException extends ezcBaseException
