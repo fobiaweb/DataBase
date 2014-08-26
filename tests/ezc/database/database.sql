@@ -19,7 +19,8 @@ SET time_zone = "+00:00";
 --
 -- База данных: `ezc-test`
 --
-
+CREATE DATABASE IF NOT EXISTS  `ezc-test`;
+USE `ezc-test`;
 -- --------------------------------------------------------
 
 --
