@@ -14,7 +14,8 @@ use ezcDbHandler;
 /**
  * DBStatement class
  *
- * @package     Fobia.DataBase
+ * @author    Dmitriy Tyurin <fobia3d@gmail.com>
+ * @package   Fobia.DataBase
  */
 class DbStatement extends PDOStatement
 {
@@ -128,7 +129,7 @@ class DbStatement extends PDOStatement
         $result = array();
         $rows = $this->fetchAll();
 
-        
+
         if ( ! $columns ) {
             foreach ( $rows as $row ) {
                 $kv = $row[$key];

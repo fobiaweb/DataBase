@@ -17,6 +17,7 @@ require_once __DIR__ . '/DbStatement.php';
 /**
  * DbFactory class
  *
+ * @author    Dmitriy Tyurin <fobia3d@gmail.com>
  * @package   Fobia.DataBase
  */
 class DbFactory extends ezcDbFactory
@@ -30,7 +31,7 @@ class DbFactory extends ezcDbFactory
         if ($dbParams instanceof \PDO) {
             return parent::wrapper($dbParams);
         }
-        
+
         if ( ! is_array( $dbParams )) {
             $dns = $dbParams;
             $dbParams = array();

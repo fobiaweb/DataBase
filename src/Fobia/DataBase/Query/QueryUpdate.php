@@ -13,7 +13,8 @@ use ezcQueryUpdate;
 /**
  * QueryUpdate class
  *
- * @package Fobia.DataBase.Query
+ * @author    Dmitriy Tyurin <fobia3d@gmail.com>
+ * @package   Fobia.DataBase.Query
  */
 class QueryUpdate extends ezcQueryUpdate
 {

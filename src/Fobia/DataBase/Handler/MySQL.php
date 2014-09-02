@@ -19,7 +19,8 @@ use Fobia\DataBase\Query\QueryUpdate;
 /**
  * MySQL class, extends PDO
  *
- * @package     Fobia.DataBase.Handler
+ * @author    Dmitriy Tyurin <fobia3d@gmail.com>
+ * @package   Fobia.DataBase.Handler
  */
 class MySQL extends ezcDbHandlerMysql
 {
@@ -57,7 +58,7 @@ class MySQL extends ezcDbHandlerMysql
         if (@$dbParams['params']['logger'] instanceof \Psr\Log\LoggerInterface) {
             $this->logger = $dbParams['params']['logger'];
         } else {
-            $this->logger = (class_exists('\Fobia\Debug\Log')) 
+            $this->logger = (class_exists('\Fobia\Debug\Log'))
                     ? \Fobia\Debug\Log::getLogger()
                     :  new \Psr\Log\NullLogger();
         }
