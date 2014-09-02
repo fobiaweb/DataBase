@@ -15,11 +15,13 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
 
     protected function setUp()
     {
+        /*
         $uname = php_uname( 's' );
         if ( substr( $uname, 0, 7 ) != 'Windows' )
         {
             $this->markTestSkipped( 'Windows tests' );
         }
+        /* */
     }
 
     /*
@@ -37,6 +39,7 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
 
     /**
      * @group windows
+     * @requires OS Windows
      */
     public function testSupportsUserId()
     {
@@ -83,6 +86,7 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
 
     /**
      * @group windows
+     * @requires OS Windows
      */
     public function testHasExtensionSupport1()
     {
@@ -91,6 +95,7 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
 
     /**
      * @group windows
+     * @requires OS Windows
      */
     public function testHasExtensionSupportNotFound1()
     {
@@ -108,6 +113,7 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
 
     /**
      * @group windows
+     * @requires OS Windows
      */
     public function testHasExtensionSupportNotFound2()
     {
@@ -125,6 +131,7 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
 
     /**
      * @group windows
+     * @requires OS Windows
      */
     public function testHasFunction1()
     {
@@ -133,6 +140,7 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
 
     /**
      * @group windows
+     * @requires OS Windows
      */
     public function testHasFunction2()
     {
@@ -141,24 +149,25 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
 
     /**
      * @group windows
+     * @requires OS Windows
      */
     public function testHasExtensionSupport2()
     {
         $this->assertEquals( true, ezcBaseFeatures::hasExtensionSupport( 'date', '5.1.0' ) );
     }
 
-
     /**
      * @group windows
+     * @requires OS Windows
      */
     public function testClassExists()
     {
         $this->assertEquals( true, ezcBaseFeatures::classExists( 'Exception', false ) );
     }
 
-
     /**
      * @group windows
+     * @requires OS Windows
      */
     public function testClassExistsAutoload()
     {
@@ -167,6 +176,7 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
 
     /**
      * @group windows
+     * @requires OS Windows
      */
     public function testClassExistsNotFound()
     {
@@ -175,6 +185,7 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
 
     /**
      * @group windows
+     * @requires OS Windows
      */
     public function testClassExistsNotFoundAutoload()
     {

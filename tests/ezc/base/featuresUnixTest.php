@@ -16,11 +16,13 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
 
     protected function setUp()
     {
+        /*
         $uname = php_uname( 's' );
         if ( substr( $uname, 0, 7 ) == 'Windows' )
         {
             $this->markTestSkipped( 'Unix tests' );
         }
+        /* */
     }
 
     /**

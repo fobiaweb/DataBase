@@ -18,6 +18,7 @@ class ezcBaseFileCalculateRelativePathTest extends ezcTestCaseBase
 
     /**
      * @group windows
+     * @requires OS Windows
      */
     public function testRelative1()
     {
@@ -36,6 +37,7 @@ class ezcBaseFileCalculateRelativePathTest extends ezcTestCaseBase
 
     /**
      * @group windows
+     * @requires OS Windows
      */
     public function testRelative2()
     {

@@ -13,11 +13,11 @@ require_once( "featuresUnixTest.php");
 require_once( "featuresWindowsTest.php");
 require_once( "baseOptionsTest.php");
 require_once( "structTest.php");
-require_once 'fileFindRecursiveTest.php';
-require_once 'fileIsAbsolutePathTest.php';
-require_once 'fileCopyRecursiveTest.php';
-require_once 'fileRemoveRecursiveTest.php';
-require_once 'fileCalculateRelativePathTest.php';
+require_once "fileFindRecursiveTest.php";
+require_once "fileIsAbsolutePathTest.php";
+require_once "fileCopyRecursiveTest.php";
+require_once "fileRemoveRecursiveTest.php";
+require_once "fileCalculateRelativePathTest.php";
 
 /**
  * @package Base
