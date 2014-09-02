@@ -1,56 +1,119 @@
-# DataBase Component
+DataBase Component
 ====================
 
-A lightweight database layer on top of PHP's PDO.
+**Конструктор запросов**
+
+Конструктор запросов  (на основании библиотеке [eZ Components][]). предоставляет объектно-ориентированный способ написания SQL-запросов. 
+Он позволяет разработчику использовать методы и свойства класса для того, чтобы указать отдельные части SQL-запроса. 
+Затем конструктор собирает отдельные части в единый SQL-запрос, который может быть выполнен вызовом методов ``query`` или ``prepare``
+
+See [eZ Components](http://ezcomponents.org/), [tutorials Database](http://ezcomponents.org/docs/tutorials/Database/)
 
 
-# QueryExpression
+## Usage
 
-- ``setAliases``
-- ``hasAliases``
-- ``setValuesQuoting``
-- ``lOr``
-- ``lAnd``
-- ``not``
+Создаем подключение
+
+```php
+<?php
+$db = Fobia\DataBase\DbFactory::create('mysql://root@localhost/test');
+?>
+```
+
+
+Создаем один из генератор команды
+
+```php
+<?php
+$q = $db->createDeleteQuery();
+$q = $db->createInsertQuery();
+$q = $db->createReplaceQuery();
+$q = $db->createSelectQuery();
+$q = $db->createUpdateQuery();
+?>
+```
+
+
+Конструируем команду, вызывая поочередности характерные для нее методы. Вызываемые методы возвращают текущий объект, в связи с чем можно организовать цепочку вызовов
+
+```php
+<?php
+$q->select('column')->limit(1)->orderBy('timestamp')->where('id > 10');
+$q->offset(10);
+?>
+```
+
+
+Подготавливаем запрос к выполнению. Возвращает ассоциированный с этим запросом объект
+
+```php
+<?php
+$stmt = $q->prepare();
+?>
+```
+
+
+Выполняем запрос иразбераем строки
+
+```php
+<?php
+$stmt->execute();
+print_r($stmt->fetchAll());
+?>
+```
+
+
+
+
+## QueryExpression
+
+Класс ``ezcQueryExpression`` используется для создания базы данных независимой SQL выражение. 
+
 - ``add``
-- ``sub``
-- ``mul``
-- ``div``
-- ``eq``
-- ``neq``
-- ``gt``
-- ``gte``
-- ``lt``
-- ``lte``
-- ``in``
-- ``isNull``
-- ``between``
-- ``like``
 - ``avg``
-- ``count``
-- ``max``
-- ``min``
-- ``sum``
-- ``md5``
-- ``length``
-- ``round``
-- ``mod``
-- ``now``
-- ``subString``
-- ``concat``
-- ``position``
-- ``lower``
-- ``upper``
-- ``floor``
-- ``ceil``
+- ``between``
 - ``bitAnd``
 - ``bitOr``
 - ``bitXor``
-- ``unixTimestamp``
-- ``dateSub``
+- ``ceil``
+- ``concat``
+- ``count``
 - ``dateAdd``
 - ``dateExtract``
-- ``searchedCase``
+- ``dateSub``
+- ``div``
+- ``eq``
+- ``floor``
+- ``gt``
+- [gte](#gte)
+- ``hasAliases``
+- ``in``
+- ``isNull``
+- [lAnd](#land)
+- ``length``
+- ``like``
+- [lOr](#lor)
+- ``lower``
+- ``lt``
+- ``lte``
+- ``max``
+- ``md5``
+- ``min``
+- ``mod``
+- ``mul``
+- [neq](#neq)
+- ``not``
+- ``now``
+- ``position``
+- ``round``
+- [searchedCase](#searchedcase)
+- ``setAliases``
+- ``setValuesQuoting``
+- ``sub``
+- ``subString``
+- ``sum``
+- ``unixTimestamp``
+- ``upper``
 
 ```php
 $q = ezcDbInstance::get()->createSelectQuery(); 
@@ -58,26 +121,46 @@ $e = $q->expr;
 $q->select( '*' )->from( 'table' ) ->where( $expr )
 ```
 
+
+##### gte
+
 ```php
 $q->expr->gte( 'id', $q->bindValue( 1 ) ) );
 // SELECT * FROM table WHERE id >= :ezcValue1
+```
 
-$q->where( $e->lOr( $e->eq( 'id', $q->bindValue( 1 ) ),
-                    $e->eq( 'id', $q->bindValue( 2 ) ) ) 
-         );
-// SELECT * FROM table WHERE ( id = :ezcValue1 OR id = :ezcValue2 )
 
+##### lAnd
+
+```php
 $q->where( $e->lAnd( $e->eq( 'id', $q->bindValue( 1 ) ),
                      $e->eq( 'id', $q->bindValue( 2 ) ) ) 
           );
 // SELECT * FROM table WHERE ( id = :ezcValue1 AND id = :ezcValue2 )
+```
 
+
+##### lOr
+
+```php
+$q->where( $e->lOr( $e->eq( 'id', $q->bindValue( 1 ) ),
+                    $e->eq( 'id', $q->bindValue( 2 ) ) ) 
+         );
+// SELECT * FROM table WHERE ( id = :ezcValue1 OR id = :ezcValue2 )
+```
+
+
+##### neq
+
+```php
 $q->where( $q->expr->neq( 'id', $q->bindValue( 1 ) ) );
 // SELECT * FROM table WHERE id <> :ezcValue1
+```
 
-$q->where( $q->expr->gte( 'id', $q->bindValue( 1 ) ) );
-// SELECT * FROM table WHERE id >= :ezcValue1
 
+##### searchedCase
+
+```php
 $q->select(
     $q->expr->searchedCase(
         array( $q->expr->gte( 'column1', 20 ), 'column1' )
@@ -92,3 +175,11 @@ $q->select(
 //           END
 // FROM table
 ```
+
+
+------------------
+
+[eZ Components]: http://ezcomponents.org/
+[PSR-0]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+[PSR-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
+[PSR-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md

@@ -13,7 +13,8 @@ use ezcQueryInsert;
 /**
  * QueryReplace class
  *
- * @package Fobia.DataBase.Query
+ * @author    Dmitriy Tyurin <fobia3d@gmail.com>
+ * @package   Fobia.DataBase.Query
  */
 class QueryReplace extends ezcQueryInsert
 {
