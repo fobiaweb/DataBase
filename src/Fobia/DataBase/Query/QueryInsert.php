@@ -35,6 +35,18 @@ class QueryInsert extends ezcQueryInsert
     }
 
     /**
+     * Игнорированая вставка
+     * 
+     * @param bool $check
+     * @return self
+     */
+    public function ignore( $check = true )
+    {
+        $this->ignore = ($check) ? 'IGNORE' : false;
+        return $this;
+    }
+
+    /**
      * Returns the query string for this query object.
      *
      * @throws ezcQueryInvalidException if no table or no values have been set.
