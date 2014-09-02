@@ -83,17 +83,31 @@ class MySQL extends ezcDbHandlerMysql
     public function query($statement)
     {
         $time  = microtime(true);
-        $query =  parent::query($statement);
+        if ($query =  parent::query($statement)) {
+            $query->time = microtime(true) - $time;
+        }
         $this->log($statement, $time);
         return $query;
     }
 
+    /**
+     * Начинает транзакцию
+     *
+     * @see \ezcDbHandler::beginTransaction()
+     * @return bool
+     */
     public function beginTransaction()
     {
         $this->logger->info("[SQL]:: ==> Begin transaction");
         return parent::beginTransaction();
     }
 
+    /**
+     * Выполняет транзакцию.
+     *
+     * @see \ezcDbHandler::commit()
+     * @return bool
+     */
     public function commit()
     {
         $r = parent::commit();
@@ -106,6 +120,12 @@ class MySQL extends ezcDbHandlerMysql
         return $r;
     }
 
+    /**
+     * Откат транзакции.
+     *
+     * @see \ezcDbHandler::rollback()
+     * @return bool
+     */
     public function rollback()
     {
         $this->logger->info("[SQL]:: ==> Rollback transaction");
