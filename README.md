@@ -82,7 +82,7 @@ print_r($stmt->fetchAll());
 - ``dateExtract``
 - ``dateSub``
 - ``div``
-- ``eq``
+- [eq](#eq)
 - ``floor``
 - ``gt``
 - [gte](#gte)
@@ -119,6 +119,14 @@ print_r($stmt->fetchAll());
 $q = ezcDbInstance::get()->createSelectQuery(); 
 $e = $q->expr;
 $q->select( '*' )->from( 'table' ) ->where( $expr )
+```
+
+
+##### eq
+
+```php
+$q->expr->eq( 'id', $q->bindValue( 1 ) ) );
+// SELECT * FROM table WHERE id = :ezcValue1
 ```
 
 
