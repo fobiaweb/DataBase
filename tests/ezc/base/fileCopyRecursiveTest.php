@@ -4,12 +4,12 @@
  * @license http://ez.no/licenses/new_bsd New BSD License
  * @version 1.8
  * @filesource
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  */
 
 /**
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  */
 class ezcBaseFileCopyRecursiveTest extends ezcTestCaseBase
@@ -240,7 +240,7 @@ class ezcBaseFileCopyRecursiveTest extends ezcTestCaseBase
 
     public static function suite()
     {
-         return new PHPUnit_Framework_TestSuite( __CLASS__ );
+        return new PHPUnit_Framework_TestSuite( __CLASS__ );
     }
 
     public function testRecursiveCopyDirCalled0()

@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
@@ -11,7 +11,7 @@ require_once dirname(__FILE__) . '/init/base_init_callback.php';
 require_once dirname(__FILE__) . '/init/base_init_class.php';
 
 /**
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  */
 class ezcBaseInitTest extends ezcTestCaseBase
@@ -75,6 +75,6 @@ class ezcBaseInitTest extends ezcTestCaseBase
 
     public static function suite()
     {
-        return new PHPUnit_Framework_TestSuite("ezcBaseInitTest");
+        return new PHPUnit_Framework_TestSuite( __CLASS__ );
     }
 }

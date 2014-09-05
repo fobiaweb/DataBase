@@ -2,6 +2,11 @@
 
 class ezcQuerySelectJoinTestImpl extends PHPUnit_Framework_TestCase
 {
+    public static function suite()
+    {
+        return new PHPUnit_Framework_TestSuite( __CLASS__ );
+    }
+
     protected $q;
     protected $e;
     protected $db;
@@ -162,7 +167,7 @@ class ezcQuerySelectJoinTestImpl extends PHPUnit_Framework_TestCase
         }
 
         $this->fail($this->q->getQuery(). "\nCall to innerJoin() not after from() did not fail" );
-         * 
+         *
          */
     }
 

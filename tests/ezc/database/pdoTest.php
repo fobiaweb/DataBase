@@ -16,6 +16,11 @@
  */
 class ezcPdoTest extends PHPUnit_Framework_TestCase
 {
+    public static function suite()
+    {
+        return new PHPUnit_Framework_TestSuite( __CLASS__ );
+    }
+
     protected function setUp()
     {
         $db = ezcTestUtils::instanceDb();

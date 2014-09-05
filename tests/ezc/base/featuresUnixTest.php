@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
@@ -8,7 +8,7 @@
  */
 
 /**
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  */
 class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
@@ -16,7 +16,6 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
 
     protected function setUp()
     {
-        /*
         $uname = php_uname( 's' );
         if ( substr( $uname, 0, 7 ) == 'Windows' )
         {
@@ -200,6 +199,6 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
 
     public static function suite()
     {
-        return new PHPUnit_Framework_TestSuite(__CLASS__);
+        return new PHPUnit_Framework_TestSuite( __CLASS__ );
     }
 }

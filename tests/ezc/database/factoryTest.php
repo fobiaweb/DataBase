@@ -5,6 +5,11 @@
  */
 class ezcDbFactoryTest extends PHPUnit_Framework_TestCase
 {
+    public static function suite()
+    {
+        return new PHPUnit_Framework_TestSuite( __CLASS__ );
+    }
+
     protected $default;
 
     /**
@@ -34,7 +39,7 @@ class ezcDbFactoryTest extends PHPUnit_Framework_TestCase
         }
         catch ( ezcDbMissingParameterException $e ) {}
     }
-    
+
     /**
      * @covers ezcDbFactory::addImplementation
      * @todo   Implement testAddImplementation().
@@ -65,7 +70,7 @@ class ezcDbFactoryTest extends PHPUnit_Framework_TestCase
         $array = ezcDbFactory::getImplementations();
         $this->assertEquals( array( 'mysql', 'pgsql', 'oracle', 'sqlite', 'mssql' ), $array );
     }
-    
+
     /**
      * @covers ezcDbFactory::create
      * @todo   Implement testCreate().
@@ -86,7 +91,7 @@ class ezcDbFactoryTest extends PHPUnit_Framework_TestCase
         $db = ezcDbFactory::wrapper($pdo);
         $this->assertTrue( $db instanceof ezcDbInterface );
     }
-    
+
     public function testSqliteDSN1()
     {
         if ( !ezcBaseFeatures::hasExtensionSupport( 'pdo_sqlite') )

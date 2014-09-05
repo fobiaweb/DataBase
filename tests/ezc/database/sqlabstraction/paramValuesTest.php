@@ -2,6 +2,11 @@
 
 class ezcParamValuesTest extends PHPUnit_Framework_TestCase
 {
+    public static function suite()
+    {
+        return new PHPUnit_Framework_TestSuite( __CLASS__ );
+    }
+
 
     protected $boolColumn;
     protected $intColumn;

@@ -2,6 +2,11 @@
 
 class ezcQueryExpressionTest extends PHPUnit_Framework_TestCase
 {
+    public static function suite()
+    {
+        return new PHPUnit_Framework_TestSuite( __CLASS__ );
+    }
+
     private $q;
     private $e;
     private $db;

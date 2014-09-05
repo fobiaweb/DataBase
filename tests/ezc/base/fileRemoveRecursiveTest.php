@@ -4,12 +4,12 @@
  * @license http://ez.no/licenses/new_bsd New BSD License
  * @version 1.8
  * @filesource
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  */
 
 /**
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  */
 class ezcBaseFileRemoveRecursiveTest extends ezcTestCaseBase
@@ -180,6 +180,6 @@ class ezcBaseFileRemoveRecursiveTest extends ezcTestCaseBase
 
     public static function suite()
     {
-         return new PHPUnit_Framework_TestSuite( "ezcBaseFileRemoveRecursiveTest" );
+        return new PHPUnit_Framework_TestSuite( __CLASS__ );
     }
 }

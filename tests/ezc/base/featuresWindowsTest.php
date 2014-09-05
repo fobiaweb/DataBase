@@ -1,13 +1,13 @@
 <?php
 /**
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
  */
 /**
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  */
 class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
@@ -15,7 +15,6 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
 
     protected function setUp()
     {
-        /*
         $uname = php_uname( 's' );
         if ( substr( $uname, 0, 7 ) != 'Windows' )
         {

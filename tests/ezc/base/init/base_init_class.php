@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
@@ -10,7 +10,7 @@
 /**
  * Test class for ezcBaseInitTest.
  *
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  */
 class testBaseInitClass

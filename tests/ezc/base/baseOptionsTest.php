@@ -1,6 +1,6 @@
 <?php
 /**
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  * @version 1.8
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
@@ -10,14 +10,14 @@
 require_once dirname( __FILE__ ) . '/init/test_options.php';
 
 /**
- * @package Base
+ * @package ezc.Base
  * @subpackage Tests
  */
 class ezcBaseOptionsTest extends ezcTestCaseBase
 {
     public static function suite()
     {
-        return new PHPUnit_Framework_TestSuite("ezcBaseOptionsTest");
+        return new PHPUnit_Framework_TestSuite( __CLASS__ );
     }
 
     public function testGetAccessFailure()
