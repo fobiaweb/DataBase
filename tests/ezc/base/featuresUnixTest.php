@@ -6,22 +6,25 @@
  * @copyright Copyright (C) 2005-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/new_bsd New BSD License
  */
+
 /**
  * @package Base
  * @subpackage Tests
- *
- * @
  */
 class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
 {
+
     protected function setUp()
     {
+        /*
         $uname = php_uname( 's' );
         if ( substr( $uname, 0, 7 ) == 'Windows' )
         {
             $this->markTestSkipped( 'Unix tests' );
         }
+        /* */
     }
+
     /**
      * @requires OS Linux
      */
@@ -29,6 +32,7 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
     {
         $this->assertEquals( true, ezcBaseFeatures::supportsLink() );
     }
+
     /**
      * @requires OS Linux
      */
@@ -36,6 +40,7 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
     {
         $this->assertEquals( true, ezcBaseFeatures::supportsSymLink() );
     }
+
     /**
      * @requires OS Linux
      */
@@ -92,7 +97,8 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
     {
         $this->assertEquals( true, ezcBaseFeatures::hasImageIdentify() );
     }
-    /**/
+    /* */
+
     /**
      * @requires OS Linux
      */
@@ -101,6 +107,7 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
         $this->assertEquals( true, ezcBaseFeatures::hasExtensionSupport( 'standard' ) );
     }
     /**/
+
     /**
      * @requires OS Linux
      */
@@ -117,6 +124,7 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
                                  $e->getMessage() );
         }
     }
+
     /**
      * @requires OS Linux
      */
@@ -132,8 +140,8 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
             $this->assertEquals( "The extension 'non_existent_extension' with version '1.2' could not be found. This is just a test.",
                                  $e->getMessage() );
         }
-    }
-    /**/
+    } /* */
+
     /**
      * @requires OS Linux
      */
@@ -141,6 +149,7 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
     {
         $this->assertEquals( true, ezcBaseFeatures::hasFunction( 'function_exists' ) );
     }
+
     /**
      * @requires OS Linux
      */
@@ -148,6 +157,7 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
     {
         $this->assertEquals( false, ezcBaseFeatures::hasFunction( 'non_existent_function_in_php' ) );
     }
+
     /**
      * @requires OS Linux
      */
@@ -155,6 +165,7 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
     {
         $this->assertEquals( true, ezcBaseFeatures::hasExtensionSupport( 'date', '5.1.0' ) );
     }
+
     /**
      * @requires OS Linux
      */
@@ -162,6 +173,7 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
     {
         $this->assertEquals( true, ezcBaseFeatures::classExists( 'Exception', false ) );
     }
+
     /**
      * @requires OS Linux
      */
@@ -169,6 +181,7 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
     {
         $this->assertEquals( true, ezcBaseFeatures::classExists( 'ezcBaseFeatures' ) );
     }
+
     /**
      * @requires OS Linux
      */
@@ -176,6 +189,7 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
     {
         $this->assertEquals( false, ezcBaseFeatures::classExists( 'ezcBaseNonExistingClass', false ) );
     }
+
     /**
      * @requires OS Linux
      */

@@ -17,9 +17,10 @@ use Fobia\DataBase\Query\QuerySelect;
 use Fobia\DataBase\Query\QueryUpdate;
 
 /**
- * MySQL class, extends PDO
+ * Обертка PDO драйвера MySQL
  *
- * @package     Fobia.DataBase.Handler
+ * @author    Dmitriy Tyurin <fobia3d@gmail.com>
+ * @package   Fobia.DataBase.Handler
  */
 class MySQL extends ezcDbHandlerMysql
 {
@@ -57,7 +58,7 @@ class MySQL extends ezcDbHandlerMysql
         if (@$dbParams['params']['logger'] instanceof \Psr\Log\LoggerInterface) {
             $this->logger = $dbParams['params']['logger'];
         } else {
-            $this->logger = (class_exists('\Fobia\Debug\Log')) 
+            $this->logger = (class_exists('\Fobia\Debug\Log'))
                     ? \Fobia\Debug\Log::getLogger()
                     :  new \Psr\Log\NullLogger();
         }
@@ -77,38 +78,6 @@ class MySQL extends ezcDbHandlerMysql
             $this->profiles = true;
             $this->logger->debug('==> Set profiling');
         }
-    }
-
-    public function query($statement)
-    {
-        $time  = microtime(true);
-        $query =  parent::query($statement);
-        $this->log($statement, $time);
-        return $query;
-    }
-
-    public function beginTransaction()
-    {
-        $this->logger->info("[SQL]:: ==> Begin transaction");
-        return parent::beginTransaction();
-    }
-
-    public function commit()
-    {
-        $r = parent::commit();
-
-        $log = ($r)
-                ? "Commit transaction"
-                : "Error commit transaction";
-        $this->logger->error("[SQL]:: ==> $log");
-
-        return $r;
-    }
-
-    public function rollback()
-    {
-        $this->logger->info("[SQL]:: ==> Rollback transaction");
-        return parent::rollback();
     }
 
     /**
@@ -165,6 +134,68 @@ class MySQL extends ezcDbHandlerMysql
     {
         return $this->logger;
     }
+
+    public function setLogger($logger)
+    {
+        $this->logger = $logger;
+    }
+
+    /* ***********************************************
+     * OVERRIDE
+     * ********************************************** */
+
+    public function query($statement)
+    {
+        $time  = microtime(true);
+        if ($query =  parent::query($statement)) {
+            $query->time = microtime(true) - $time;
+        }
+        $this->log($statement, $time);
+        return $query;
+    }
+
+    /**
+     * Начинает транзакцию
+     *
+     * @see \ezcDbHandler::beginTransaction()
+     * @return bool
+     */
+    public function beginTransaction()
+    {
+        $this->logger->info("[SQL]:: ==> Begin transaction");
+        return parent::beginTransaction();
+    }
+
+    /**
+     * Выполняет транзакцию.
+     *
+     * @see \ezcDbHandler::commit()
+     * @return bool
+     */
+    public function commit()
+    {
+        $r = parent::commit();
+
+        $log = ($r)
+                ? "Commit transaction"
+                : "Error commit transaction";
+        $this->logger->error("[SQL]:: ==> $log");
+
+        return $r;
+    }
+
+    /**
+     * Откат транзакции.
+     *
+     * @see \ezcDbHandler::rollback()
+     * @return bool
+     */
+    public function rollback()
+    {
+        $this->logger->info("[SQL]:: ==> Rollback transaction");
+        return parent::rollback();
+    }
+
 
     /**
      * Returns a new QueryInsert derived object for the correct database type.

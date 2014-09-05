@@ -14,6 +14,12 @@
  */
 class ezcBaseFileCalculateRelativePathTest extends ezcTestCaseBase
 {
+
+
+    /**
+     * @group windows
+     * @requires OS Windows
+     */
     public function testRelative1()
     {
         $result = ezcBaseFile::calculateRelativePath( 'C:/foo/1/2/php.php', 'C:/foo/bar' );
@@ -29,6 +35,10 @@ class ezcBaseFileCalculateRelativePathTest extends ezcTestCaseBase
         self::assertEquals('..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'bar' . DIRECTORY_SEPARATOR . 'php.php', $result);
     }
 
+    /**
+     * @group windows
+     * @requires OS Windows
+     */
     public function testRelative2()
     {
         $result = ezcBaseFile::calculateRelativePath( 'C:\\foo\\1\\2\\php.php', 'C:\\foo\\bar' );
@@ -50,6 +60,9 @@ class ezcBaseFileCalculateRelativePathTest extends ezcTestCaseBase
         self::assertEquals('..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'C:' . DIRECTORY_SEPARATOR . 'bar' . DIRECTORY_SEPARATOR . 'php.php', $result);
     }
 
+    /**
+     * @requires OS Linux
+     */
     public function testRelative3()
     {
         $result = ezcBaseFile::calculateRelativePath( '/foo/1/2/php.php', '/foo/bar' );

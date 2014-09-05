@@ -17,6 +17,16 @@
 class ezcBase
 {
     /**
+     * Обозначает систему Windows
+     */
+    const OS_WINDOWS = "Windows";
+
+    /**
+     * Обозначает систему Linux
+     */
+    const OS_LINUX = "Linux";
+
+    /**
      * Used for dependency checking, to check for a PHP extension.
      */
     const DEP_PHP_EXTENSION = "extension";

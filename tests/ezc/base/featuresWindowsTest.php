@@ -12,25 +12,35 @@
  */
 class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
 {
+
     protected function setUp()
     {
+        /*
         $uname = php_uname( 's' );
         if ( substr( $uname, 0, 7 ) != 'Windows' )
         {
             $this->markTestSkipped( 'Windows tests' );
         }
+        /* */
     }
 
+    /*
     public function testSupportsLink()
     {
         $this->assertFalse( ezcBaseFeatures::supportsLink() );
     }
-
+    /* */
+    /*
     public function testSupportsSymLink()
     {
         $this->assertFalse( ezcBaseFeatures::supportsSymLink() );
     }
+    /* */
 
+    /**
+     * @group windows
+     * @requires OS Windows
+     */
     public function testSupportsUserId()
     {
         $this->assertFalse( ezcBaseFeatures::supportsUserId() );
@@ -48,32 +58,45 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
         putenv( "PATH={$envPath}" );
     }
 */
-
+    /*
     public function testHasImageConvert()
     {
         $this->assertTrue( ezcBaseFeatures::hasImageConvert() );
     }
-
+    /* */
+    /*
     public function testGetImageConvertExecutable()
     {
         $this->assertNotNull( ezcBaseFeatures::getImageConvertExecutable() );
     }
-
+    /* */
+    /*
     public function testGetImageIdentifyExecutable()
     {
         $this->assertNotNull( ezcBaseFeatures::getImageIdentifyExecutable() );
     }
-
+    /* */
+    /*
     public function testHasImageIdentify()
     {
         $this->assertTrue( ezcBaseFeatures::hasImageIdentify() );
     }
+    /* */
 
+
+    /**
+     * @group windows
+     * @requires OS Windows
+     */
     public function testHasExtensionSupport1()
     {
         $this->assertTrue( ezcBaseFeatures::hasExtensionSupport( 'standard' ) );
     }
 
+    /**
+     * @group windows
+     * @requires OS Windows
+     */
     public function testHasExtensionSupportNotFound1()
     {
         $this->assertEquals( false, ezcBaseFeatures::hasExtensionSupport( 'non_existent_extension' ) );
@@ -88,6 +111,10 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
         }
     }
 
+    /**
+     * @group windows
+     * @requires OS Windows
+     */
     public function testHasExtensionSupportNotFound2()
     {
         $this->assertEquals( false, ezcBaseFeatures::hasExtensionSupport( 'non_existent_extension' ) );
@@ -102,36 +129,64 @@ class ezcBaseFeaturesWindowsTest extends ezcTestCaseBase
         }
     }
 
+    /**
+     * @group windows
+     * @requires OS Windows
+     */
     public function testHasFunction1()
     {
         $this->assertEquals( true, ezcBaseFeatures::hasFunction( 'function_exists' ) );
     }
 
+    /**
+     * @group windows
+     * @requires OS Windows
+     */
     public function testHasFunction2()
     {
         $this->assertEquals( false, ezcBaseFeatures::hasFunction( 'non_existent_function_in_php' ) );
     }
 
+    /**
+     * @group windows
+     * @requires OS Windows
+     */
     public function testHasExtensionSupport2()
     {
         $this->assertEquals( true, ezcBaseFeatures::hasExtensionSupport( 'date', '5.1.0' ) );
     }
 
+    /**
+     * @group windows
+     * @requires OS Windows
+     */
     public function testClassExists()
     {
         $this->assertEquals( true, ezcBaseFeatures::classExists( 'Exception', false ) );
     }
 
+    /**
+     * @group windows
+     * @requires OS Windows
+     */
     public function testClassExistsAutoload()
     {
         $this->assertEquals( true, ezcBaseFeatures::classExists( 'ezcBaseFeatures' ) );
     }
 
+    /**
+     * @group windows
+     * @requires OS Windows
+     */
     public function testClassExistsNotFound()
     {
         $this->assertEquals( false, ezcBaseFeatures::classExists( 'ezcBaseNonExistingClass', false ) );
     }
 
+    /**
+     * @group windows
+     * @requires OS Windows
+     */
     public function testClassExistsNotFoundAutoload()
     {
         $this->assertEquals( false, ezcBaseFeatures::classExists( 'ezcBaseNonExistingClass' ) );

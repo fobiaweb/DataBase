@@ -7,7 +7,7 @@
  * @license http://ez.no/licenses/new_bsd New BSD License
  */
 
-require_once dirname( __FILE__ ) . '/test_options.php';
+require_once dirname( __FILE__ ) . '/init/test_options.php';
 
 /**
  * @package Base

@@ -223,6 +223,8 @@ class ezcQueryExpression
      * $q->select( '*' )->from( 'table' )
      *                  ->where( $e->lOr( $e->eq( 'id', $q->bindValue( 1 ) ),
      *                                    $e->eq( 'id', $q->bindValue( 2 ) ) ) );
+     * 
+     * // SELECT * FROM table WHERE ( id = :ezcValue1 OR id = :ezcValue2 )
      * </code>
      *
      * @throws ezcDbAbstractionException if called with no parameters.
@@ -260,6 +262,8 @@ class ezcQueryExpression
      * $q->select( '*' )->from( 'table' )
      *                  ->where( $e->lAnd( $e->eq( 'id', $q->bindValue( 1 ) ),
      *                                     $e->eq( 'id', $q->bindValue( 2 ) ) ) );
+     *
+     * // SELECT * FROM table WHERE ( id = :ezcValue1 AND id = :ezcValue2 )
      * </code>
      *
      * @throws ezcDbAbstractionException if called with no parameters.
@@ -350,6 +354,7 @@ class ezcQueryExpression
      * $q = ezcDbInstance::get()->createSelectQuery();
      * $q->select( '*' )->from( 'table' )
      *                  ->where( $q->expr->add( 'id', 2 )  );
+     * // SELECT * FROM table WHERE ( id + 2 )
      * </code>
      *
      * @throws ezcDbAbstractionException if called with no parameters.
@@ -463,6 +468,8 @@ class ezcQueryExpression
      * $q = ezcDbInstance::get()->createSelectQuery();
      * $q->select( '*' )->from( 'table' )
      *                  ->where( $q->expr->neq( 'id', $q->bindValue( 1 ) ) );
+     * 
+     * // SELECT * FROM table WHERE id <> :ezcValue1
      * </code>
      *
      * @param string $value1 logical expression to compare
@@ -506,6 +513,8 @@ class ezcQueryExpression
      * $q = ezcDbInstance::get()->createSelectQuery();
      * $q->select( '*' )->from( 'table' )
      *                  ->where( $q->expr->gte( 'id', $q->bindValue( 1 ) ) );
+     *
+     * // SELECT * FROM table WHERE id >= :ezcValue1
      * </code>
      *
      * @param string $value1 logical expression to compare
@@ -1066,6 +1075,13 @@ class ezcQueryExpression
      *      )
      *  )
      *     ->from( 'table' );
+     *
+     * // SELECT  CASE
+     * //             WHEN column1 >= 20 THEN column1
+     * //             WHEN column2 >= 50 THEN column2
+     * //             ELSE column3
+     * //           END
+     * // FROM table
      * </code>
      *
      * @throws ezcQueryVariableParameterException

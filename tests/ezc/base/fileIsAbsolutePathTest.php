@@ -14,6 +14,10 @@
  */
 class ezcBaseFileIsAbsoluteTest extends ezcTestCaseBase
 {
+
+    /**
+     * @group windows
+     */
     public static function testAbsoluteWindows1()
     {
         self::assertEquals( true, ezcBaseFile::isAbsolutePath( 'c:\\winnt\\winnt.sys', 'Windows' ) );
@@ -46,6 +50,9 @@ class ezcBaseFileIsAbsoluteTest extends ezcTestCaseBase
         self::assertEquals( false, ezcBaseFile::isAbsolutePath( 'etc\\init.d\\apache', 'Windows' ) );
     }
 
+    /**
+     * @group windows
+     */
     public static function testAbsoluteWindows2()
     {
         self::assertEquals( true, ezcBaseFile::isAbsolutePath( 'c://winnt//winnt.sys', 'Windows' ) );
@@ -78,6 +85,9 @@ class ezcBaseFileIsAbsoluteTest extends ezcTestCaseBase
         self::assertEquals( false, ezcBaseFile::isAbsolutePath( 'etc//init.d//apache', 'Windows' ) );
     }
 
+    /**
+     * @group windows
+     */
     public static function testAbsoluteWindows3()
     {
         if ( ezcBaseFeatures::os() !== 'Windows' )

@@ -13,7 +13,8 @@ use ezcQueryInsert;
 /**
  * QueryInsert class
  *
- * @package Fobia.DataBase.Query
+ * @author    Dmitriy Tyurin <fobia3d@gmail.com>
+ * @package   Fobia.DataBase.Query
  */
 class QueryInsert extends ezcQueryInsert
 {
@@ -26,12 +27,24 @@ class QueryInsert extends ezcQueryInsert
      * insertInto() returns a pointer to $this.
      *
      * @param string $table
-     * @return ezcQueryInsert
+     * @return \ezcQueryInsert
      */
     public function insertIntoIgnore( $table )
     {
         $this->ignore = 'IGNORE' ;
         return $this->insertInto( $table );
+    }
+
+    /**
+     * Игнорированая вставка
+     *
+     * @param bool $check
+     * @return \ezcQueryInsert
+     */
+    public function ignore( $check = true )
+    {
+        $this->ignore = ($check) ? 'IGNORE' : false;
+        return $this;
     }
 
     /**
