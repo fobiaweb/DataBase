@@ -1,0 +1,273 @@
+<?xml version="1.0"?>
+<mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database name="ezc-test">
+	<table_data name="authors">
+	<row>
+		<field name="id">1</field>
+		<field name="firstname">name_1</field>
+		<field name="lastname">lastname_1</field>
+	</row>
+	<row>
+		<field name="id">2</field>
+		<field name="firstname">name_2</field>
+		<field name="lastname">lastname_2</field>
+	</row>
+	<row>
+		<field name="id">3</field>
+		<field name="firstname">name_3</field>
+		<field name="lastname">lastname_3</field>
+	</row>
+	<row>
+		<field name="id">4</field>
+		<field name="firstname">name_4</field>
+		<field name="lastname">lastname_4</field>
+	</row>
+	<row>
+		<field name="id">5</field>
+		<field name="firstname">name_5</field>
+		<field name="lastname">lastname_5</field>
+	</row>
+	<row>
+		<field name="id">6</field>
+		<field name="firstname">name_6</field>
+		<field name="lastname">lastname_6</field>
+	</row>
+	<row>
+		<field name="id">7</field>
+		<field name="firstname">name_7</field>
+		<field name="lastname">lastname_7</field>
+	</row>
+	<row>
+		<field name="id">8</field>
+		<field name="firstname">name_8</field>
+		<field name="lastname">lastname_8</field>
+	</row>
+	<row>
+		<field name="id">9</field>
+		<field name="firstname">name_9</field>
+		<field name="lastname">lastname_9</field>
+	</row>
+	<row>
+		<field name="id">10</field>
+		<field name="firstname">name_10</field>
+		<field name="lastname">lastname_10</field>
+	</row>
+	</table_data>
+	<table_data name="books">
+	<row>
+		<field name="id">1</field>
+		<field name="description">description_1</field>
+		<field name="title">title_1</field>
+	</row>
+	<row>
+		<field name="id">2</field>
+		<field name="description">description_2</field>
+		<field name="title">title_2</field>
+	</row>
+	<row>
+		<field name="id">3</field>
+		<field name="description">description_3</field>
+		<field name="title">title_3</field>
+	</row>
+	<row>
+		<field name="id">4</field>
+		<field name="description">description_4</field>
+		<field name="title">title_4</field>
+	</row>
+	<row>
+		<field name="id">5</field>
+		<field name="description">description_5</field>
+		<field name="title">title_5</field>
+	</row>
+	<row>
+		<field name="id">6</field>
+		<field name="description">description_6</field>
+		<field name="title">title_6</field>
+	</row>
+	<row>
+		<field name="id">7</field>
+		<field name="description">description_7</field>
+		<field name="title">title_7</field>
+	</row>
+	<row>
+		<field name="id">8</field>
+		<field name="description">description_8</field>
+		<field name="title">title_8</field>
+	</row>
+	<row>
+		<field name="id">9</field>
+		<field name="description">description_9</field>
+		<field name="title">title_9</field>
+	</row>
+	<row>
+		<field name="id">10</field>
+		<field name="description">description_10</field>
+		<field name="title">title_10</field>
+	</row>
+	</table_data>
+	<table_data name="books_authors">
+	<row>
+		<field name="author_id">1</field>
+		<field name="book_id">1</field>
+	</row>
+	<row>
+		<field name="author_id">1</field>
+		<field name="book_id">3</field>
+	</row>
+	<row>
+		<field name="author_id">1</field>
+		<field name="book_id">2</field>
+	</row>
+	<row>
+		<field name="author_id">2</field>
+		<field name="book_id">2</field>
+	</row>
+	<row>
+		<field name="author_id">2</field>
+		<field name="book_id">4</field>
+	</row>
+	<row>
+		<field name="author_id">2</field>
+		<field name="book_id">3</field>
+	</row>
+	<row>
+		<field name="author_id">3</field>
+		<field name="book_id">3</field>
+	</row>
+	<row>
+		<field name="author_id">3</field>
+		<field name="book_id">5</field>
+	</row>
+	<row>
+		<field name="author_id">3</field>
+		<field name="book_id">4</field>
+	</row>
+	<row>
+		<field name="author_id">4</field>
+		<field name="book_id">4</field>
+	</row>
+	<row>
+		<field name="author_id">4</field>
+		<field name="book_id">6</field>
+	</row>
+	<row>
+		<field name="author_id">4</field>
+		<field name="book_id">5</field>
+	</row>
+	<row>
+		<field name="author_id">5</field>
+		<field name="book_id">5</field>
+	</row>
+	<row>
+		<field name="author_id">5</field>
+		<field name="book_id">7</field>
+	</row>
+	<row>
+		<field name="author_id">5</field>
+		<field name="book_id">6</field>
+	</row>
+	<row>
+		<field name="author_id">6</field>
+		<field name="book_id">6</field>
+	</row>
+	<row>
+		<field name="author_id">6</field>
+		<field name="book_id">8</field>
+	</row>
+	<row>
+		<field name="author_id">6</field>
+		<field name="book_id">7</field>
+	</row>
+	<row>
+		<field name="author_id">7</field>
+		<field name="book_id">7</field>
+	</row>
+	<row>
+		<field name="author_id">7</field>
+		<field name="book_id">9</field>
+	</row>
+	<row>
+		<field name="author_id">7</field>
+		<field name="book_id">8</field>
+	</row>
+	<row>
+		<field name="author_id">8</field>
+		<field name="book_id">8</field>
+	</row>
+	<row>
+		<field name="author_id">8</field>
+		<field name="book_id">10</field>
+	</row>
+	<row>
+		<field name="author_id">8</field>
+		<field name="book_id">9</field>
+	</row>
+	<row>
+		<field name="author_id">9</field>
+		<field name="book_id">9</field>
+	</row>
+	<row>
+		<field name="author_id">9</field>
+		<field name="book_id">3</field>
+	</row>
+	<row>
+		<field name="author_id">9</field>
+		<field name="book_id">10</field>
+	</row>
+	<row>
+		<field name="author_id">10</field>
+		<field name="book_id">10</field>
+	</row>
+	<row>
+		<field name="author_id">10</field>
+		<field name="book_id">4</field>
+	</row>
+	<row>
+		<field name="author_id">10</field>
+		<field name="book_id">2</field>
+	</row>
+	</table_data>
+	<table_data name="ownership">
+	<row>
+		<field name="id">1</field>
+		<field name="critique">critique_1</field>
+	</row>
+	<row>
+		<field name="id">2</field>
+		<field name="critique">critique_2</field>
+	</row>
+	<row>
+		<field name="id">3</field>
+		<field name="critique">critique_3</field>
+	</row>
+	<row>
+		<field name="id">4</field>
+		<field name="critique">critique_4</field>
+	</row>
+	<row>
+		<field name="id">5</field>
+		<field name="critique">critique_5</field>
+	</row>
+	<row>
+		<field name="id">6</field>
+		<field name="critique">critique_6</field>
+	</row>
+	<row>
+		<field name="id">7</field>
+		<field name="critique">critique_7</field>
+	</row>
+	<row>
+		<field name="id">8</field>
+		<field name="critique">critique_8</field>
+	</row>
+	<row>
+		<field name="id">9</field>
+		<field name="critique">critique_9</field>
+	</row>
+	<row>
+		<field name="id">10</field>
+		<field name="critique">critique_10</field>
+	</row>
+	</table_data>
+</database>
+</mysqldump>

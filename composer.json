@@ -14,7 +14,8 @@
     },
     "require-dev": {
         "psr/log": "~1",
-        "phpunit/phpunit": "~4.2"
+        "phpunit/phpunit": "~4.2",
+        "phpunit/dbunit": ">=1.2"
     },
     "suggest": {
         "pear-components.ez.no/base": "1.8.1",
