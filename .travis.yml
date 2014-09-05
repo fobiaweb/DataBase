@@ -7,7 +7,7 @@ php:
 
 before_script:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
-  - mysql < tests/ezc/database.sql
+  - mysql < tests/ezc/database/database.sql
   - composer install --prefer-dist --dev
 
 script: phpunit --coverage-text
