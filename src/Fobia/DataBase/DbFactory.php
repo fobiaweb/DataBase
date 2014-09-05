@@ -12,7 +12,8 @@ use ezcDbFactory;
 
 ezcDbFactory::addImplementation('mysql', '\\Fobia\\DataBase\\Handler\\MySQL');
 
-require_once __DIR__ . '/DbStatement.php';
+// пусть загружает автозагрузчит
+// require_once __DIR__ . '/DbStatement.php';
 
 /**
  * DbFactory class
