@@ -26,7 +26,6 @@
         "psr-0": { "Fobia\\DataBase\\": "src/" },
         "classmap": [ "src/ezc/" ]
     },
-    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
             "dev-master": "0.3-dev"
