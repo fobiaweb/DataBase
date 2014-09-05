@@ -73,7 +73,7 @@ class QuerySelect extends ezcQuerySelect
      * @param string $type       The join type: inner, right or left.
      * @param string $table2,... The table to join with, followed by either the
      *                           two join columns, or a join condition.
-     * @return ezcQuery
+     * @return \ezcQuery
      */
     protected function doJoin($type)
     {
