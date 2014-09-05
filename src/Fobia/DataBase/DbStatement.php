@@ -36,7 +36,7 @@ class DbStatement extends PDOStatement
         $this->connection = $connection;
     }
 
-    public function execute(array $input_parameters = null)
+    public function execute(/* array */ $input_parameters = null)
     {
         $_time  = microtime(true);
         if ($input_parameters === null) {
