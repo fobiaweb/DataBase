@@ -7,11 +7,11 @@
  */
 
 $loader = require  dirname(__DIR__) . '/vendor/autoload.php';
-
 /* @var $logger \Composer\Autoload\ClassLoader */
-$loader->add('', __DIR__ );
-// $logger->add("Fobia\\DataBase\\", __DIR__);
-//$logger->setPsr4("Fobia\\DataBase\\", __DIR__);
+$loader->add("Fobia\\DataBase\\", __DIR__ );
+
+require_once __DIR__ . '/ezc/ezcTestUtils.php';
+require_once __DIR__ . '/ezc/ezcTestCaseBase.php';
 
 
 // var_dump($logger);

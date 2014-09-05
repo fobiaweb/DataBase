@@ -6,25 +6,29 @@
     "require": {
         "php": ">=5.3.3"
     },
+    "replace": {
+        "pear-components.ez.no/base": "self.version",
+        "pear-components.ez.no/database": "self.version",
+        "fobiaweb/ezc-base": "dev-master",
+        "fobiaweb/ezc-database": "dev-master"
+    },
     "require-dev": {
         "psr/log": "~1",
-        "fobiaweb/ezc-base": "1.*",
-        "fobiaweb/ezc-database": "1.*",
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "~4.2"
     },
     "suggest": {
-        "pear-components.ez.no/base": "1.8",
-        "pear-components.ez.no/database": "1.4.7",
+        "pear-components.ez.no/base": "1.8.1",
+        "pear-components.ez.no/database": "1.4.9",
         "psr/log": "-"
     },
     "autoload": {
-        "psr-0": { "Fobia\\DataBase\\": "" }
+        "psr-0": { "Fobia\\DataBase\\": "src/" },
+        "classmap": [ "src/ezc/" ]
     },
-    "target-dir": "Fobia/DataBase",
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "0.2-dev"
+            "dev-master": "0.3-dev"
         }
     }
 }
