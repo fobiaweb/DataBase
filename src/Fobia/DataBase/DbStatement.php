@@ -25,9 +25,6 @@ class DbStatement extends PDOStatement
     /** @var \ezcDbHandler */
     protected $connection;
 
-    /** @var float время выполнения последнего запроса */
-    public $time = null;
-
     /**
      * @internal
      */
@@ -38,25 +35,17 @@ class DbStatement extends PDOStatement
 
     public function execute(/* array */ $input_parameters = null)
     {
-        $_time  = microtime(true);
+        $time  = microtime(true);
         if ($input_parameters === null) {
             $result = parent::execute();
         } else {
             $result = parent::execute($input_parameters);
         }
-        $this->time = microtime(true) - $_time;
 
-        if (method_exists($this->connection, 'log')) {
-            $args = array(
-                'time' => round($this->time, 6),
-                'rows' => $this->rowCount()
-            );
-
+        if ( method_exists($this->connection, 'logQuery') ) {
+            $rows = $this->rowCount();
             $query = $this->queryString;
-            if ($input_parameters) {
-                $query = array($query, $input_parameters);
-            }
-            $this->connection->log($query, $args);
+            $this->connection->logQuery('INFO', $query, $time, $rows, $input_parameters);
         }
 
         return  $result;
