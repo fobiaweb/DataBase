@@ -40,20 +40,26 @@ class DbStatement extends PDOStatement
     {
         $_time  = microtime(true);
         if ($input_parameters === null) {
-            $query = parent::execute();
+            $result = parent::execute();
         } else {
-            $query = parent::execute($input_parameters);
+            $result = parent::execute($input_parameters);
         }
         $this->time = microtime(true) - $_time;
 
         if (method_exists($this->connection, 'log')) {
-            $logger = $this->connection->log($this, $_time);
+            $args = array(
+                'time' => round($this->time, 6),
+                'rows' => $this->rowCount()
+            );
+
+            $query = $this->queryString;
             if ($input_parameters) {
-               // $logger = $this->connection->getLogger();
-               $logger->debug('[SQL]:: ==> execute parameters: ', array_values($input_parameters));
+                $query = array($query, $input_parameters);
             }
+            $this->connection->log($query, $args);
         }
-        return $query;
+
+        return  $result;
     }
 
     /**
@@ -153,6 +159,7 @@ class DbStatement extends PDOStatement
 
     /**
      * @internal
+     * @return void 
      */
     public function __destruct()
     {

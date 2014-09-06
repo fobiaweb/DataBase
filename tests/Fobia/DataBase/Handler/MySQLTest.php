@@ -100,25 +100,14 @@ class MySQLTest extends \PHPUnit_Framework_TestCase
         $this->assertRegExp("/^5\..+/", $v);
     }
 
-
-    /**
-     * @covers Fobia\DataBase\Handler\MySQL::log
-     * @todo   Implement testLog().
-     */
-    public function testLog()
-    {
-        $logger = $this->db->log("SELECT VERSION()", microtime(true));
-        $this->assertInstanceOf('\Psr\Log\LoggerInterface', $logger);
-    }
-
     /**
      * @covers Fobia\DataBase\Handler\MySQL::getLogger
      * @todo   Implement testGetLogger().
      */
-    public function testGetLogger()
-    {
-        $this->assertInstanceOf('\Psr\Log\LoggerInterface', $this->db->getLogger());
-    }
+//    public function testGetLogger()
+//    {
+//        $this->assertInstanceOf('\Psr\Log\LoggerInterface', $this->db->getLogger());
+//    }
 
     /**
      * @covers Fobia\DataBase\Handler\MySQL::createInsertQuery

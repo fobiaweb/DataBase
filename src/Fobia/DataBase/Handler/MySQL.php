@@ -24,14 +24,11 @@ use Fobia\DataBase\Query\QueryUpdate;
  */
 class MySQL extends ezcDbHandlerMysql
 {
-    protected $profiles = false;
-
     /**
      * @var \Psr\Log\LoggerInterface
      */
     protected $logger = null;
 
-    protected $log_error = null;
 
     /**
      * Создает объект из параметров $dbParams.
@@ -55,29 +52,11 @@ class MySQL extends ezcDbHandlerMysql
         $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
         $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Fobia\DataBase\DbStatement', array($this)));
 
-        if (@$dbParams['params']['logger'] instanceof \Psr\Log\LoggerInterface) {
-            $this->logger = $dbParams['params']['logger'];
-        } else {
-            $this->logger = (class_exists('\Fobia\Debug\Log'))
-                    ? \Fobia\Debug\Log::getLogger()
-                    :  new \Psr\Log\NullLogger();
-        }
-
-        if (isset($dbParams['params']['log_error'])) {
-            $this->log_error = $dbParams['params']['log_error'];
-        }
-
         // if (@$dbParams['charset']) {
         //     parent::query("SET NAMES '{$dbParams['charset']}'");
         // }
 
-        $this->getLogger()->info('[SQL]:: Connect database', array($dbParams['database']));
-
-        if (@$dbParams['params']['debug']) {
-            parent::query('SET profiling = 1');
-            $this->profiles = true;
-            $this->logger->debug('==> Set profiling');
-        }
+        $this->log("Connect database '{$dbParams['database']}'");
     }
 
     /**
@@ -87,6 +66,7 @@ class MySQL extends ezcDbHandlerMysql
      */
     public function getProfiles()
     {
+        parent::query('SET profiling = 1');
         if ($this->profiles) {
             $stmt = parent::query('SHOW profiles');
             return $stmt->fetchAll();
@@ -96,35 +76,44 @@ class MySQL extends ezcDbHandlerMysql
 
     /**
      *
-     * @param \Fobia\DataBase\DbStatement|string $stmt
-     * @param mixed $time
-     * @return \Psr\Log\LoggerInterface
+     * @param \Fobia\DataBase\DbStatement|string $logQuery
+     * @param string|array $args
      */
-    public function log($stmt, $time)
+    public function log($logQuery, $args = null)
     {
-        if ( $stmt instanceof PDOStatement ) {
-            $query = $stmt->queryString;
-        } else {
-            $query = $stmt;
-            $stmt = $this;
+        if (is_array($logQuery)) {
+            $query = array_shift($logQuery);
+            $logQuery = $query . "\n"
+                    . "-- ===> Params:: " . json_encode($logQuery);
         }
 
-        $dTime = round( microtime(true) - $time , 6);
-        $this->logger->info('[SQL]:: ' . $query, array( $dTime ) );
+        $message = date("[Y-m-d H:i:s]") . " [SQL]:: " . $logQuery . "\n" ;
+        if ($args) {
+            if (is_array($args)) {
+                $args = json_encode($args) ;
+            }
+            $message .= "-- ===> " . $args  . "\n";
+        }
 
-        if ( (int) $stmt->errorCode() ) {
-            $error = $stmt->errorInfo();
+        // echo $message;
+
+        /*
+        if ( (int) $logQuery->errorCode() ) {
+            $error = $logQuery->errorInfo();
             $this->logger->error('==> [SQL]:: '. $error[1].': '.$error[2]);
 
             if ($this->log_error) {
                 // LOGS_DIR . "/sql.log"
                 $str = date("[Y-m-d H:i:s]") . " [SQL]:: Error " . $error[1] . ': '
                         . $error[2] . "\n"
-                        . preg_replace(array("/\n/", "/\s*\n/"), array("\n    # ", "\n"), "    # $query\n");
+                        . preg_replace(array("/\n/", "/\s*\n/"), array("\n    # ", "\n"), "    # $logQuery\n");
                 file_put_contents($this->log_error, $str, FILE_APPEND);
             }
         }
-        return $this->logger;
+         *
+         */
+        
+        // return $this->logger;
     }
 
     /**
@@ -147,11 +136,21 @@ class MySQL extends ezcDbHandlerMysql
     public function query($statement)
     {
         $time  = microtime(true);
-        if ($query =  parent::query($statement)) {
+        if ($query =  $this->pdo->query($statement)) {
             $query->time = microtime(true) - $time;
         }
-        $this->log($statement, $time);
+        $this->log($statement, round(microtime(true) - $time, 6));
         return $query;
+    }
+
+    public function exec($statement)
+    {
+        $s_time  = microtime(true);
+        $result = $this->pdo->exec($statement);
+        
+        $this->log($statement, round(microtime(true) - $s_time, 6));
+
+        return $result;
     }
 
     /**
@@ -162,7 +161,7 @@ class MySQL extends ezcDbHandlerMysql
      */
     public function beginTransaction()
     {
-        $this->logger->info("[SQL]:: ==> Begin transaction");
+        $this->log("Begin transaction");
         return parent::beginTransaction();
     }
 
@@ -175,12 +174,7 @@ class MySQL extends ezcDbHandlerMysql
     public function commit()
     {
         $r = parent::commit();
-
-        $log = ($r)
-                ? "Commit transaction"
-                : "Error commit transaction";
-        $this->logger->error("[SQL]:: ==> $log");
-
+        $this->log(($r) ? "Commit transaction" : "Error commit transaction");
         return $r;
     }
 
@@ -192,7 +186,7 @@ class MySQL extends ezcDbHandlerMysql
      */
     public function rollback()
     {
-        $this->logger->info("[SQL]:: ==> Rollback transaction");
+        $this->log("Rollback transaction");
         return parent::rollback();
     }
 
