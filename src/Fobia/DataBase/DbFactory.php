@@ -35,14 +35,16 @@ class DbFactory extends ezcDbFactory
         if ($dbParams instanceof \PDO) {
             return parent::wrapper($dbParams);
         }
-
+        /*
         if ( ! is_array( $dbParams )) {
             $dns = $dbParams;
             $dbParams = array();
             $dbParams['dns'] = $dns;
             unset($dns);
+            self::parseDSN($dbParams);
         }
-
+        */
+        /*
         if (isset($dbParams['dbname'])) {
             $dbParams['database'] = $dbParams['dbname'];
             unset($dbParams['dbname']);
@@ -63,17 +65,22 @@ class DbFactory extends ezcDbFactory
         if (empty($dbParams['charset'])) {
             $dbParams['charset'] = 'utf8';
         }
+        /* */
 
-        if ( @array_key_exists('dns', $dbParams)) {
-            $params = self::parseDSN($dbParams['dns']);
-            $dbParams = array_merge($params, $dbParams);
-            unset($dbParams['dns']);
+        if (is_array($dbParams)) {
+            if (@array_key_exists('dns', $dbParams)) {
+                $params = self::parseDSN($dbParams['dns']);
+                $dbParams = array_merge($params, $dbParams);
+                unset($dbParams['dns']);
+            }
+            if (empty($dbParams['charset'])) {
+                $dbParams['charset'] = 'utf8';
+            }
+            if (!isset($dbParams['phptype'])) {
+                $dbParams['phptype'] = 'mysql';
+            }
         }
-
-        if (!isset($dbParams['phptype'])) {
-            $dbParams['phptype'] = 'mysql';
-        }
-
+        
         return parent::create($dbParams);
     }
 }

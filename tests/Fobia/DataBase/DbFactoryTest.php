@@ -20,9 +20,9 @@ class DbFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $params = array(
             'host'   => 'localhost',
-            'dbname' => 'mysql',
-            'user'   => 'root',
-            'pass'   => ''
+            'database' => 'mysql',
+            'username'   => 'root',
+            'password'   => ''
         );
         $db     = \Fobia\DataBase\DbFactory::create($params);
         $this->assertInstanceOf('PDO', $db->getPdo());
@@ -33,10 +33,10 @@ class DbFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $params = array(
             'host'   => 'localhost',
-            'dbname' => 'mysql',
+            'database' => 'mysql',
             'driver' => 'mysql',
-            'user'   => 'root',
-            'pass'   => ''
+            'username'   => 'root',
+            'password'   => ''
         );
         $db     = \Fobia\DataBase\DbFactory::create($params);
         $this->assertInstanceOf('\\Fobia\\DataBase\\Handler\\MySQL', $db);
