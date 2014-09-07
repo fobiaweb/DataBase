@@ -2,8 +2,11 @@
 /**
  * DbConnectionMysql class  - DbConnectionMysql.php file
  *
- * @author     Tyurin D. <fobia3d@gmail.com>
- * @copyright  Copyright (c) 2013 AC Software
+ * @author     Dmitriy Tyurin <fobia3d@gmail.com>
+ * @copyright  Copyright (c) 2014 Dmitriy Tyurin
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Fobia\DataBase\Handler;
@@ -160,7 +163,7 @@ class MySQL extends ezcDbHandlerMysql
         }
          *
          */
-        
+
         // return $this->logger;
 //    }
 
@@ -183,7 +186,7 @@ class MySQL extends ezcDbHandlerMysql
      *     rows   - кол. затронувших строк
      *     params - переданые параметры в подготовленый запрос
      *     debug  - стек вызова
-     * 
+     *
      * @param callback $logger
      */
     public function setLogger($logger)
@@ -211,7 +214,7 @@ class MySQL extends ezcDbHandlerMysql
     {
         $time  = microtime(true);
         $result = $this->pdo->exec($statement);
-        
+
         $this->logQuery('INFO', $statement, $time, $result);
         return $result;
     }
@@ -308,7 +311,7 @@ class MySQL extends ezcDbHandlerMysql
      * @param bool $ignoresRe
      * @param bool $returnCaller вернуть последнего колера
      * @return array
-     * 
+     *
      * @version 2.03
      */
     protected function debug_backtrace_smart($ignoresRe = null, $returnCaller = false)

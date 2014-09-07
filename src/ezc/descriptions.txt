@@ -1,0 +1,9 @@
+Base
+----
+The Base package provides the basic infrastructure that all packages rely on.
+Therefore every component relies on this package.
+
+Database
+--------
+A lightweight database layer on top of PHP's PDO that allows you to utilize a
+database without having to take care of differences in SQL dialects.
