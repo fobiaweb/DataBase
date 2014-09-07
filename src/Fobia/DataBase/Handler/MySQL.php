@@ -13,11 +13,31 @@ namespace Fobia\DataBase\Handler;
 
 use PDO;
 use ezcDbHandlerMysql;
-use PDOStatement;
 use Fobia\DataBase\Query\QueryInsert;
 use Fobia\DataBase\Query\QueryReplace;
 use Fobia\DataBase\Query\QuerySelect;
 use Fobia\DataBase\Query\QueryUpdate;
+
+/*
+$db->setLogger(function($t, $q, $args) {
+    $message = date("[Y-m-d H:i:s]") . " [SQL]:: " . $q . "\n";
+    if (isset($args['params'])) {
+        $message .= "           --   ===> Params: " . json_encode($args['params']) . "\n";
+    }
+    if (isset($args['time'])) {
+        $message .= "           --   ===> Time: " . $args['time'];
+        if (isset($args['rows'])) {
+            $message .= ", Rows: " . $args['rows'];
+        }
+        $message .= "\n";
+    }
+    if (isset($args['error'])) {
+        list($sql, $code, $msg) =$args['error'];
+        $message .= "           --   ===> Error $code($sql): $msg\n" ;
+    }
+    echo $message;
+});
+/* */
 
 /**
  * Обертка PDO драйвера MySQL.
@@ -88,6 +108,15 @@ class MySQL extends ezcDbHandlerMysql
         $this->logQuery('DEBUG', "Connect database '{$dbParams['database']}'");
     }
 
+    /**
+     * Слогировать запрос/информацию
+     *
+     * @param string $type  - тип лога (DEBUG, INFO, WARNING, ERROR)
+     * @param string $query - текст запроса/информации
+     * @param float  $time  - стартовое время начало выполнения
+     * @param int    $rows  - количество затронутых строк
+     * @param array  $params - параметры переданые запросу
+     */
     public function logQuery($type, $query, $time = null, $rows = null, $params = null)
     {
         if ($this->logger) {
@@ -101,6 +130,15 @@ class MySQL extends ezcDbHandlerMysql
             if ($params) {
                $args['params'] = $params;
             }
+
+            if ($type == 'INFO' && ((int) $this->errorCode())) {
+                if ( (int) $this->pdo->errorCode() ) {
+                    $args['error'] = $this->errorInfo();
+                    //list($sql, $code, $msg) = $this->errorInfo();
+                    //$args['error'] = "Error $code($sql): $msg" ;
+                }
+            }
+
             $args['debug'] = $this->debug_backtrace_smart();
             call_user_func_array($this->logger, array($type, $query, $args));
        }
@@ -126,48 +164,6 @@ class MySQL extends ezcDbHandlerMysql
     }
 
     /**
-     *
-     * @param \Fobia\DataBase\DbStatement|string $logQuery
-     * @param string|array $args
-     */
-//    public function log($logQuery, $args = null)
-//    {
-//        if (is_array($logQuery)) {
-//            $query = array_shift($logQuery);
-//            $logQuery = $query . "\n"
-//                    . "-- ===> Params:: " . json_encode($logQuery);
-//        }
-//
-//        $message = date("[Y-m-d H:i:s]") . " [SQL]:: " . $logQuery . "\n" ;
-//        if ($args) {
-//            if (is_array($args)) {
-//                $args = json_encode($args) ;
-//            }
-//            $message .= "-- ===> " . $args  . "\n";
-//        }
-
-        // echo $message;
-
-        /*
-        if ( (int) $logQuery->errorCode() ) {
-            $error = $logQuery->errorInfo();
-            $this->logger->error('==> [SQL]:: '. $error[1].': '.$error[2]);
-
-            if ($this->log_error) {
-                // LOGS_DIR . "/sql.log"
-                $str = date("[Y-m-d H:i:s]") . " [SQL]:: Error " . $error[1] . ': '
-                        . $error[2] . "\n"
-                        . preg_replace(array("/\n/", "/\s*\n/"), array("\n    # ", "\n"), "    # $logQuery\n");
-                file_put_contents($this->log_error, $str, FILE_APPEND);
-            }
-        }
-         *
-         */
-
-        // return $this->logger;
-//    }
-
-    /**
      * @return \Closure
      */
     public function getLogger()
@@ -191,6 +187,22 @@ class MySQL extends ezcDbHandlerMysql
      */
     public function setLogger($logger)
     {
+        /*
+        if ( (int) $logQuery->errorCode() ) {
+            $error = $logQuery->errorInfo();
+            $this->logger->error('==> [SQL]:: '. $error[1].': '.$error[2]);
+
+            if ($this->log_error) {
+                // LOGS_DIR . "/sql.log"
+                $str = date("[Y-m-d H:i:s]") . " [SQL]:: Error " . $error[1] . ': '
+                        . $error[2] . "\n"
+                        . preg_replace(array("/\n/", "/\s*\n/"), array("\n    # ", "\n"), "    # $logQuery\n");
+                file_put_contents($this->log_error, $str, FILE_APPEND);
+            }
+        }
+         *
+         */
+
         $this->logger = $logger;
     }
 
@@ -201,12 +213,9 @@ class MySQL extends ezcDbHandlerMysql
     public function query($statement)
     {
         $time  = microtime(true);
-        if ($query =  $this->pdo->query($statement)) {
-            $query->time = microtime(true) - $time;
-            $rows = $query->rowCount();
-        }
+        $query =  $this->pdo->query($statement);
 
-        $this->logQuery('INFO', $statement, $time, $rows );
+        $this->logQuery('INFO', $statement, $time, ($query) ? $query->rowCount() : null  );
         return $query;
     }
 
@@ -227,7 +236,7 @@ class MySQL extends ezcDbHandlerMysql
      */
     public function beginTransaction()
     {
-        $this->logQuery('DEBUG', "Begin transaction");
+        $this->logQuery('INFO', "Begin transaction");
         return parent::beginTransaction();
     }
 
@@ -240,7 +249,7 @@ class MySQL extends ezcDbHandlerMysql
     public function commit()
     {
         $r = parent::commit();
-        $this->logQuery('DEBUG', ($r) ? "Commit transaction" : "Error commit transaction");
+        $this->logQuery('INFO', ($r) ? "Commit transaction" : "Error commit transaction");
         return $r;
     }
 
@@ -252,7 +261,7 @@ class MySQL extends ezcDbHandlerMysql
      */
     public function rollback()
     {
-        $this->logQuery('DEBUG', "Rollback transaction");
+        $this->logQuery('INFO', "Rollback transaction");
         return parent::rollback();
     }
 

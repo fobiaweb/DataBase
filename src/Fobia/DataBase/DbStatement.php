@@ -46,7 +46,7 @@ class DbStatement extends PDOStatement
         }
 
         if ( method_exists($this->connection, 'logQuery') ) {
-            $rows = $this->rowCount();
+            $rows  = $this->rowCount();
             $query = $this->queryString;
             $this->connection->logQuery('INFO', $query, $time, $rows, $input_parameters);
         }
