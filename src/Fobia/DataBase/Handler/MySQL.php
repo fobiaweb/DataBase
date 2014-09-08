@@ -107,7 +107,7 @@ class MySQL extends ezcDbHandlerMysql
      *
      * @param array $dbParams Database connection parameters (key=>value pairs).
      */
-    public function __construct(array $dbParams)
+    public function __construct($dbParams)
     {
         parent::__construct($dbParams);
 
@@ -120,7 +120,7 @@ class MySQL extends ezcDbHandlerMysql
         //     parent::query("SET NAMES '{$dbParams['charset']}'");
         // }
 
-        $this->logQuery('DEBUG', "Connect database '{$dbParams['database']}'");
+        // $this->addLogRecord('DEBUG', "Connect database '{$dbParams['database']}'");
     }
 
     /**

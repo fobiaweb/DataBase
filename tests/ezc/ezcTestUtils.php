@@ -9,14 +9,14 @@
 /**
  * ezcTestUtils class
  *
- * @package   
+ * @package
  */
 class ezcTestUtils
 {
-    public static function instanceDb($params = 'mysql://root@localhost/ezc-test')
+    public static function instanceDb($params = 'mysql://root@localhost/test')
     {
         $db = null;
-        
+
         try
         {
             $db = ezcDbInstance::get();

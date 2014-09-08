@@ -9,9 +9,9 @@
 /**
  * ezcDataBaseTestCase class
  *
- * @package   
+ * @package
  */
-class ezcDataBaseTestCase extends PHPUnit_Extensions_Database_TestCase
+class ezcDbTestCase extends PHPUnit_Extensions_Database_TestCase
 {
     // only instantiate pdo once for test clean-up/fixture load
     static private $pdo = null;
@@ -35,7 +35,6 @@ class ezcDataBaseTestCase extends PHPUnit_Extensions_Database_TestCase
         return $this->conn;
     }
 
-
     /**
      * @return PHPUnit_Extensions_Database_DataSet_IDataSet
      */
@@ -44,11 +43,11 @@ class ezcDataBaseTestCase extends PHPUnit_Extensions_Database_TestCase
         return $this->createMySQLXMLDataSet(dirname(__FILE__).'/database/_files/database.xml');
     }
 
-
+    /*
     public function testGuestbook()
     {
         // $dataSet = $this->getConnection()->createDataSet();
-print_r($this->getConnection()->getRowCount('authors'));
+        print_r($this->getConnection()->getRowCount('authors'));
         $this->getConnection()->getConnection()->query("DELETE FROM authors");
         $res = $this->getConnection()->getConnection()->query("SELECT * FROM authors");
         print_r($res->fetchAll());
@@ -59,4 +58,6 @@ print_r($this->getConnection()->getRowCount('authors'));
         $res = $this->getConnection()->getConnection()->query("SELECT * FROM authors");
         print_r($res->fetchAll());
     }
+    /** */
+
 }
