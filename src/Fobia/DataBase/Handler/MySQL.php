@@ -19,6 +19,12 @@ use Fobia\DataBase\Query\QuerySelect;
 use Fobia\DataBase\Query\QueryUpdate;
 
 /*
+
+    const ERROR = 'error';
+    const WARNING = 'warning';
+    const NOTICE = 'notice';
+    const INFO = 'info';
+    const DEBUG = 'debug';
 $db->setLogger(function($t, $q, $args) {
     $message = date("[Y-m-d H:i:s]") . " [SQL]:: " . $q . "\n";
     if (isset($args['params'])) {
@@ -52,6 +58,27 @@ $db->setLogger(function($t, $q, $args) {
  *
  * log($type, $query, $time, $row, $params)
  *
+ * <code>
+ * $db->setLogger(function($t, $q, $args) {
+ *     $message = date("[Y-m-d H:i:s]") . " [SQL]:: " . $q . "\n";
+ *     if (isset($args['params'])) {
+ *         $message .= "           --   ===> Params: " . json_encode($args['params']) . "\n";
+ *     }
+ *     if (isset($args['time'])) {
+ *         $message .= "           --   ===> Time: " . $args['time'];
+ *         if (isset($args['rows'])) {
+ *             $message .= ", Rows: " . $args['rows'];
+ *         }
+ *         $message .= "\n";
+ *     }
+ *     if (isset($args['error'])) {
+ *         list($sql, $code, $msg) =$args['error'];
+ *         $message .= "           --   ===> Error $code($sql): $msg\n" ;
+ *     }
+ *     echo $message;
+ * });
+ * </code>
+ *
  *
  * @author    Dmitriy Tyurin <fobia3d@gmail.com>
  * @package   Fobia.DataBase.Handler
@@ -62,6 +89,8 @@ class MySQL extends ezcDbHandlerMysql
      * @var \Psr\Log\LoggerInterface
      */
     protected $logger = null;
+
+    private $_debug = false;
 
 
     /**
@@ -84,64 +113,61 @@ class MySQL extends ezcDbHandlerMysql
 
         $this->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
+        
         $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('Fobia\DataBase\DbStatement', array($this)));
 
         // if (@$dbParams['charset']) {
         //     parent::query("SET NAMES '{$dbParams['charset']}'");
         // }
-        /*
-        $this->setLogger(function($t, $q, $args) {
-            $message = date("[Y-m-d H:i:s]") . " [SQL]:: " . $q . "\n" ;
-            if (isset($args['params'])) {
-                $message .= "           --   ===> Params: " . json_encode($args['params']) . "\n" ;
-            }
-            if (isset($args['time'])) {
-                $message .= "           --   ===> Time: " . $args['time'];
-                if (isset($args['rows'])) {
-                    $message .= ", Rows: " . $args['rows'] ;
-                }
-                $message .= "\n" ;
-            }
-            echo  $message;
-        });
-        /* */
+
         $this->logQuery('DEBUG', "Connect database '{$dbParams['database']}'");
     }
 
     /**
-     * Слогировать запрос/информацию
+     * Залогировать че-нить
      *
-     * @param string $type  - тип лога (DEBUG, INFO, WARNING, ERROR)
-     * @param string $query - текст запроса/информации
-     * @param float  $time  - стартовое время начало выполнения
-     * @param int    $rows  - количество затронутых строк
-     * @param array  $params - параметры переданые запросу
+     * @param string $message   строка сообщения / запроса
+     * @param float $time       время начало запроса
+     * @param int   $rows       кол. затронутых строк
+     * @param array $params     параметры execute
      */
-    public function logQuery($type, $query, $time = null, $rows = null, $params = null)
+    public function addLogRecord($message, $time = null, $rows = null, $params = null)
     {
-        if ($this->logger) {
-            $args = array();
-            if ($time) {
-               $args['time'] = round(microtime(true) - $time, 6);
-            }
-            if ($rows) {
-               $args['rows'] = $rows;
-            }
-            if ($params) {
-               $args['params'] = $params;
-            }
+        if (!$this->logger) {
+            return;
+        }
 
-            if ($type == 'INFO' && ((int) $this->errorCode())) {
-                if ( (int) $this->pdo->errorCode() ) {
-                    $args['error'] = $this->errorInfo();
-                    //list($sql, $code, $msg) = $this->errorInfo();
-                    //$args['error'] = "Error $code($sql): $msg" ;
-                }
-            }
+        $context = array();
+        
+        // Error
+        if ($this->pdo->errorCode() != \PDO::ERR_NONE) {
+            $context['error'] = $this->pdo->errorInfo();
+        }
 
-            $args['debug'] = $this->debug_backtrace_smart();
-            call_user_func_array($this->logger, array($type, $query, $args));
-       }
+        // Time
+        if ($time) {
+            $context['time'] = round(microtime(true) - $time, 7);
+        }
+        
+        // Rows
+        $context['rows']   = $rows;
+        $context['params'] = $params;
+
+        // array_keys($args, null)
+        // Debug
+        if ($this->_debug) {
+            $context['debug'] = $this->debug_backtrace_smart();
+        }
+
+        call_user_func_array($this->logger, array('INFO', $message, $context));
+    }
+
+    protected function _log($query, array $context = array(), $level = 'DEBUG')
+    {
+        if (!$this->logger) {
+            return;
+        }
+        call_user_func_array($this->logger, array($level, $query, $context));
     }
 
     /**
@@ -210,21 +236,33 @@ class MySQL extends ezcDbHandlerMysql
      * OVERRIDE
      * ********************************************** */
 
+    /**
+     * Выполняет SQL заявление, возвращая результат запроса в виде объекта \PDOStatement
+     *
+     * @param string $statement
+     * @return \PDOStatement
+     */
     public function query($statement)
     {
         $time  = microtime(true);
-        $query =  $this->pdo->query($statement);
+        $stmt =  $this->pdo->query($statement);
 
-        $this->logQuery('INFO', $statement, $time, ($query) ? $query->rowCount() : null  );
-        return $query;
+        $this->addLogRecord($statement, $time, ($stmt) ? $stmt->rowCount() : null);
+        return $stmt;
     }
 
+    /**
+     * Выполняет оператор SQL и возвращает количество затронутых строк
+     *
+     * @param string $statement
+     * @return int
+     */
     public function exec($statement)
     {
         $time  = microtime(true);
         $result = $this->pdo->exec($statement);
 
-        $this->logQuery('INFO', $statement, $time, $result);
+        $this->addLogRecord($statement, $time, $result);
         return $result;
     }
 
@@ -236,7 +274,7 @@ class MySQL extends ezcDbHandlerMysql
      */
     public function beginTransaction()
     {
-        $this->logQuery('INFO', "Begin transaction");
+        $this->addLogRecord("Begin transaction");
         return parent::beginTransaction();
     }
 
@@ -249,7 +287,10 @@ class MySQL extends ezcDbHandlerMysql
     public function commit()
     {
         $r = parent::commit();
-        $this->logQuery('INFO', ($r) ? "Commit transaction" : "Error commit transaction");
+        $this->addLogRecord("Commit transaction.");
+        if (!$r) {
+            $this->_log("Error commit transaction", array(), 'ERROR');
+        }
         return $r;
     }
 
@@ -261,7 +302,7 @@ class MySQL extends ezcDbHandlerMysql
      */
     public function rollback()
     {
-        $this->logQuery('INFO', "Rollback transaction");
+        $this->addLogRecord("Rollback transaction");
         return parent::rollback();
     }
 
@@ -352,7 +393,7 @@ class MySQL extends ezcDbHandlerMysql
             }
 
             // Skip myself frame.
-            if (++$framesSeen < 2) {
+            if (++$framesSeen < 3) {
                 continue;
             }
 

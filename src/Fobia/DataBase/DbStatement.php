@@ -36,7 +36,13 @@ class DbStatement extends PDOStatement
         $this->connection = $connection;
     }
 
-    public function execute(/* array */ $input_parameters = null)
+    /**
+     * Выполнить подготовленый запрос.
+     *
+     * @param array $input_parameters
+     * @return bool
+     */
+    public function execute($input_parameters = null)
     {
         $time  = microtime(true);
         if ($input_parameters === null) {
@@ -44,11 +50,9 @@ class DbStatement extends PDOStatement
         } else {
             $result = parent::execute($input_parameters);
         }
-
-        if ( method_exists($this->connection, 'logQuery') ) {
-            $rows  = $this->rowCount();
-            $query = $this->queryString;
-            $this->connection->logQuery('INFO', $query, $time, $rows, $input_parameters);
+        
+        if ( method_exists($this->connection, 'addLogRecord') ) {
+            $this->connection->addLogRecord($this->queryString, $time, $this->rowCount(), $input_parameters);
         }
 
         return  $result;
