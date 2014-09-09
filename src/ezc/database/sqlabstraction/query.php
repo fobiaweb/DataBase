@@ -285,6 +285,19 @@ abstract class ezcQuery
     }
 
     /**
+     * Котировка строки для использования в запросе.
+     * Рекомендуеться использовать подготовленые запросы, нежеле в ручную экранировать.
+     * 
+     * @param string $string     строка для экранирования
+     * @param int $paramert_type  Обеспечивает тип данных для драйверов, которые имеют альтернативные стили ковычек. 
+     * @return string в кавычках, что теоретически безопасно передавать в заявлении SQL. Возвращает FALSE, если драйвер не поддерживает такой образ.
+     */
+    protected function quote( $string, $paramert_type = \PDO::PARAM_STR )
+    {
+        return $this->pdo->quote($string, $paramert_type);
+    }
+    
+    /**
      * Returns the correct identifiers for the aliases found in $aliases.
      *
      * This method is similar to getIdentifier except that it works on an array.
