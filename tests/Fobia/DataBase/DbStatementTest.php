@@ -41,7 +41,7 @@ class DbStatementTest extends \PHPUnit_Framework_TestCase
     {
         $stmt = $this->db->prepare("SELECT `user` FROM `mysql`.`user` WHERE user = :user");
         $stmt->execute(array(
-            'user' => $_
+            'user' => $_ENV['database']['username']
         ));
         $row = $stmt->fetch();
         $this->assertEquals("root", $row["user"]);
