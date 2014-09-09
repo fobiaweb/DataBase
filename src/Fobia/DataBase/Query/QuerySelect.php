@@ -23,6 +23,12 @@ class QuerySelect extends ezcQuerySelect
     /**
      * Количество всех найденых строк и список строк по limit
      *
+     * @param int $fetch_style может принимать \PDO::FETCH_CLASS, \PDO::FETCH_ASSOC, 
+     *                         \PDO::FETCH_NUM, \PDO::FETCH_BOTH.
+     *                         По умолчанию \PDO::ATTR_DEFAULT_FETCH_MODE
+     *
+     * @param mixed $fetch_argument
+     * @param mixed $ctor_args        аргументы объекта при \PDO::FETCH_CLASS
      * @return array [count, items]
      */
     public function fetchItemsCount()
