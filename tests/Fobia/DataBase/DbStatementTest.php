@@ -16,7 +16,7 @@ class DbStatementTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         if ( ! $this->db) {
-            $this->db = \Fobia\DataBase\DbFactory::create('mysql://root@localhost/mysql');
+            $this->db = \Fobia\DataBase\DbFactory::create($_ENV['dsn']);
         }
     }
 
@@ -39,9 +39,9 @@ class DbStatementTest extends \PHPUnit_Framework_TestCase
      */
     public function testExecute2()
     {
-        $stmt = $this->db->prepare("SELECT user FROM user WHERE user = :user");
+        $stmt = $this->db->prepare("SELECT `user` FROM `mysql`.`user` WHERE user = :user");
         $stmt->execute(array(
-            'user' => 'root'
+            'user' => $_
         ));
         $row = $stmt->fetch();
         $this->assertEquals("root", $row["user"]);

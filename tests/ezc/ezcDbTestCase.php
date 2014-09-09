@@ -13,9 +13,13 @@
  */
 class ezcDbTestCase
 {
-    public static function instanceDb($params = 'mysql://root@localhost/test')
+    public static function instanceDb($params = null)
     {
         $db = null;
+        if ($params === null) {
+            $params = $_ENV['database'];
+            $params['type'] = 'mysql';
+        }
 
         try
         {

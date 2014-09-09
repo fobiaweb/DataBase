@@ -25,7 +25,7 @@ class QueryTestCase extends  \PHPUnit_Framework_TestCase
     {
         if ($this->conn === null) {
             if (self::$pdo == null) {
-                self::$pdo = \Fobia\DataBase\DbFactory::create('mysql://root@localhost/ezc-test');
+                self::$pdo = \Fobia\DataBase\DbFactory::create($_ENV['dsn']);
             }
             $this->conn = self::$pdo;//$this->createDefaultDBConnection(self::$pdo);
         }

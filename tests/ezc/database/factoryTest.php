@@ -18,6 +18,9 @@ class ezcDbFactoryTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        if (isset($_ENV['OS']) && $_ENV['OS'] == 'WINDOWS') {
+            $this->markTestSkipped( 'Unix tests' );
+        }
         $this->default =  ezcDbTestCase::instanceDb();
     }
 
@@ -77,6 +80,9 @@ class ezcDbFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testCreate()
     {
+        if (isset($_ENV['OS']) && $_ENV['OS'] == 'WINDOWS') {
+            $this->markTestSkipped( 'Unix tests' );
+        }
         $db = ezcDbFactory::create('mysql://root@localhost/ezc-test');
         $this->assertTrue( $db instanceof ezcDbInterface );
     }
@@ -87,6 +93,9 @@ class ezcDbFactoryTest extends PHPUnit_Framework_TestCase
      */
     public function testWrapper()
     {
+        if (isset($_ENV['OS']) && $_ENV['OS'] == 'WINDOWS') {
+            $this->markTestSkipped( 'Unix tests' );
+        }
         $pdo = new PDO('mysql://localhost/ezc-test', 'root', '');
         $db = ezcDbFactory::wrapper($pdo);
         $this->assertTrue( $db instanceof ezcDbInterface );

@@ -16,7 +16,7 @@ class MySQLTest extends \ezcDbTestCase
     protected function setUp()
     {
         if (!$this->db) {
-            $this->db = \Fobia\DataBase\DbFactory::create('mysql://root@localhost/ezc-test');
+            $this->db = \Fobia\DataBase\DbFactory::create($_ENV['dsn']);
         }
     }
 
@@ -34,7 +34,7 @@ class MySQLTest extends \ezcDbTestCase
     public function testNewDatabaseDebug()
     {
         $dbParams = array(
-            'dns' => 'mysql://root@localhost/mysql',
+            'dns' => $_ENV['dsn'],
             'params' => array( 'debug' => true )
         );
         $db = \Fobia\DataBase\DbFactory::create($dbParams);
@@ -44,7 +44,7 @@ class MySQLTest extends \ezcDbTestCase
     public function testNewDatabaseLogger()
     {
         $dbParams = array(
-            'dns' => 'mysql://root@localhost/mysql',
+            'dns' => $_ENV['dsn'],
             'params' => array(
                 'debug' => true ,
                 'logger' => new \Psr\Log\NullLogger()
@@ -62,7 +62,7 @@ class MySQLTest extends \ezcDbTestCase
     public function testGetProfilesCreate()
     {
         $dbParams = array(
-            'dns' => 'mysql://root@localhost/mysql',
+            'dns' => $_ENV['dsn'],
             'params' => array( )
         );
         $dbParams['params']['debug'] = true;

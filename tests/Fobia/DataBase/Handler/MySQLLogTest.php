@@ -26,7 +26,8 @@ class MySQLLogTest extends \PHPUnit_Extensions_Database_TestCase
         if ($this->conn === null) {
             if (self::$pdo == null) {
                 // $pdo = \Fobia\DataBase\DbFactory::create('mysql://root@localhost/ezc-test');
-                self::$pdo = new \PDO('mysql:dbname=ezc-test;host=127.0.0.1', 'root', '');
+                $dsn = 'mysql:dbname=' . $_ENV['database']['database'] . ';host=' . $_ENV['database']['host'];
+                self::$pdo = new \PDO($dsn, $_ENV['database']['username'], $_ENV['database']['password']);
             }
             $this->conn = $this->createDefaultDBConnection(self::$pdo);
         }
