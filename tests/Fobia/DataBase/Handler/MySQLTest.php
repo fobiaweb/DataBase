@@ -16,37 +16,14 @@ class MySQLTest extends \ezcDbTestCase
     protected function setUp()
     {
         if (!$this->db) {
-            $this->db = new \Fobia\DataBase\Handler\MySQL($this->getConnection()->getConnection());
-            parent::setUp();
+            $this->db = \Fobia\DataBase\DbFactory::create('mysql://root@localhost/ezc-test');
         }
     }
 
     protected function tearDown()
     {
-        $this->db->setLogger(null);
+        //
     }
-
-    protected function initializeDbLogget()
-    {
-        $this->db->setLogger(function($t, $msg, $args) {
-            echo "{$t}\n"
-                . "QUERY: {$msg}\n";
-
-            if ($args['params']) {
-                echo "Params: " . (is_array($args['params']) ? json_encode($args['params']) : $args['params'])
-                    . "\n";
-            }
-            echo "Time: {$args['time']}\n";
-            if (isset($args['error'])) {
-                list($sql, $code, $msg) =$args['error'];
-                echo "Error $code($sql): $msg\n" ;
-            } else {
-                echo "Rows: {$args['rows']}\n";
-            }
-        });
-    }
-
-
     /////////////////////////////////////////////////////////////////////////
 
 
@@ -179,70 +156,5 @@ class MySQLTest extends \ezcDbTestCase
         $this->db->beginTransaction();
         $this->assertTrue($this->db->rollback());
 
-    }
-
-    public function testLog1()
-    {
-        $this->expectOutputRegex("/Rows: 1/");
-        $this->initializeDbLogget();
-        $this->db->query("SELECT VERSION()");
-    }
-
-    public function testLog2()
-    {
-        $this->expectOutputRegex("/Rows: 1/");
-        $this->initializeDbLogget();
-
-        $q = $this->db->createSelectQuery();
-        $q->select('NOW()')->prepare()->execute();
-    }
-
-    public function testLog3()
-    {
-        $this->expectOutputRegex("/Rows: 3/");
-        $this->initializeDbLogget();
-        $this->getConnection()->createDataSet();
-
-        $this->db->exec("UPDATE authors SET lastname = 'new' WHERE id > 7");
-    }
-
-    public function testLog4()
-    {
-        $this->expectOutputRegex('/Params: {"val":"new_value 2","id":2}/');
-        $this->initializeDbLogget();
-        $this->getConnection()->createDataSet();
-        
-        $q = $this->db->createUpdateQuery();
-        $stmt = $q->update('authors')
-                ->set('lastname', ':val')
-                ->where("id = :id")
-                ->prepare();
-
-        $stmt->execute(array(
-            'val'=>'new_value 1',
-            'id' => 1
-        ));
-        $stmt->execute(array(
-            'val'=>'new_value 2',
-            'id' => 2
-        ));
-        $stmt->execute(array(
-            'val'=>'new_value 3',
-            'id' => 3
-        ));
-
-        $r = $this->db->query("SELECT id, lastname FROM authors WHERE id = 3");
-        $item = $r->fetch();
-        $this->assertSame(array(
-            'id' => '3',
-            'lastname'=>'new_value 3',
-        ), $item);
-    }
-
-    public function testLogError()
-    {
-        $this->expectOutputRegex("/Error 1064/");
-        $this->initializeDbLogget();
-        $this->db->exec("SELECT ERROR-SHOW-VER()");
     }
 }

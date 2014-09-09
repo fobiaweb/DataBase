@@ -2,6 +2,8 @@
 
 namespace Fobia\DataBase\Query;
 
+use Fobia\DataBase\QueryTestCase;
+
 class QueryInsertTest extends QueryTestCase
 {
 

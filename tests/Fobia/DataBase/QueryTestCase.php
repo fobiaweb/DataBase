@@ -6,7 +6,7 @@
  * @copyright  Copyright (c) 2014 Dmitriy Tyurin
  */
 
-namespace Fobia\DataBase\Query;
+namespace Fobia\DataBase;
 
 /**
  * QueryTestCase class

@@ -13,7 +13,7 @@ class ezcQuerySelectTestImpl extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->db = ezcTestUtils::instanceDb();
+        $this->db = ezcDbTestCase::instanceDb();
 
         $this->q = $this->db->createSelectQuery();
         $this->e = $this->q->expr;

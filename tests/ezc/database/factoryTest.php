@@ -18,7 +18,7 @@ class ezcDbFactoryTest extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->default =  ezcTestUtils::instanceDb();
+        $this->default =  ezcDbTestCase::instanceDb();
     }
 
     protected function tearDown()

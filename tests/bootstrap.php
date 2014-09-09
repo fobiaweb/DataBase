@@ -10,7 +10,6 @@ $loader = require  dirname(__DIR__) . '/vendor/autoload.php';
 /* @var $logger \Composer\Autoload\ClassLoader */
 $loader->add("Fobia\\DataBase\\", __DIR__ );
 
-require_once __DIR__ . '/ezc/ezcTestUtils.php';
 require_once __DIR__ . '/ezc/ezcDbTestCase.php';
 require_once __DIR__ . '/ezc/ezcTestCaseBase.php';
 
@@ -18,4 +17,10 @@ require_once __DIR__ . '/ezc/ezcTestCaseBase.php';
 // var_dump($logger);
 if (class_exists('\Fobia\Debug\Log')) {
     \Fobia\Debug\Log::setLogger(new \Psr\Log\NullLogger());
+}
+
+if (isset($_SERVER['OS']) && $_SERVER['OS'] == 'Windows_NT') {
+    $_ENV['SERVER'] = 'WINDOWS';
+} else if (isset($_SERVER['USER']) && $_SERVER['USER'] == 'vagrant') {
+    $_ENV['SERVER'] = 'VAGRANT';
 }

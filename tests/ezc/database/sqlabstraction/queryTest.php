@@ -8,7 +8,7 @@ class MyQuery extends ezcQuery
 
     public function __construct()
     {
-        $db = ezcTestUtils::instanceDb();
+        $db = ezcDbTestCase::instanceDb();
         parent::__construct( $db );
     }
 

@@ -13,7 +13,7 @@ class ezcQueryExpressionTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->db = ezcTestUtils::instanceDb();
+        $this->db = ezcDbTestCase::instanceDb();
         // $this->db->setAttribute(PDO::ATTR_CASE,    PDO::CASE_LOWER);
 
         $this->q = $this->db->createSelectQuery();

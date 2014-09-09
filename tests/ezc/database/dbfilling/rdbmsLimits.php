@@ -7,7 +7,7 @@ class ezcRdbmsLimitTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $db = ezcTestUtils::instanceDb();
+        $db = ezcDbTestCase::instanceDb();
         $this->assertNotNull( $db, 'Database instance is not initialized.' );
 
         $this->db = ezcDbFactory::create( 'sqlite://:memory:' );

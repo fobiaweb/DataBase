@@ -10,7 +10,7 @@ class ezcQueryInsertTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $db = ezcTestUtils::instanceDb();
+        $db = ezcDbTestCase::instanceDb();
 
         $this->q = new ezcQueryInsert( $db );
         try

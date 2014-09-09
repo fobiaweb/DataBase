@@ -1,6 +1,8 @@
 <?php
+
 namespace Fobia\DataBase\Query;
 
+use Fobia\DataBase\QueryTestCase;
 
 class QueryUpdateTest extends QueryTestCase
 {
