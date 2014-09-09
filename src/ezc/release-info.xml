@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<release-info>
+ <version>2009.2.1</version>
+ <deps>
+  <php>5.2.1</php>
+  <packages>
+   <package version="1.8.1" name="Base"/>
+   <package version="1.4.9" name="Database"/>
+  </packages>
+ </deps>
+</release-info>

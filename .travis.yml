@@ -1,0 +1,16 @@
+language: php
+
+php:
+  - "5.5"
+  - "5.4"
+  - "5.3"
+
+before_script:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+  - mysql < tests/_files/database.sql
+  - composer install --prefer-dist --dev
+
+script: phpunit --coverage-text
+
+notifications:
+  email: false
