@@ -12,7 +12,8 @@ class DbFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function testCreate()
     {
-        $db = \Fobia\DataBase\DbFactory::create($_ENV['dsn']);
+        $params = $_ENV['dsn'];
+        $db = \Fobia\DataBase\DbFactory::create($params);
         $this->assertInstanceOf('PDO', $db->getPdo());
     }
 

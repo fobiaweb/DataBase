@@ -30,10 +30,12 @@ $_ENV['database'] = array(
     'host' => 'localhost',
     'username' => 'root',
     'password' => '',
-    'database' => 'ezc-test'
+    'database' => 'ezc-test',
+    'port'     => ''
 );
 if ($_ENV['SERVER'] == 'WINDOWS') {
-    $_ENV['database']['host'] = '192.168.33.10';
+    $_ENV['database']['host'] = '127.0.0.1';// '192.168.33.10';
+    $_ENV['database']['port'] = '4040';
     $_ENV['database']['username'] = $_ENV['database']['password'] = 'admin';
 }
 
@@ -41,5 +43,6 @@ $_ENV['dsn'] = 'mysql://'
         . $_ENV['database']['username']
         . (($_ENV['database']['password']) ? ':' . $_ENV['database']['password'] : '')
         . '@' .$_ENV['database']['host']
+        . (($_ENV['database']['port']) ? ':' . $_ENV['database']['port'] : '')
         . '/' . $_ENV['database']['database'] ;
 

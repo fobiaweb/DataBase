@@ -16,20 +16,26 @@ namespace Fobia\DataBase;
 class QueryTestCase extends  \PHPUnit_Framework_TestCase
 {
     static private $pdo = null;
-    private $conn = null;
 
     /**
      * @return \Fobia\DataBase\Handler\MySQL
      */
     final public function getConnection()
     {
-        if ($this->conn === null) {
-            if (self::$pdo == null) {
+        if (self::$pdo == null) {
+            try {
+                $db = \ezcDbInstance::get();
+            } catch (\Exception $e) {
+                $db = null;
+            }
+            if ($db instanceof \Fobia\DataBase\Handler\MySQL) {
+                self::$pdo = $db;
+            } else {
+                \ezcDbFactory::addImplementation('mysql', '\\Fobia\\DataBase\\Handler\\MySQL');
                 self::$pdo = \Fobia\DataBase\DbFactory::create($_ENV['dsn']);
             }
-            $this->conn = self::$pdo;//$this->createDefaultDBConnection(self::$pdo);
         }
 
-        return $this->conn;
+        return self::$pdo;
     }
 }
