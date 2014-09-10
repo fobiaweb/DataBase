@@ -473,6 +473,18 @@ abstract class ezcQuery
     }
 
     /**
+     * Подготавлевает, выполняе и возвращает операт от этого запроса.
+     *
+     * @return \PDOStatement
+     */
+    public function execute()
+    {
+        $stmt = $this->prepare();
+        call_user_func_array(array($this, 'execute'), func_get_args());
+        return $stmt;
+    }
+
+    /**
      * Returns all the elements in $array as one large single dimensional array.
      *
      * @todo public? Currently this is needed for QueryExpression.
