@@ -242,18 +242,40 @@ class MySQL extends ezcDbHandlerMysql
      *
      * @param type $query
      */
-    public function queryParse($query, array $params = array() )
+    public function queryExec($query, array $params = array() )
+    {
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute($params);
+        return $stmt;
+    }
+
+    /**
+     * ?# - поля таблицы
+     * ?d - целочисленые параметры
+     * ?f - дробные параметры
+     * ?s - строка
+     * ?a - масив
+     *
+     * @param string $query
+     * @param array $params
+     * @return array [query, params]
+     * @throws \Exception
+     */
+    public function parsePlaceholder($query, array $params = array())
     {
         if ( substr_count ($query, '?') != count($params) ) {
-            trigger_error("Не верное количество параметров", E_USER_ERROR);
+            throw new \Exception("Не верное количество параметров", E_USER_ERROR);
         }
         $db = &$this;
-        return preg_replace_callback('/\?([#avsnd]?)/', function($m) use (&$params, &$db) {
+        $input_parameters = array();
+
+        $callback = function($m) use (&$params, &$db, &$input_parameters) {
             $value = array_shift($params);
 
             // одиночный попрос
             if ($m[0] == '?') {
-                return $db->quote($value);
+                $input_parameters[] = $value;
+                return '?';
             }
             // Столбцы
             if ($m[0] == '?#') {
@@ -265,72 +287,19 @@ class MySQL extends ezcDbHandlerMysql
             }
             // масив значений
             if ($m[0] == '?a') {
-                array_walk($value, function(&$val) use($db) {
-                    $val = $db->quote($val);
-                });
-                return implode(", ", $value);
-            }
-            // масив типа "ключ = значение"
-            if ($m[0] == '?v') {
-                $str = "";
-                foreach ($value as $column => $val) {
-                    $str .= "`{$column}` = '{$val}', ";
-                }
-                return substr($str, 0, -2);
-            }
-            // Прямая вставка строки
-            if ($m[0] == '?s') {
-                return $value;
-            }
-            // Целое число
-            if ($m[0] == '?n') {
-                return ($value) ? $db->quote($value) : 'NULL';
-            }
-            // Целое число
-            if ($m[0] == '?d') {
-                return (int) $value;
-            }
-        }, $query);
-    }
-
-    public function queryExec($query, array $params = array() )
-    {
-        if ( substr_count ($query, '?') != count($params) ) {
-            throw new \Exception("Не верное количество параметров");
-        }
-
-        $binds = array();
-        $db = &$this;
-        $callback = function($m) use(&$params, &$binds, &$db) {
-            $value = array_shift($params);
-
-            // одиночный попрос
-            if ($m[0] == '?') {
-                $binds[] = $value;
-                return '?';
-            }
-            // Столбцы
-            if ($m[0] == '?#') {
                 $value = (array) $value;
-                array_walk($value, function(&$v) use ($db) {
-                    $v = $db->quoteIdentifier($v);
-                });
-                return implode(", ", $value);
-            }
-            // масив значений
-            if ($m[0] == '?a') {
-                $str = '';
-                array_walk($value, function($v) use(&$binds) {
-                    $binds[] = $v;
+                array_walk($value, function(&$val) use(&$input_parameters) {
+                    $input_parameters[] = $val;
                 });
                 return implode(", ", array_fill(0, count($value), '?'));
             }
             // масив типа "ключ = значение"
             if ($m[0] == '?v') {
+                $value = (array) $value;
                 $str = "";
-                foreach ($value as $k => $v) {
-                    $str .= "`{$k}` = ?, ";
-                    $binds[] = $v;
+                foreach ($value as $column => $val) {
+                    $input_parameters[] = $val;
+                    $str .= "`{$column}` = ?, ";
                 }
                 return substr($str, 0, -2);
             }
@@ -341,25 +310,22 @@ class MySQL extends ezcDbHandlerMysql
             // Целое число
             if ($m[0] == '?n') {
                 if ($value) {
-                    $binds[] = $value;
+                    $input_parameters[] = $value;
                     return '?';
-                } else {
-                    return 'NULL';
                 }
+                return 'NULL';
             }
             // Целое число
             if ($m[0] == '?d') {
-                $binds[] = $value;
-                return '?';
+                $input_parameters[] = (int) $value;
+                return '?';// (int) $value;
             }
         };
-        $string = preg_replace_callback('/\?([#avsnd]?)/', $callback, $query);
 
-        $stmt = $this->pdo->prepare($string);
-        $stmt->execute($binds);
-        return $stmt;
+        $query = preg_replace_callback('/\?([#avsnd]?)/', $callback, $query);
+
+        return array($query, $input_parameters);
     }
-
 
     /* ***********************************************
      * OVERRIDE
