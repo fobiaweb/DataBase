@@ -1,0 +1,15 @@
+
+
+    [2014-09-11 10:59:13] SELECT * FROM table
+    [2014-09-11 10:59:13] -- 0.0004 sec.; returned 10 row(s)
+
+	[2014-09-11 10:59:13] SELECT `id`, `firstname` FROM `authors` WHERE id IN (?, ?, ?, ?) AND `firstname` LIKE ?
+	[2014-09-11 10:59:13] -- Input parameters: ["1",2,3,4,"name%"]
+    [2014-09-11 10:59:13] -- 0 ms; returned 0 row(s)
+
+    [2014-09-11 10:59:13] SELECT * FROM _err
+    [2014-09-11 10:59:13] -- Error #1146 - Table 'ezc-test.authors1' doesn't exist
+
+LOGER:
+	DB::log()
+
