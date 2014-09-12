@@ -15,6 +15,7 @@ PHP PDO Wrapper
  * [Usage](#usage)
  * * [Connection](#connection)
  * * [Выборга](#fetch)
+ * * [Placeholder](#Placeholder)
  * [QueryExpression](docs/QueryExpression.md)
  * [Tests](tests/README)
     * [phpunit](tests/README)
@@ -137,6 +138,21 @@ Array
         )
 )
  */
+?>
+```
+
+### Placeholder
+
+```php
+<?php
+$stmt = $db->queryExec('SELECT ?#, ?# FROM ?# WHERE `firstname` LIKE ? AND id IN (?a)', array(
+    'id',
+    'firstname',
+    'authors',
+    "name%",
+    array(1,2,3,4,5)
+));
+print_r($stmt->fetchAll());
 ?>
 ```
 
