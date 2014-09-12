@@ -13,3 +13,14 @@
 LOGER:
 	DB::log()
 
+GIT:
+
+	*.txt    ident
+    *.c     filter=indent
+
+    git config --global filter.indent.clean indent
+    git config --global filter.indent.smudge cat
+
+    $ git config filter.indent.smudge cat
+	$ git config filter.dater.clean 'perl -pe "s/\\\$Id[^\\\$]*\\\$/\\\$Id: `git log --pretty=format:\"%H %ai\" -1` \\\$/"'
+
