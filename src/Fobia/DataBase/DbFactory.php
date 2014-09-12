@@ -4,6 +4,7 @@
  *
  * @author     Dmitriy Tyurin <fobia3d@gmail.com>
  * @copyright  Copyright (c) 2014 Dmitriy Tyurin
+ * @version    $Id$
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -80,7 +81,7 @@ class DbFactory extends ezcDbFactory
                 $dbParams['phptype'] = 'mysql';
             }
         }
-        
+
         return parent::create($dbParams);
     }
 }
