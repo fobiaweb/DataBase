@@ -4,7 +4,7 @@
  *
  * @author     Dmitriy Tyurin <fobia3d@gmail.com>
  * @copyright  Copyright (c) 2014 Dmitriy Tyurin
- * @version    $Id: 71758ca328c212bb31df83683ddc23786277a470 $
+ * @version    $Id$
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
