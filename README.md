@@ -1,18 +1,8 @@
 PHP PDO Wrapper
 ====================
 
-[![Latest Stable Version](https://poser.pugx.org/fobiaweb/database/v/stable.svg)](https://packagist.org/packages/fobiaweb/database) 
-[![Total Downloads](https://poser.pugx.org/fobiaweb/database/downloads.svg)](https://packagist.org/packages/fobiaweb/database) 
-[![License](https://poser.pugx.org/fobiaweb/database/license.svg)](https://packagist.org/packages/fobiaweb/database)
------
-
-[![Latest Stable Version](https://poser.pugx.org/fobiaweb/database/v/stable.svg)](https://packagist.org/packages/fobiaweb/database) 
-
----- 
-
-[![Build Status](https://travis-ci.org/fobiaweb/DataBase.svg?branch=master)](https://travis-ci.org/fobiaweb/DataBase)
-[![Build Status](https://travis-ci.org/fobiaweb/DataBase.svg?branch=develop)](https://travis-ci.org/fobiaweb/DataBase)
-
+[![Build Status](https://travis-ci.org/fobiaweb/DataBase.svg)](https://travis-ci.org/fobiaweb/DataBase) [![Build Status](https://travis-ci.org/fobiaweb/DataBase.svg?branch=develop)](https://travis-ci.org/fobiaweb/DataBase) [![Latest Stable Version](https://poser.pugx.org/fobiaweb/database/version.svg)](https://packagist.org/packages/fobiaweb/database) [![Latest Unstable Version](https://poser.pugx.org/fobiaweb/database/v/unstable.svg)](//packagist.org/packages/fobiaweb/database) [![Total Downloads](https://poser.pugx.org/fobiaweb/database/downloads.svg)](https://packagist.org/packages/fobiaweb/database) [![License](https://poser.pugx.org/fobiaweb/database/license.svg)](https://packagist.org/packages/fobiaweb/database)
+ 
 
 [ci skip]
 
@@ -30,6 +20,7 @@ PHP PDO Wrapper
  * [Usage](#usage)
  * * [Connection](#connection)
  * * [Выборга](#fetch)
+ * * [Placeholder](#Placeholder)
  * [QueryExpression](docs/QueryExpression.md)
  * [Tests](tests/README)
     * [phpunit](tests/README)
@@ -152,6 +143,21 @@ Array
         )
 )
  */
+?>
+```
+
+### Placeholder
+
+```php
+<?php
+$stmt = $db->queryExec('SELECT ?#, ?# FROM ?# WHERE `firstname` LIKE ? AND id IN (?a)', array(
+    'id',
+    'firstname',
+    'authors',
+    "name%",
+    array(1,2,3,4,5)
+));
+print_r($stmt->fetchAll());
 ?>
 ```
 
