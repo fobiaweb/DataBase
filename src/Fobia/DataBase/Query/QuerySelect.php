@@ -4,6 +4,7 @@
  *
  * @author     Dmitriy Tyurin <fobia3d@gmail.com>
  * @copyright  Copyright (c) 2014 Dmitriy Tyurin
+ * @version    $Id$
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -23,7 +24,7 @@ class QuerySelect extends ezcQuerySelect
     /**
      * Количество всех найденых строк и список строк по limit
      *
-     * @param int $fetch_style может принимать \PDO::FETCH_CLASS, \PDO::FETCH_ASSOC, 
+     * @param int $fetch_style может принимать \PDO::FETCH_CLASS, \PDO::FETCH_ASSOC,
      *                         \PDO::FETCH_NUM, \PDO::FETCH_BOTH.
      *                         По умолчанию \PDO::ATTR_DEFAULT_FETCH_MODE
      *
