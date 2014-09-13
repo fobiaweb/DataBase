@@ -1,6 +1,21 @@
 PHP PDO Wrapper
 ====================
 
+[![Latest Stable Version](https://poser.pugx.org/fobiaweb/database/v/stable.svg)](https://packagist.org/packages/fobiaweb/database) 
+[![Total Downloads](https://poser.pugx.org/fobiaweb/database/downloads.svg)](https://packagist.org/packages/fobiaweb/database) 
+[![License](https://poser.pugx.org/fobiaweb/database/license.svg)](https://packagist.org/packages/fobiaweb/database)
+-----
+
+[![Latest Stable Version](https://poser.pugx.org/fobiaweb/database/v/stable.svg)](https://packagist.org/packages/fobiaweb/database) 
+
+---- 
+
+[![Build Status](https://travis-ci.org/fobiaweb/DataBase.svg?branch=master)](https://travis-ci.org/fobiaweb/DataBase)
+[![Build Status](https://travis-ci.org/fobiaweb/DataBase.svg?branch=develop)](https://travis-ci.org/fobiaweb/DataBase)
+
+
+[ci skip]
+
 **Конструктор запросов**
 
 Конструктор запросов  (на основании библиотеке [eZ Components][]). предоставляет объектно-ориентированный способ написания SQL-запросов. 
