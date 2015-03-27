@@ -48,7 +48,7 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
         $this->assertEquals( true, ezcBaseFeatures::supportsUserId() );
     }
 
-/*  // Need to find a way to make this test work, as setting global enviroment variables
+    // Need to find a way to make this test work, as setting global enviroment variables
     // is not working (putenv( "PATH=" ) doesn't unset $_ENV["PATH"])
     // One solution would be to use in the ezcBaseFeatures::getPath():
     // getenv( 'PATH' ) instead of $_ENV['PATH'] (but that won't work under IIS).
@@ -59,44 +59,39 @@ class ezcBaseFeaturesUnixTest extends ezcTestCaseBase
         $this->assertEquals( false, ezcBaseFeatures::hasImageIdentify() );
         putenv( "PATH={$envPath}" );
     }
-*/
+
 
     /**
      * @requires OS Linux
      */
-    /*
     public function testHasImageConvert()
     {
         $this->assertEquals( true, ezcBaseFeatures::hasImageConvert() );
-    }
-    /**/
+    }/**/
+    
     /**
      * @requires OS Linux
      */
-    /*
     public function testGetImageConvertExecutable()
     {
         $this->assertEquals( '/usr/bin/convert', ezcBaseFeatures::getImageConvertExecutable() );
-    }
-    /**/
+    }/**/
+    
     /**
      * @requires OS Linux
      */
-    /*
     public function testGetImageIdentifyExecutable()
     {
         $this->assertEquals( '/usr/bin/identify', ezcBaseFeatures::getImageIdentifyExecutable() );
-    }
-    /**/
+    }/**/
+    
     /**
      * @requires OS Linux
      */
-    /*
     public function testHasImageIdentify()
     {
         $this->assertEquals( true, ezcBaseFeatures::hasImageIdentify() );
-    }
-    /* */
+    }/**/
 
     /**
      * @requires OS Linux

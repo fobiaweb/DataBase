@@ -16,4 +16,5 @@ $> phpunit tests
 $> phpunit tests/ezc
 
 Запуск тестов компонента base библиотеки ezc:
-$> phpunit tests/ezc/base
+$> phpunit tests/ezc/base/suite.php
+$> phpunit tests/ezc/database/suite.php

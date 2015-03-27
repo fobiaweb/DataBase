@@ -31,6 +31,7 @@ class ezcDbTestCase
             ezcDbFactory::addImplementation('mysql', 'ezcDbHandlerMysql');
 
             $db = ezcDbFactory::create($params);
+            $db->query("SET time_zone = '+04:00'");
             ezcDbInstance::set($db);
         }
 

@@ -13,6 +13,8 @@ $loader->add("Fobia\\DataBase\\", __DIR__ );
 require_once __DIR__ . '/ezc/ezcDbTestCase.php';
 require_once __DIR__ . '/ezc/ezcTestCaseBase.php';
 
+date_default_timezone_set('Europe/Moscow');
+
 
 // var_dump($logger);
 if (class_exists('\Fobia\Debug\Log')) {
