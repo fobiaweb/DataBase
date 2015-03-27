@@ -6,11 +6,11 @@ php:
   - "5.3"
 
 before_script:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS  `ezc-test`;'
   - mysql < tests/_files/database.sql
   - composer install --prefer-dist --dev
 
-script: phpunit --coverage-text
+script: phpunit --coverage-text --exclude-group windows
 
 notifications:
   email: false

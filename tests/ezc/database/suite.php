@@ -23,6 +23,7 @@ require_once( "sqlabstraction/querySubSelectImplTest.php");
 require_once( "sqlabstraction/querySubSelectTest.php");
 require_once( "sqlabstraction/queryTest.php");
 require_once( "sqlabstraction/queryUpdateTest.php");
+require_once( "sqlabstraction/rdbmsLimitsTest.php");
 
 /**
  * @package ezc.DataBase
@@ -51,6 +52,8 @@ class ezcDataBaseSuite extends PHPUnit_Framework_TestSuite
         $this->addTest( ezcQuerySubSelectTest::suite() );
         $this->addTest( ezcQueryTest::suite() );
         $this->addTest( ezcQueryUpdateTest::suite() );
+        
+        $this->addTest( ezcRdbmsLimitTest::suite() );
     }
 
     public static function suite()

@@ -20,7 +20,8 @@
     "suggest": {
         "pear-components.ez.no/base": "1.8.1",
         "pear-components.ez.no/database": "1.4.9",
-        "psr/log": "-"
+        "psr/log": "1.0",
+        "ImageMagick": "*"
     },
     "autoload": {
         "psr-0": { "Fobia\\DataBase\\": "src/" },

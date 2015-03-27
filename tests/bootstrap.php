@@ -14,7 +14,7 @@ require_once __DIR__ . '/ezc/ezcDbTestCase.php';
 require_once __DIR__ . '/ezc/ezcTestCaseBase.php';
 
 date_default_timezone_set('Europe/Moscow');
-
+error_reporting(error_reporting() & ~E_NOTICE);
 
 // var_dump($logger);
 if (class_exists('\Fobia\Debug\Log')) {
