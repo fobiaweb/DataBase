@@ -52,7 +52,7 @@ class ezcDataBaseSuite extends PHPUnit_Framework_TestSuite
         $this->addTest( ezcQuerySubSelectTest::suite() );
         $this->addTest( ezcQueryTest::suite() );
         $this->addTest( ezcQueryUpdateTest::suite() );
-        
+
         $this->addTest( ezcRdbmsLimitTest::suite() );
     }
 

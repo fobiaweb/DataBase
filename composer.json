@@ -8,14 +8,10 @@
     },
     "replace": {
         "pear-components.ez.no/base": "self.version",
-        "pear-components.ez.no/database": "self.version",
-        "fobiaweb/ezc-base": "dev-master",
-        "fobiaweb/ezc-database": "dev-master"
+        "pear-components.ez.no/database": "self.version"
     },
     "require-dev": {
-        "psr/log": "~1",
-        "phpunit/phpunit": "~4.2",
-        "phpunit/dbunit": ">=1.2"
+        "psr/log": "~1"
     },
     "suggest": {
         "pear-components.ez.no/base": "1.8.1",
