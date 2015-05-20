@@ -55,7 +55,7 @@ $db->setLogger(function($t, $q, $args) {
  *  - DbStatement::execute [запрос, параметры, время, кол. строк]
  *  - DB::beginTransaction/commit/rollback [сообщение]
  *  - И простые сообщения от DB  [сообщение]
- * Будем также передавать и тум лога
+ * Будем также передавать и пум лога
  *
  * log($type, $query, $time, $row, $params)
  *
@@ -152,7 +152,9 @@ class MySQL extends ezcDbHandlerMysql
 
         // Rows
         $context['rows']   = $rows;
-        $context['params'] = $params;
+        if ($params !== null) {
+            $context['params'] = $params;
+        }
 
         // array_keys($args, null)
         // Debug
@@ -169,25 +171,6 @@ class MySQL extends ezcDbHandlerMysql
             return;
         }
         call_user_func_array($this->logger, array($level, $query, $context));
-    }
-
-    /**
-     * Все выполненные запросы за сессию с временем выполнения.
-     *
-     * @return array
-     */
-    public function getProfiles()
-    {
-        /*
-        parent::query('SET profiling = 1');
-        if ($this->profiles) {
-            $stmt = parent::query('SHOW profiles');
-            return $stmt->fetchAll();
-        }
-        return array();
-         *
-         */
-        // $this->logQuery('DEBUG', "========TEST============");
     }
 
     /**
@@ -214,6 +197,11 @@ class MySQL extends ezcDbHandlerMysql
      */
     public function setLogger($logger)
     {
+        $_logger = $this->logger;
+        if (is_callable($logger)) {
+            $this->logger = $logger;
+        }
+        return $_logger;
         /*
         if ( (int) $logQuery->errorCode() ) {
             $error = $logQuery->errorInfo();
@@ -229,8 +217,6 @@ class MySQL extends ezcDbHandlerMysql
         }
          *
          */
-
-        $this->logger = $logger;
     }
 
 
@@ -370,7 +356,7 @@ class MySQL extends ezcDbHandlerMysql
      */
     public function beginTransaction()
     {
-        $this->addLogRecord("Begin transaction");
+        $this->addLogRecord("-- Begin transaction");
         return parent::beginTransaction();
     }
 
@@ -383,7 +369,7 @@ class MySQL extends ezcDbHandlerMysql
     public function commit()
     {
         $r = parent::commit();
-        $this->addLogRecord("Commit transaction.");
+        $this->addLogRecord("-- Commit transaction.");
         if (!$r) {
             $this->_log("Error commit transaction", array(), 'ERROR');
         }
@@ -398,7 +384,7 @@ class MySQL extends ezcDbHandlerMysql
      */
     public function rollback()
     {
-        $this->addLogRecord("Rollback transaction");
+        $this->addLogRecord("-- Rollback transaction");
         return parent::rollback();
     }
 
