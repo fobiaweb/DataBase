@@ -40,7 +40,7 @@ class MySQLLogTest extends \PHPUnit_Extensions_Database_TestCase
      */
     public function getDataSet()
     {
-        return $this->createMySQLXMLDataSet(dirname(__FILE__).'/../../../_files/database.xml');
+        return $this->createMySQLXMLDataSet(dirname(__FILE__).'/../../../../_files/database.xml');
     }
 
     protected function setUp()

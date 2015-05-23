@@ -7,11 +7,10 @@
  */
 
 $loader = require  dirname(__DIR__) . '/vendor/autoload.php';
-/* @var $logger \Composer\Autoload\ClassLoader */
-$loader->add("Fobia\\DataBase\\", __DIR__ );
-
-require_once __DIR__ . '/ezc/ezcDbTestCase.php';
-require_once __DIR__ . '/ezc/ezcTestCaseBase.php';
+/* @var $loader \Composer\Autoload\ClassLoader */
+$loader->add("Fobia\\DataBase\\", dirname(__FILE__) . '/Test' );
+require_once dirname(__FILE__) . '/Test/ezc/ezcDbTestCase.php';
+require_once dirname(__FILE__) . '/Test/ezc/ezcTestCaseBase.php';
 
 date_default_timezone_set('Europe/Moscow');
 error_reporting(error_reporting() & ~E_NOTICE);
